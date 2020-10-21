@@ -1,0 +1,138 @@
+.content_body{
+    width: 1250px;
+    height: auto;
+    margin: auto;
+    margin-top: 2px;
+}
+.lft_panel{
+    width: 172px;
+    height: auto;
+    float: left;
+    background-color: #323840;
+}
+.brand_link{
+    width: 164px;
+    height: auto;
+    border-bottom: 3px solid #4c525e;
+    color: #ffffff;
+    font-size: 13px;
+    float: left;
+    padding: 10px 5px 5px 13px;
+    text-align: center;
+
+}
+.divp_styles{
+    background-color: #577f63;
+    padding: 5px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    margin-left: -12px;
+    margin-top: -9px;
+    margin-bottom: 15px;
+    width: 170px;
+    font-weight: bold;
+}
+.p_link{
+    color: #208cfc;
+     font-size: 10px;
+      margin-right: 10px;
+       text-align: right;
+        cursor: pointer; 
+        text-decoration: underline;
+         margin: 0px;
+          color: white;
+}
+.gridheader{
+    width: 805px;
+    margin-left: 12px;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+    background: #577f63;
+}
+.drop_select{
+    background:transparent;
+    width: 100%;
+    height: 21px;
+    padding: 0 7%;
+    float: right;
+    border: 1px solid #577f63;
+    font-size: 11px;
+    color: #fff;
+    outline: none;
+}
+.dashboard{
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+    color: #333333;
+    width: 805px;
+    display: table;
+}
+.dashboard th{
+    background-color: #323840;
+    font-weight: normal;
+    height: 20px;
+    padding: 3px 10px;
+    color: #fff;
+    text-transform: uppercase;
+}
+.dashboard tbody tr:nth-child(odd){
+    background: #e6eff6;
+}
+
+.dashboard tbody tr:nth-child(even){
+    background: #eeeeee;
+}
+.dashboard td{
+    height: auto;
+    padding: 3px 10px;
+    border: 1px solid #ccc ;
+}
+.clear{clear: both;}
+
+.style_statistics{
+    width: 171px;
+    height: 38px;
+    margin-top: 5px;
+    padding-bottom: 20px;
+    border-color: #161616;
+}
+.statistics{
+    background-color: #577f63; padding: 2px; color: #fff; text-align: center; font-size: 15px; font-weight:bold;
+}
+.countdiv{
+    position: relative; float: left; background-color: #161616; margin: 5px; overflow: hidden; width: 95%;
+}
+.countable{
+    color: white; font-size: 11px; width: 100%;
+}
+.firsttd{
+    text-align: left; width: 60%; padding-bottom: 5px;
+}
+.secondtd{
+    text-align: right; vertical-align: top;
+}
+.lblcount{
+    color: white; border-radius: 3px; padding: 0px 5px; background: #F27324;margin-bottom: .0rem;
+}
+  
+
+.contents{
+    width: 822px;
+    height:250px;
+   overflow-x: hidden;
+}
+.getdiv{
+    padding:0px 2px; margin: 0px 2px; text-align: right; text-decoration-color: white; width: auto; height: 20px;
+}
+.getlabel{
+    margin-bottom: .0rem;font-size: 14px;
+}
+.getstylediv{
+    margin: 6px 6px 2px 0px; float: left
+}
+.getstylelbl{
+    margin-bottom: .0rem;font-size: 14px;
+}

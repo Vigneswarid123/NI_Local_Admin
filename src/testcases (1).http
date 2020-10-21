@@ -1,0 +1,960 @@
+# localapi.throttle.com
+# throttleapi.azaz.com
+# localhost:3000
+
+
+###############
+# Health check
+###############
+
+GET http://localhost:3001/api/healthcheck
+
+
+############
+# Sign in
+############
+
+POST http://localapi.throttle.com/api/auth/signin
+content-type: application/json
+
+{
+"email":"testuser@gmail.com",
+"password":"test@1234"
+}
+
+
+###
+
+##################
+# Get Positions
+##################
+POST http://localapi.throttle.com/api/positions/GET 
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDE2Nzg5NCwiZXhwIjoxNjMxNzAzODk0fQ.Pf1Lcr4YvwEUsq-KXW4_PHladSMdNENhEcjB3oSj0Tg
+
+{
+ 	"p_id": 0
+}
+
+###
+##################
+# Add Positions
+##################
+POST http://localapi.throttle.com/api/positions/
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDE2Nzg5NCwiZXhwIjoxNjMxNzAzODk0fQ.Pf1Lcr4YvwEUsq-KXW4_PHladSMdNENhEcjB3oSj0Tg
+
+{
+ 	"p_id": 0,
+	"p_name": "test",
+	"p_code": 1,
+	"p_status": "Y",
+	"p_createdts": "2020-09-03T17:29:29.470Z",
+	"p_createduser": 0,
+	"p_updatedts": 0,
+	"p_updateduser": 0
+
+}
+
+###
+#####################
+# Update Positions
+#####################
+PUT http://localapi.throttle.com/api/positions/
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDE2Nzg5NCwiZXhwIjoxNjMxNzAzODk0fQ.Pf1Lcr4YvwEUsq-KXW4_PHladSMdNENhEcjB3oSj0Tg
+
+{
+ 	"p_id": 5,
+	"p_name": "testings",
+	"p_code": 2,
+	"p_status": "Y",
+	"p_createdts": "2020-09-03T17:29:29.470Z",
+	"p_createduser": 0,
+	"p_updatedts": 0,
+	"p_updateduser": 0
+
+}
+
+###
+
+##################
+# Delete Positions
+##################
+DELETE http://localapi.throttle.com/api/positions
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDE2Nzg5NCwiZXhwIjoxNjMxNzAzODk0fQ.Pf1Lcr4YvwEUsq-KXW4_PHladSMdNENhEcjB3oSj0Tg
+
+{
+ 	"p_id": 6
+}
+
+###
+#####################
+# Get Roles
+#####################
+
+POST http://localapi.throttle.com/api/roles/GET 
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDE2Nzg5NCwiZXhwIjoxNjMxNzAzODk0fQ.Pf1Lcr4YvwEUsq-KXW4_PHladSMdNENhEcjB3oSj0Tg
+
+{
+	"role_id":0
+}
+
+###
+
+#####################
+# Get Brands
+#####################
+
+POST http://localapi.throttle.com/api/brands/GET 
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDE2Nzg5NCwiZXhwIjoxNjMxNzAzODk0fQ.Pf1Lcr4YvwEUsq-KXW4_PHladSMdNENhEcjB3oSj0Tg
+
+{
+	"brand_id":0
+}
+
+###
+
+
+#####################
+# Get Styles
+#####################
+
+POST http://localapi.throttle.com/api/styles/GET 
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDE2Nzg5NCwiZXhwIjoxNjMxNzAzODk0fQ.Pf1Lcr4YvwEUsq-KXW4_PHladSMdNENhEcjB3oSj0Tg
+
+{
+	"style_id":0,
+	"expression":" modelid = 1335 and modelyear = 2002 and divisionid = 8"
+}
+
+###
+#####################
+# Get Models
+#####################
+
+POST http://localapi.throttle.com/api/model/GET 
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDE2Nzg5NCwiZXhwIjoxNjMxNzAzODk0fQ.Pf1Lcr4YvwEUsq-KXW4_PHladSMdNENhEcjB3oSj0Tg
+
+{
+	"modelid":0,
+	"expression":"divisionid =1"
+}
+
+###
+
+
+#####################
+# Get Users
+#####################
+
+POST http://localapi.throttle.com/api/users/GET 
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDE2Nzg5NCwiZXhwIjoxNjMxNzAzODk0fQ.Pf1Lcr4YvwEUsq-KXW4_PHladSMdNENhEcjB3oSj0Tg
+
+{
+	"User_Id":4
+}
+
+###
+
+
+
+#####################
+# Get Users
+#####################
+
+POST http://localapi.throttle.com/api/users 
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDE2Nzg5NCwiZXhwIjoxNjMxNzAzODk0fQ.Pf1Lcr4YvwEUsq-KXW4_PHladSMdNENhEcjB3oSj0Tg
+
+{
+	"User_Id":4,
+	"User_Firstname":"",
+	"User_Lastname":"",
+	"User_Phone":"",
+	"User_Email":"",
+	"User_Address":"",
+	"User_Mapaddresslink":"",
+	"User_Password":"",
+	"User_Profileimage":"",
+	"User_Roleid":"",
+	"User_IsAdmin":"",
+	"User_Type":"",
+	"User_Status":"",
+	"User_Created_Userid":"",
+	"User_Updated_Userid":""
+}
+
+###
+
+
+
+#####################
+# Get CMS Modules
+#####################
+
+POST http://localapi.throttle.com/api/cmsmodules/GET 
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDE2Nzg5NCwiZXhwIjoxNjMxNzAzODk0fQ.Pf1Lcr4YvwEUsq-KXW4_PHladSMdNENhEcjB3oSj0Tg
+
+{
+	"mod_id":85
+}
+
+###
+
+#####################
+# Add CMS Modules
+#####################
+
+POST http://localapi.throttle.com/api/cmsmodules
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTM4ODE2MywiZXhwIjoxNjMwOTI0MTYzfQ.SEaRgGc8OwaS5ZNNhs3_hjiN-h7vSQU2FRnSLgbC5lY
+
+{
+	"mod_ParentId":"20",
+	"mod_filename":"#",
+	"mod_name":"test",
+	"mod_seq":0,
+	"mod_uid":"1",
+	"mod_type":"A",
+	"mod_status":"Y"
+}
+
+###
+
+
+#####################
+# Update CMS Modules
+#####################
+
+PUT http://localapi.throttle.com/api/cmsmodules
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTM4ODE2MywiZXhwIjoxNjMwOTI0MTYzfQ.SEaRgGc8OwaS5ZNNhs3_hjiN-h7vSQU2FRnSLgbC5lY
+
+{
+	"mod_id": 85,
+	"mod_ParentId":"20",
+	"mod_filename":"#",
+	"mod_name":"testing",
+	"mod_seq":0,
+	"mod_uid":"1",
+	"mod_type":"A",
+	"mod_status":"Y"
+}
+
+###
+
+
+#####################
+# Delete CMS Modules
+#####################
+
+DELETE  http://localapi.throttle.com/api/cmsmodules
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTM4ODE2MywiZXhwIjoxNjMwOTI0MTYzfQ.SEaRgGc8OwaS5ZNNhs3_hjiN-h7vSQU2FRnSLgbC5lY
+
+{
+	"mod_id": 85,
+	"mod_ParentId":"20",
+	"mod_filename":"#",
+	"mod_name":"test",
+	"mod_seq":0,
+	"mod_uid":"1",
+	"mod_type":"A",
+	"mod_status":"Y"
+}
+
+###
+
+
+
+
+############
+# Get Make
+############
+POST http://localapi.throttle.com/api/make/get
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDA3NzI3NSwiZXhwIjoxNjMxNjEzMjc1fQ.tPKl8H1vV-AOt8FOjOlbphWvTTaUnWK9FhZFmaFzALs
+
+{
+	"div_id":0
+}
+
+###
+
+
+############
+# Add Make
+############
+POST http://localapi.throttle.com/api/make/
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDA3NzI3NSwiZXhwIjoxNjMxNjEzMjc1fQ.tPKl8H1vV-AOt8FOjOlbphWvTTaUnWK9FhZFmaFzALs
+
+{
+	"div_name": "testing", 
+	"div_code": "171", 
+	"div_year": "2020", 
+	"div_status": "Y"
+}
+
+###
+
+
+###############
+# Update Make
+###############
+PUT http://localapi.throttle.com/api/make/
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDA3NzI3NSwiZXhwIjoxNjMxNjEzMjc1fQ.tPKl8H1vV-AOt8FOjOlbphWvTTaUnWK9FhZFmaFzALs
+
+{
+	"div_id":1065,
+	"div_name": "test", 
+	"div_code": "171", 
+	"div_year": "2020", 
+	"div_status": "Y"
+}
+
+###
+
+
+
+###############
+# Delete Make
+###############
+DELETE http://localapi.throttle.com/api/make/
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDA3NzI3NSwiZXhwIjoxNjMxNjEzMjc1fQ.tPKl8H1vV-AOt8FOjOlbphWvTTaUnWK9FhZFmaFzALs
+
+{
+	"div_id":1065
+}
+
+###
+
+
+
+
+
+##################
+# Get Dealership
+##################
+POST http://localhost:3001/api/dealerships/get
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTc0MjM1OCwiZXhwIjoxNjMxMjc4MzU4fQ.V5R7eoSaYjPjij0b4bpRxMwRfTxJbHF6Jr2l83WY2hU
+
+{
+	"dealerid":0,
+	"expression": ""
+}
+
+###
+
+
+##################
+# Add Dealership
+##################
+POST http://localhost:3001/api/dealerships/
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiRCIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMTk5MTM2MywiZXhwIjoxNjMzNTI3MzYzfQ.qbe_WlEb_-aCTAyWoJM4j08mNuaFhT8hmQ4VbTz-kMU
+
+{
+	"dealername": "testing", 
+	"dealeraddress1": "dealer_address1", 
+	"dealeraddress2": "dealer_address2", 
+	"dealeraddress3": "dealer_address3",
+	"dealercity": "dealer_city",
+	"dealerstate": "1",
+	"dealercountry": "4", 
+	"dealerzip": "533103", 
+	"dealerphone": "123456789",
+	"dealerlogo": "dealer_logo",
+	"dealergroupid":"3053",
+	"dealerbrands": "dealer_brands",
+	"dealerstatus": "A", 
+    "dealercreateduser": "1001",
+	"dealerdetails":[
+	{
+		"ddname": "testing",
+		"ddposition": 6,
+		"ddemail": "test@gmail.com",
+		"ddphone": "1234567890",
+		"dddealerid": 1,
+		"ddtype":"A",
+		"ddstatus": "A",
+		"ddcreateduser": 1002,
+		"ddupdateduser": 1003
+	},	
+	{	"ddname": "testing",
+		"ddposition": 6,
+		"ddemail": "test@gmail.com",
+		"ddphone": "1234567890",
+		"dddealerid": 1,
+		"ddtype":"C",
+		"ddstatus": "A",
+		"ddcreateduser": 1002,
+		"ddupdateduser": 1003
+	}]
+
+}
+
+###
+
+
+#####################
+# Update Dealership
+#####################
+PUT http://localapi.throttle.com/api/dealerships/
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiRCIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMTAwOTQwNiwiZXhwIjoxNjMyNTQ1NDA2fQ.83R7KeSPERnNWyqGB2VqfxLoeFqj4r4aqEjS0UCVTM8
+
+{
+	"dealerid":9,
+	"dealername": "testing", 
+	"dealeraddress1": "address1", 
+	"dealeraddress2": "address2", 
+	"dealeraddress3": "address3",
+	"dealercity": "dealer_city",
+	"dealerstate": "1",
+	"dealercountry": "4",
+	"dealerzip": "533106",  
+	"dealerphone": "123456789",
+	"dealerlogo": "dealer_logo",
+	"dealerbrands": "dealer_brands",
+	"dealerstatus": "A", 
+    "dealercreateduser": "1001"
+}
+
+###
+
+
+
+#####################
+# Delete Dealership
+#####################
+DELETE http://localapi.throttle.com/api/dealerships/
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiRCIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMTAwOTQwNiwiZXhwIjoxNjMyNTQ1NDA2fQ.83R7KeSPERnNWyqGB2VqfxLoeFqj4r4aqEjS0UCVTM8
+
+{
+	"dealerid":6
+}
+
+###
+
+
+########################
+# Get Dealership Groups
+########################
+POST http://localapi.throttle.com/api/dealershipgroups/get
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTY2ODc2NywiZXhwIjoxNjMxMjA0NzY3fQ.6z1KRXYdEEhp5O5qb3GI4UeQuYVaHtKv3B7kH48sSHI
+
+{
+	"dealergroupid":0,
+	"expression": "dg_status = 'A'"
+}
+
+
+###
+
+
+########################
+# Add Dealership Groups
+########################
+POST http://localapi.throttle.com/api/dealershipgroups
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiRCIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTYwMDk0OTk2MSwiZXhwIjoxNjMyNDg1OTYxfQ.6ntpQwHYckMUmem_h9nFM-t28oRZxY-bfYaNKaTeM5Q
+
+{
+	"dgname": "aaa",
+	"dgaddress1": "aaaa",
+	"dgaddress2": "aaa",
+	"dgaddress3": "aaa",
+	"dgcity": "rjy",
+	"dgstate": 1,
+	"dgcountry": 4,
+	"dgzip": "533001",
+	"dgphone": "1234568790",
+	"dglogo": "logo",
+	"dgstatus": "A",
+	"dgcreateduser": 1002,
+	"dgupdateduser": 1001
+}
+
+
+###
+
+
+
+###########################
+# Update Dealership Groups
+###########################
+PUT http://localapi.throttle.com/api/dealershipgroups
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTY2ODc2NywiZXhwIjoxNjMxMjA0NzY3fQ.6z1KRXYdEEhp5O5qb3GI4UeQuYVaHtKv3B7kH48sSHI
+
+{
+	"dgid":8,
+	"dgname": "xyz",
+	"dgaddress1": "aaaa",
+	"dgaddress2": "aaa",
+	"dgaddress3": "aaa",
+	"dgcity": "rjy",
+	"dgstate": 1,
+	"dgcountry": 4,
+	"dgzip":"533003",
+	"dgphone": "1234568790",
+	"dglogo": "logo",
+	"dgstatus": "A",
+	"dgcreateduser": 1002,
+	"dgupdateduser": 1001
+}
+
+###
+
+###########################
+# Delete Dealership Groups
+###########################
+DELETE http://localapi.throttle.com/api/dealershipgroups
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTY2ODc2NywiZXhwIjoxNjMxMjA0NzY3fQ.6z1KRXYdEEhp5O5qb3GI4UeQuYVaHtKv3B7kH48sSHI
+
+{
+	"dgid":1
+}
+
+
+###
+########################
+# Get Dealership Users
+########################
+POST http://localapi.throttle.com/api/dealershipusers/get
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTc0MjM1OCwiZXhwIjoxNjMxMjc4MzU4fQ.V5R7eoSaYjPjij0b4bpRxMwRfTxJbHF6Jr2l83WY2hU
+
+{
+	"duid":0,
+	"expression": "du_status = 'A'"
+}
+
+###
+
+
+
+########################
+# Add Dealership Users
+########################
+POST http://localapi.throttle.com/api/dealershipusers
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTc0MjM1OCwiZXhwIjoxNjMxMjc4MzU4fQ.V5R7eoSaYjPjij0b4bpRxMwRfTxJbHF6Jr2l83WY2hU
+
+{
+	"duname": "testing",
+	"duposition": 6,
+	"duemail": "test@gmail.com",
+	"duphone": "1234567890",
+	"dudealerid": 1,
+	"dustatus": "A",
+	"ducreateduser": 1002,
+	"duupdateduser": 1003
+}
+
+
+###
+
+
+
+########################
+# Update Dealership Users
+########################
+PUT http://localapi.throttle.com/api/dealershipusers
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTA3MTM5OCwiZXhwIjoxNTk5MDcxNDg0fQ.bgaEPUsZbiq78JA-lnu0HK3PxALLNyOF8SYlkpNiSFc
+
+{
+	"duid":2,
+	"duname": "testing",
+	"duposition": 6,
+	"duemail": "test@gmail.com",
+	"duphone": "1234567890",
+	"dudealerid": 1,
+	"dustatus": "A",
+	"ducreateduser": 1002,
+	"duupdateduser": 1003
+}
+
+
+###
+
+
+########################
+# Delete Dealership Users
+########################
+DELETE http://localapi.throttle.com/api/dealershipusers
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTA3MTM5OCwiZXhwIjoxNTk5MDcxNDg0fQ.bgaEPUsZbiq78JA-lnu0HK3PxALLNyOF8SYlkpNiSFc
+
+{
+	"duid":2,
+	"duname": "testing",
+	"duposition": 6,
+	"duemail": "test@gmail.com",
+	"duphone": "1234567890",
+	"dudealerid": 1,
+	"dustatus": "A",
+	"ducreateduser": 1002,
+	"duupdateduser": 1003
+}
+
+
+###
+
+
+###########################
+# Get Dealership Contacts
+###########################
+POST http://localapi.throttle.com/api/dealershipcontacts/get
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTExMTUxMywiZXhwIjoxNjMwNjQ3NTEzfQ.9U1fudM0slBdLuHBfa-HiUgB8keqUXiB6E3AHOiBobQ
+
+{
+	"dcid":0,
+	"expression": ""
+}
+
+###
+
+
+###########################
+# Add Dealership Contacts
+###########################
+
+POST http://localapi.throttle.com/api/dealershipcontacts
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTExMDIwNiwiZXhwIjoxNTk5MTk2NjA2fQ.E-xqsSnV6DVhgI3C1damC2JWkMQ_jQgdPiyJ6Di5Om8
+
+
+{
+	"dcname":"xyz",
+	"dcposition":6,
+	"dcphone":"123456789",
+	"dcemail":"testmail@gmail.com",
+	"dcdealerid":6,
+	"dcstatus":"A",
+	"dccreateduser":1010,
+	"dcupdateduser":1012
+}
+
+
+
+###
+
+
+##############################
+# Update Dealership Contacts
+##############################
+PUT http://localapi.throttle.com/api/dealershipcontacts
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTExMDIwNiwiZXhwIjoxNTk5MTk2NjA2fQ.E-xqsSnV6DVhgI3C1damC2JWkMQ_jQgdPiyJ6Di5Om8
+
+
+{
+	"dcid":2,
+	"dcname":"welcome",
+	"dcposition":6,
+	"dcphone":"123456789",
+	"dcemail":"test@gmail.com",
+	"dcdealerid":6,
+	"dcstatus":"A",
+	"dccreateduser":1010,
+	"dcupdateduser":1012
+}
+
+
+###
+
+
+
+##############################
+# Delete Dealership Contacts
+##############################
+DELETE http://localapi.throttle.com/api/dealershipcontacts
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTExMDIwNiwiZXhwIjoxNTk5MTk2NjA2fQ.E-xqsSnV6DVhgI3C1damC2JWkMQ_jQgdPiyJ6Di5Om8
+
+
+{
+	"dcid":2,
+	"dcname":"abcd",
+	"dcposition":6,
+	"dcphone":"123456789",
+	"dcemail":"test@gmail.com",
+	"dcdealerid":6,
+	"dcstatus":"A",
+	"dccreateduser":1010,
+	"dcupdateduser":1012
+}
+
+
+###
+
+
+#################################
+# Get Dealership Group Contacts
+#################################
+POST http://localapi.throttle.com/api/dealershipgroupcontacts/get
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTExMTUxMywiZXhwIjoxNjMwNjQ3NTEzfQ.9U1fudM0slBdLuHBfa-HiUgB8keqUXiB6E3AHOiBobQ
+
+{
+	"dgcid":0,
+	"expression": ""
+}
+
+###
+
+
+
+#################################
+# Add Dealership Group Contacts
+#################################
+
+POST http://localapi.throttle.com/api/dealershipgroupcontacts
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTExMDIwNiwiZXhwIjoxNTk5MTk2NjA2fQ.E-xqsSnV6DVhgI3C1damC2JWkMQ_jQgdPiyJ6Di5Om8
+
+
+{
+	"dgcname":"xyz",
+	"dgcposition":6,
+	"dgcphone":"123456789",
+	"dgcemail":"testmail@gmail.com",
+	"dgcdgid":1,
+	"dgcstatus":"A",
+	"dgccreateduser":1010,
+	"dgcupdateduser":1012
+}
+
+
+
+###
+
+
+####################################
+# Update Dealership Group Contacts
+####################################
+PUT http://localapi.throttle.com/api/dealershipgroupcontacts
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTExMDIwNiwiZXhwIjoxNTk5MTk2NjA2fQ.E-xqsSnV6DVhgI3C1damC2JWkMQ_jQgdPiyJ6Di5Om8
+
+{
+	"dgcid":1,
+	"dgcname":"welcome",
+	"dgcposition":6,
+	"dgcphone":"123456789",
+	"dgcemail":"test@gmail.com",
+	"dgcdgid":1,
+	"dgcstatus":"A",
+	"dgccreateduser":1010,
+	"dgcupdateduser":1012
+}
+
+
+###
+
+
+
+####################################
+# Delete Dealership Group Contacts
+####################################
+DELETE http://localapi.throttle.com/api/dealershipgroupcontacts
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTExMDIwNiwiZXhwIjoxNTk5MTk2NjA2fQ.E-xqsSnV6DVhgI3C1damC2JWkMQ_jQgdPiyJ6Di5Om8
+
+
+{
+	"dgcid":2,
+	"dgcname":"abcd",
+	"dgcposition":6,
+	"dgcphone":"123456789",
+	"dgcemail":"test@gmail.com",
+	"dgcdgid":1,
+	"dgcstatus":"A",
+	"dgccreateduser":1010,
+	"dgcupdateduser":1012
+}
+
+
+###
+
+
+
+##############################
+# Get Dealership Group Users
+##############################
+POST http://localapi.throttle.com/api/dealershipgroupusers/get
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTEyNTU4OSwiZXhwIjoxNjMwNjYxNTg5fQ.KL89FSmoX_sTbozs9RuPOomaj7TsCQ_VrynG7dgIDAY
+
+{
+	"dguid":0,
+	"expression": "dgu_status = 'A'"
+}
+
+###
+
+
+
+##############################
+# Add Dealership Group Users
+##############################
+POST http://localapi.throttle.com/api/dealershipgroupusers
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTEyNTU4OSwiZXhwIjoxNjMwNjYxNTg5fQ.KL89FSmoX_sTbozs9RuPOomaj7TsCQ_VrynG7dgIDAY
+
+{
+	"dguname": "test",
+	"dguposition": 6,
+	"dguemail": "test@gmail.com",
+	"dguphone": "1234567890",
+	"dgudgid": 1,
+	"dgustatus": "A",
+	"dgucreateduser": 1002,
+	"dguupdateduser": 1003
+}
+
+
+
+
+###
+
+
+
+#################################
+# Update Dealership Group Users
+#################################
+PUT http://localapi.throttle.com/api/dealershipgroupusers
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTEyNTU4OSwiZXhwIjoxNjMwNjYxNTg5fQ.KL89FSmoX_sTbozs9RuPOomaj7TsCQ_VrynG7dgIDAY
+
+{
+	"dguid":2,
+	"dguname": "testing",
+	"dguposition": 6,
+	"dguemail": "test@gmail.com",
+	"dguphone": "1234567890",
+	"dgudgid": 1,
+	"dgustatus": "A",
+	"dgucreateduser": 1002,
+	"dguupdateduser": 1003
+}
+
+
+###
+
+
+#################################
+# Delete Dealership Group Users
+#################################
+DELETE http://localapi.throttle.com/api/dealershipgroupusers
+content-type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTEyNTU4OSwiZXhwIjoxNjMwNjYxNTg5fQ.KL89FSmoX_sTbozs9RuPOomaj7TsCQ_VrynG7dgIDAY
+
+{
+	"dguid":2,
+	"dguname": "testing",
+	"dguposition": 6,
+	"dguemail": "test@gmail.com",
+	"dguphone": "1234567890",
+	"dgudgid": 1,
+	"dgustatus": "A",
+	"dgucreateduser": 1002,
+	"dguupdateduser": 1003
+}
+
+
+###
+
+
+#####################
+# Get Admin Modules
+#####################
+
+POST http://localapi.throttle.com/api/adminmodules/GET 
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTM4ODE2MywiZXhwIjoxNjMwOTI0MTYzfQ.SEaRgGc8OwaS5ZNNhs3_hjiN-h7vSQU2FRnSLgbC5lY
+
+{
+	"mod_id":25
+}
+
+###
+
+#####################
+# Add Admin Modules
+#####################
+
+POST http://localapi.throttle.com/api/adminmodules
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTM4ODE2MywiZXhwIjoxNjMwOTI0MTYzfQ.SEaRgGc8OwaS5ZNNhs3_hjiN-h7vSQU2FRnSLgbC5lY
+
+{
+	 "mod_seq": 0,
+      "mod_name": "Users",
+      "mod_status": "A",
+      "mod_uid": 1,
+      "mod_admin": "Y",
+      "mod_front": "Y"
+}
+
+###
+
+
+#####################
+# Update Admin Modules
+#####################
+
+PUT http://localapi.throttle.com/api/adminmodules
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTM4ODE2MywiZXhwIjoxNjMwOTI0MTYzfQ.SEaRgGc8OwaS5ZNNhs3_hjiN-h7vSQU2FRnSLgbC5lY
+
+{
+	"mod_id": 25,
+	 "mod_seq": 0,
+      "mod_name": "Users",
+      "mod_status": "A",
+      "mod_uid": 1,
+      "mod_admin": "Y",
+      "mod_front": "Y"
+}
+
+###
+
+
+#####################
+# Delete Admin Modules
+#####################
+
+DELETE  http://localapi.throttle.com/api/adminmodules
+Content-Type:application/json
+x-access-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjUsIkZpcnN0TmFtZSI6ImFuayIsIkxhc3ROYW1lIjoibXVwIiwiUGhvbmUiOiIxMjM0NTY3ODkwIiwiRW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJBZGRyZXNzIjoicmp5IiwiTWFwQWRkcmVzcyI6InRlc3QiLCJSb2xlSWQiOjAsIklzQWRtaW4iOiJZIiwiVXNlclR5cGUiOiJBIiwiU3RhdHVzIjoiWSIsIkNyZWF0ZWREYXRlIjoiMjAyMC0wOC0yNVQyMDoxNjoyNC41NTAiLCJDcmVhdGVkVXNlcklkIjowLCJVcGRhdGVkRGF0ZSI6IjIwMjAtMDgtMjVUMjA6MTY6MjQuNTUwIiwiVXBkYXRlZFVzZXJJZCI6MCwiVG9rZW4iOm51bGwsImlhdCI6MTU5OTM4ODE2MywiZXhwIjoxNjMwOTI0MTYzfQ.SEaRgGc8OwaS5ZNNhs3_hjiN-h7vSQU2FRnSLgbC5lY
+
+{
+	"mod_id": 25,
+	 "mod_seq": 0,
+      "mod_name": "Users",
+      "mod_status": "A",
+      "mod_uid": 1,
+      "mod_admin": "Y",
+      "mod_front": "Y"
+}
+
+###

@@ -1,0 +1,410 @@
+####
+#To connect to local server replace http://localhost:3000 with http://api.ankaiahmuppana.com
+#To connect to dev server replace http://localhost:3000 with http://aaatapi.azaz.com
+####
+
+
+#Health check 
+## To check whether the API is working or not.
+GET http://localhost:3000/api/healthcheck
+
+### (atleast 3 hash symbols are mandatory to keep after every request, otherwise you can't able to check the next request)
+
+
+############ Authentication Routes Start ############
+
+# Sign up
+POST http://aaatapi.azaz.com/api/auth/signup
+Content-Type: application/json
+
+{
+    "firstname":"Sudheer",
+    "lastname":"PVSS",
+    "email":"sudheerpvss@gmail.com",
+    "password":"1234",
+    "imagename":"sudheerimg"
+}
+
+###
+
+
+# Sign in
+POST http://localhost:3000/api/auth/signin
+Content-Type: application/json
+
+{
+    "email":"sudheerpvss@gmail.com",
+    "password":"1234"
+}
+
+###
+
+
+# Logout
+DELETE http://aaatapi.azaz.com/api/auth/logout
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###`
+
+############ Authentication Routes End ############
+
+
+
+############ User Routes Start ############
+
+# Get all users
+GET http://localhost:3000/api/users
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+
+# Get user by ID
+GET http://localhost:3000/api/users?id=59
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+
+# Update user
+PUT http://localhost:3000/api/users
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+{
+    "id":59,
+    "firstname":"Sudheer",
+    "lastname":"PVSS",
+    "imagename":"sudheerimg",
+    "status":"Y"
+}
+
+###
+
+
+# Delete user
+DELETE http://localhost:3000/api/users/53
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+############ User Routes End ############
+
+
+
+############ Airlines Routes Start ############
+
+
+# Get all airlines
+GET http://localhost:3000/api/airlines
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+
+# Get airline by id
+GET http://localhost:3000/api/airlines?id=66
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+# Add airline
+POST http://localhost:3000/api/airlines
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+{
+    "name":"name",
+    "iata":"iata",
+    "icao":"icao",
+    "yearstarted":"2000",
+    "website":"website",
+    "callsign":"callsign",
+    "alliance":"alliance",
+    "fleet":"250",
+    "hq":"hq",
+    "frequentflyer":"frequentflyer",
+    "mainnumber":"mainnumber",
+    "fb":"fb",
+    "youtube":"youtube",
+    "twitter":"twitter",
+    "instagram":"instagram",
+    "type":"type",
+    "country":"country"
+}
+
+###
+
+
+# Update airline
+PUT http://localhost:3000/api/airlines
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+{
+    "id": 2464,
+    "name":"namename",
+    "iata":"iata",
+    "icao":"icao",
+    "yearstarted":"2000",
+    "website":"website",
+    "callsign":"callsign",
+    "alliance":"alliance",
+    "fleet":"250",
+    "hq":"hq",
+    "frequentflyer":"frequentflyer",
+    "mainnumber":"mainnumber",
+    "fb":"fb",
+    "youtube":"youtube",
+    "twitter":"twitter",
+    "instagram":"instagram",
+    "type":"type",
+    "country":"country",
+    "status":"Y"
+}
+
+###
+
+# Delete airline
+DELETE http://localhost:3000/api/airlines/2440
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+############ Airlines Routes End ############
+
+
+
+############ Airports Routes Start ############
+
+# Get all airports
+GET http://localhost:3000/api/airports
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+# Get airport by id
+GET http://localhost:3000/api/airports?id=12166
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+# Add airport
+POST http://localhost:3000/api/airports
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+{
+    "iata_code":"iata_code",
+    "icao_code":"icao_code",
+    "city":"city",
+    "state":"state",
+    "international":"international",
+    "runways":"runways",
+    "full_name":"full_name",
+    "elevation_msl":"elevation_msl",
+    "country":"country",
+    "googlemaplink":"googlemaplink",
+    "officalwebsite":"officalwebsite",
+    "fb":"fb",
+    "instagram":"instagram",
+    "twitter":"twitter",
+    "wiki":"wiki",
+    "linkedin":"linkedin"
+}
+
+###
+
+# Update airport
+PUT  http://localhost:3000/api/airports
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+{
+    "id":12166,
+    "iata_code":"iata_code",
+    "icao_code":"icao_code",
+    "city":"city",
+    "state":"state",
+    "international":"international",
+    "runways":"runways",
+    "full_name":"full_name",
+    "elevation_msl":"elevation_msl",
+    "country":"country",
+    "googlemaplink":"googlemaplink",
+    "officalwebsite":"officalwebsite",
+    "fb":"fb",
+    "instagram":"instagram",
+    "twitter":"twitter",
+    "wiki":"wiki",
+    "linkedin":"linkedin",
+    "status":"Y"
+}
+
+###
+
+# Delete airport
+DELETE http://localhost:3000/api/airports/12166
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+############ Airports Routes End ############
+
+
+
+############ Cities Routes Start ############
+
+
+
+# Get cities by StateID
+## http://localhost:3000/api/cities/{StateID}
+GET http://localhost:3000/api/cities/20
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+# Add city
+POST http://localhost:3000/api/cities
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+{
+    "name":"test",
+    "stateid":"20"
+}
+
+###
+
+# Update city
+PUT http://localhost:3000/api/cities
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+{
+    "id":47576,
+    "name":"testing",
+    "stateid":"44"
+}
+
+###
+
+# Delete city
+DELETE http://localhost:3000/api/cities/47576
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+############ Cities Routes End ############
+
+
+
+############ States Routes Start ############
+
+
+# Get states by CountryID
+## http://localhost:3000/api/states/{CountryID}
+GET http://localhost:3000/api/states/5
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+# Add city
+POST http://localhost:3000/api/states
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+{
+    "name":"test",
+    "countryid":"123"
+}
+
+###
+
+# Update city
+PUT http://localhost:3000/api/states
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+{
+    "id":4120,
+    "name":"testing",
+    "countryid":"44"
+}
+
+###
+
+# Delete city
+DELETE http://localhost:3000/api/states/4120
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+############ States Routes End ############
+
+
+
+############ Countries Routes Start ############
+
+
+# Get all countries
+
+GET http://localhost:3000/api/countries
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+
+# Get country by id
+
+GET http://localhost:3000/api/countries?id=5
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+# Add country
+POST http://localhost:3000/api/countries
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+{
+    "name":"name",
+    "code":"code"
+}
+###
+# Update country
+PUT http://localhost:3000/api/countries
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+{
+    "id":1,
+    "name":"Afghanistan",
+    "code":"AF"
+}
+
+###
+
+# Delete country
+DELETE http://localhost:3000/api/countries/25
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1ZGhlZXJwdnNzQGdtYWlsLmNvbSIsImlkIjo1MywiaWF0IjoxNTk5NDU3Mjk0LCJleHAiOjE1OTk1NDM2OTR9.sYxf9EVd9f1Kr6p0W3gXVYprfUhycf3C1RU-M-Lv4Mo
+
+###
+
+############ Countries Routes End ############

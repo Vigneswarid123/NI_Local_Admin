@@ -1,0 +1,141 @@
+ <form [formGroup]="brandForm" (ngSubmit)="OnSubmit()">
+    <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-9" style="padding-top:3%;margin-left: 58px;">
+            <label style="color: white;">Brand Name</label>
+        </div>
+    </div>
+    <div class=" row">
+        <div class=col-sm-1>
+        </div>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" maxlength="51" formControlName="brandname" autofocus>
+            <small class="errormessage" *ngIf="submitted && brandForm.controls.brandname.hasError('required')">City is
+                required
+                
+            </small>
+            <small class="errormessage" *ngIf="brandForm.controls.brandname.hasError('maxlength')">
+                You have reached your maximum limit of characters allowed for City
+            </small>
+        </div>
+    </div>
+    <div class="row">
+        <div class=col-sm-1>
+        </div>
+        <div class="col-9" style="padding-top:3%;margin-left: 58px;">
+            <label style="color: white;">Brand Description</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-9">
+            <input type="text" class="form-control" maxlength="100" formControlName="branddesc" autofocus>
+           
+        </div>
+    </div>
+    <div class="row">
+        <div class=col-sm-1>
+        </div>
+        <div class="col-9" style="padding-top:3%;margin-left: 58px;">
+            <label style="color: white;">Brand URL</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-9">
+            <input type="text" class="form-control" maxlength="100" formControlName="brandurl" autofocus>
+          
+        </div>
+    </div>
+    <div class="row">
+        <div class=col-sm-1>
+        </div>
+        <div class="col-9" style="padding-top:3%;margin-left: 58px;">
+            <label style="color: white;">Recall URL</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-9">
+            <input type="text" class="form-control" maxlength="100" formControlName="recallurl" autofocus>
+           
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-9" style="padding-top:3%;margin-left: 58px;">
+                <label style="color: white;">Brand Chrome Id</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" maxlength="100" formControlName="chromeid" autofocus>
+                <small class="errormessage" *ngIf="submitted && brandForm.controls.chromeid.hasError('required')">Brand Chrome Id is
+                    required
+                    <br>
+                </small>
+               
+            </div>
+        </div>
+        <div class="row">
+            <div class=col-sm-1>
+            </div>
+            <div class="col-9" style="padding-top:3%;margin-left: 58px;">
+                <label style="color: white;">Brand Acronym</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-9">
+                <input type="text" class="form-control" maxlength="100" formControlName="brandacronym" autofocus>
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class=col-sm-1>
+            </div>
+            <div class="col-9" style="padding-top:3%;margin-left: 58px;">
+                <label style="color: white;">Background Color</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-9">
+                <input type="text" class="form-control" maxlength="100" formControlName="backgroundcolor" autofocus>
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class=col-sm-1>
+            </div>
+            <div class="col-9" style="padding-top:3%;margin-left: 58px;">
+                <label style="color: white;">Fore Color</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-9">
+                <input type="text" class="form-control" maxlength="100" formControlName="forecolor" autofocus>
+                
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class=col-sm-1>
+            </div>
+            <div class="col-9" style="padding-top:3%;margin-left: 58px;">
+                <label style="color: white;">Logo</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class=col-sm-1>
+            </div>
+            <div class="col-9" style="padding-top:3%;margin-left: 58px;">
+                <input #logoinput type="file" accept="image/*" (change)="processFile(logoinput)">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-3" style="padding-top: 2%">
+                <button type="submit" class="button">Save</button>
+            </div>
+            <div class="col-sm-3" style="padding-top: 2%">
+                <!-- <button type="submit" [routerLink]="['/BrandList']" class="button">cancel</button> -->
+                <a [routerLink]="['/BrandList']" style="padding-left: 47px;">Cancel</a>
+            </div>
+        </div>
+</form>

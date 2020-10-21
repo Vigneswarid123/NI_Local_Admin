@@ -1,0 +1,202 @@
+ 
+ <div class="dashboard_bg">
+    <app-header></app-header>
+    <div class="container-fluid pt64">
+      <div class="row">
+        <div
+          class="col-2 collapse show d-md-flex bg-dark pl-0 min-vh-100 sidenav" id="sidebar">
+          <app-left-panel></app-left-panel>
+        </div>
+
+
+<div class="content_body" *ngIf="showgrid">
+    <table style="width: 1000px; float: left;">
+             <tbody>
+                 <tr>
+                     <td></td>
+                     <td style="vertical-align: top;">
+                          <table class="gridheader">
+                              <thead>
+                                  <tr>
+                                      <th style="width: 462px; font-weight: bold;">
+                                        <div style="float: left">
+                                            <div class="getuser">
+                                                <label class="getuserlabel">User Brands</label>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="getrolediv">
+                                            <label class="getrolelbl">Brands</label>
+                                        </div> -->
+                                      </th>
+                                      <th style="width: 500px; text-align: center">
+                                        <div style="float: left">                                       
+                                        </div>
+                                    </th>              
+                                    <th style="width: 30px; text-align: center" colspan="2">
+                                        <div>
+                                            <a (click)="showAddPanel()" style="padding-left: 47px;"><img src="assets/Images/addvvsml.png"></a>
+                                        </div>
+                                    </th>
+                                  </tr>
+                              </thead>
+                          </table>
+                          <div style="margin: 5px 12px;">
+                            <table class="dashboard">
+                                <thead>
+                                    <tr class="colHeader">
+                                        <th style="width:6%;"></th>
+                                        <th align="center" scope="col" style="width: 150px;">
+                                           Brand Name
+                                        </th>
+                                        <th align="center" scope="col" style="width: 190px;text-align: center;">
+                                            URL
+                                        </th>
+                                        <th align="center" scope="col" style="width: 100px;text-align: center;">
+                                            Logo
+                                        </th>
+                                                                     
+                                         
+                                        <th scope="col" style="width: 37px;">&nbsp;</th>
+                                       
+                                    </tr>
+                                  </thead>
+                               </table>
+                               <div class="col-md-8" style="padding-left: 0px;">
+                                <div  class="contentss">
+                                    <table class="dashboard">
+                                        <tbody>
+                                            <tr *ngFor="let br of Brands.response">
+                                                <td style="width: 120px;text-align: center;"><div><span style="font-size: 12px;">{{br.brand_name}}</span></div></td>
+                                                <td style="width: 100px;"><div style="text-align: center;"><span style="font-size: 12px;">{{br.brand_url}}</span></div></td>
+                                                <td style="width: 98px;"><div style="text-align: center;"><img id="imglogo" style="width: 100px;height: 50px;" src='{{ "assets/Images/BrandLogo/" + br.brand_logo + "" }}'></div></td>
+                                                <td align="center" style="width:37px;">
+                                                    <a (click)="editButtonClick(br.brand_id)"><img src="assets/Images/edit_icon.png"></a>
+                                                </td>                                                                                       
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                                </div>   
+                            </div>
+                        </div>
+                     </td>
+                 </tr>
+             </tbody>
+    </table>
+</div>
+
+<div class="contentpanel_bg col-9 pt-3" *ngIf="addclick">
+    <form [formGroup]="brandForm" (ngSubmit)="OnSubmit()">
+        
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label>Brand Name</label>
+                        <input type="text" class="form-control" maxlength="51" formControlName="brandname" autofocus>
+                        <small class="errormessage" *ngIf="submitted && brandForm.controls.brandname.hasError('required')">BrandName is
+                            required
+                            
+                        </small>
+                        <small class="errormessage" *ngIf="brandForm.controls.brandname.hasError('maxlength')">
+                            You have reached your maximum limit of characters allowed for Brand Name
+                        </small>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label>Brand Description</label>
+                        <input type="text" class="form-control" maxlength="100" formControlName="branddesc" autofocus>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label>Brand URL</label>
+                        <input type="text" class="form-control" maxlength="100" formControlName="brandurl" autofocus>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label>Recall URL</label>
+                        <input type="text" class="form-control" maxlength="100" formControlName="recallurl" autofocus>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label>Brand Chrome Id</label>
+                        <input type="text" class="form-control" maxlength="100" formControlName="chromeid" autofocus>
+                        <small class="errormessage" *ngIf="submitted && brandForm.controls.chromeid.hasError('required')"> Chrome Id is
+                        required
+                        <br>
+                        </small>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label>Brand Acronym</label>
+                        <input type="text" class="form-control" maxlength="100" formControlName="brandacronym" autofocus>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label>Background Color</label>
+                        <input type="text" class="form-control" maxlength="100" formControlName="backgroundcolor" autofocus>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label>Logo Highlights</label>
+                        <input type="text" class="form-control" maxlength="100" formControlName="logohighlights" autofocus>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+ 
+        
+          
+       
+        <div class="col-12">
+           <label style="color: white;">Logo</label>
+        </div>
+
+        <div class="col-12">
+                <img src="assets/Images/Upload-Icon.png" (click)="selectFile.click()">
+                <input style="display: none;" *ngIf="AddView"  type="file" accept="image/*" formControlName="file" (change)="processFile($event)" #selectFile>
+        </div>
+            <div class="col-12">
+                <div class="imagePreview" *ngIf="selectedFile && selectedFile !== ''">
+                    <img [src]="selectedFile"  style="width: auto;height: 100px;" *ngIf="AddView">
+                    <img [src]="ImageFolder+brandForm.value.file" [alt]="brandForm.value.file" style="width: auto;height: 100px;" *ngIf="EditView">
+                  </div>
+            </div>
+            <div class="row" style="padding-bottom: 4%;">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-1" style="padding-top: 2%">
+                    <button type="submit" class="button">Save</button>
+                </div>
+                <div class="col-sm-1" style="padding-top: 2%">
+                    <!-- <button type="submit" [routerLink]="['/BrandList']" class="button">cancel</button> -->
+                    <!-- <a routerLink="/BrandList" style="padding-left: 47px;"><button  class="button">cancel</button></a> -->
+                    <a  style="padding-left: 47px;" ><button  class="button" (click)="showGridPanel()">cancel</button></a> 
+                    
+                </div>
+            </div>
+    </form>
+    
+    </div>
+    
+
+
+</div>
+</div>
+</div>

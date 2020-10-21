@@ -1,0 +1,220 @@
+<div class="container">
+    <form [formGroup]="popupForm">
+        <div class="row">
+            <!-- <div> -->
+                <!-- Add Contact -->
+            <div class="col-sm-3" style="padding-top:3%;">
+                <label style="color:floralwhite;">Contact</label>
+                <input type="text" class="form-control1" formControlName="contact">
+                <small class="errormessage" *ngIf="submitted && popupForm.controls.contact.hasError('required')">Contact is required
+                    <br>
+                </small>
+                <small class="errormessage" *ngIf="popupForm.controls.contact.hasError('pattern')">
+                    Only alphabets are allowed for Contact
+                    <br>
+                </small>
+                <small class="errormessage" *ngIf="popupForm.controls.contact.hasError('maxlength')">
+                    You have reached your maximum limit of characters allowed for Contact
+                </small>
+            </div>
+            <div class="col-sm-3" style="padding-top:3%;">
+                <label style="color:floralwhite;">Position</label>
+                <select class="form-control1" formControlName="contposition">
+                    <option value="">Select Position</option>
+                    <option value="1">Controller</option>
+                   
+                </select>
+                <small class="errormessage" *ngIf="submitted && popupForm.controls.contposition.hasError('required')">
+                    Position is required
+                </small>
+            </div>
+            <div class="col-sm-3" style="padding-top:3%;">
+                <label style="color:floralwhite;">Email</label>
+                <input type="email" class="form-control1" formControlName="contemail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$">
+                <small class="errormessage" *ngIf="submitted && popupForm.controls.contemail.hasError('required')">
+                    Email Address is required
+                </small>
+                <small class="errormessage" *ngIf="popupForm.controls.contemail.hasError('pattern')">
+                    Invalid Email Address
+                </small>
+            </div>
+            <div class="col-sm-3" style="padding-top:3%;">
+                <label style="color:floralwhite;">Phone</label>
+                <input type="text" class="form-control" formControlName="contphone" (keypress)="allowNumbers($event)" maxlength="10">
+                <small class="errormessage" *ngIf="submitted && popupForm.controls.contphone.hasError('required')">
+                    Phone is required
+                </small>
+            </div>
+            <div formArrayName="dgContacts" style="padding: 0 20px 10px 20px;">
+
+                <div class="row" *ngFor="let quantity of dgContacts().controls; let i=index" [formGroupName]="i">
+                    <div class="row">
+                        <div class="col-sm-3" style="padding-top:3%;">
+                            <label style="color:floralwhite;">Contact</label>
+                            <input type="text" class="form-control1" formControlName="contact2">
+                            <!-- <small class="errormessage" *ngIf="submitted && popupForm.controls.contact2.hasError('required')">Contact is required
+                                    <br>
+                                </small>
+                                <small class="errormessage" *ngIf="popupForm.controls.contact2.hasError('pattern')">
+                                    Only alphabets are allowed for Contact
+                                    <br>
+                                </small>
+                                <small class="errormessage" *ngIf="popupForm.controls.contact2.hasError('maxlength')">
+                                    You have reached your maximum limit of characters allowed for Contact
+                                </small> -->
+                        </div>
+                        <div class="col-sm-3" style="padding-top:3%;">
+                            <label style="color:floralwhite;">Position</label>
+                            <select class="form-control1" formControlName="contposition2">
+                                <option>Select Position</option>
+                                <option>Controller</option>
+                            </select>
+                            <!-- <small class="errormessage" *ngIf="submitted && popupForm.controls.contposition2.hasError('required')">
+                                    Position is required
+                                </small> -->
+                        </div>
+                        <div class="col-sm-3" style="padding-top:3%;">
+                            <label style="color:floralwhite;">Email</label>
+                            <input type="email" class="form-control1" formControlName="contemail2" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$">
+                            <!-- <small class="errormessage" *ngIf="submitted && popupForm.controls.contemail1.hasError('required')">
+                                    Email Address is required
+                                </small>
+                                <small class="errormessage" *ngIf="popupForm.controls.email.hasError('pattern')">
+                                    Invalid Email Address
+                                </small> -->
+                        </div>
+                        <div class="col-sm-3" style="padding-top:3%;">
+                            <label style="color:floralwhite;">Phone</label>
+                            <input type="text" class="form-control" formControlName="contphone2" (keypress)="allowNumbers($event)" maxlength="10">
+                            <!-- <small class="errormessage" *ngIf="submitted && popupForm.controls.phone.hasError('required')">
+                                    Phone is required
+                                </small> -->
+                        </div>
+                    </div>
+                    <td style="padding-top:3%;">
+                        <!-- <button (click)="remove(i)" class="btn btn-danger">Remove</button> -->
+                        <img src="assets/remove.png" style="width: 35px;margin: 25px 0 0 9px;" (click)="contRemove(i)">
+                    </td>
+
+                </div>
+            </div>
+            <!-- </div> -->
+            <div class="col-md-12" style="padding-top:3%;">
+                <img src="../assets/Images/Add-Contact.png" style="width: 115px;margin-right: 15px" (click)="addContact()">
+            </div>
+        </div>
+    
+        <!-- Add User -->
+        <div class="row">
+            <div class="col-sm-3" style="padding-top:3%;">
+                <label style="color:floralwhite;">User</label>
+                <input type="text" class="form-control1" formControlName="user">
+                <small class="errormessage" *ngIf="submitted && popupForm.controls.user.hasError('required')">User Name is required
+                    <br>
+                </small>
+                <small class="errormessage" *ngIf="popupForm.controls.user.hasError('pattern')">
+                    Only alphabets are allowed for User Name
+                    <br>
+                </small>
+                <small class="errormessage" *ngIf="popupForm.controls.user.hasError('maxlength')">
+                    You have reached your maximum limit of characters allowed for User Name
+                </small>
+            </div>
+            <div class="col-sm-3" style="padding-top:3%;">
+                <label style="color:floralwhite;">Position</label>
+                <select class="form-control1" formControlName="position">
+                    <option>Select Position</option>
+                    <option>Controller</option>
+                </select>
+                <small class="errormessage" *ngIf="submitted && popupForm.controls.position.hasError('required')">
+                    Position is required
+                </small>
+            </div>
+            <div class="col-sm-3" style="padding-top:3%;">
+                <label style="color:floralwhite;">Email</label>
+                <input type="email" class="form-control1" formControlName="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$">
+                <small class="errormessage" *ngIf="submitted && popupForm.controls.email.hasError('required')">
+                    Email Address is required
+                </small>
+                <small class="errormessage" *ngIf="popupForm.controls.email.hasError('pattern')">
+                    Invalid Email Address
+                </small>
+            </div>
+            <div class="col-sm-3" style="padding-top:3%;">
+                <label style="color:floralwhite;">Phone</label>
+                <input type="text" class="form-control" formControlName="phone" (keypress)="allowNumbers($event)" maxlength="10">
+                <small class="errormessage" *ngIf="submitted && popupForm.controls.phone.hasError('required')">
+                    Phone is required
+                </small>
+            </div>
+        </div>
+
+        <div formArrayName="quantities" style="padding: 0 20px 10px 20px;">
+
+            <div class="row" *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+                <div class="row">
+                    <div class="col-sm-3" style="padding-top:3%;">
+                        <label style="color:floralwhite;">User</label>
+                        <input type="text" class="form-control1" formControlName="user1">
+                        <!-- <small class="errormessage" *ngIf="submitted && popupForm.controls.user.hasError('required')">User Name is required
+                            <br>
+                        </small>
+                        <small class="errormessage" *ngIf="popupForm.controls.user.hasError('pattern')">
+                            Only alphabets are allowed for User Name
+                            <br>
+                        </small>
+                        <small class="errormessage" *ngIf="popupForm.controls.user.hasError('maxlength')">
+                            You have reached your maximum limit of characters allowed for User Name
+                        </small> -->
+                    </div>
+                    <div class="col-sm-3" style="padding-top:3%;">
+                        <label style="color:floralwhite;">Position</label>
+                        <select class="form-control1" formControlName="position1">
+                            <option>Select Position</option>
+                            <option>Controller</option>
+                        </select>
+                        <!-- <small class="errormessage" *ngIf="submitted && popupForm.controls.position.hasError('required')">
+                            Position is required
+                        </small> -->
+                    </div>
+                    <div class="col-sm-3" style="padding-top:3%;">
+                        <label style="color:floralwhite;">Email</label>
+                        <input type="email" class="form-control1" formControlName="email1" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$">
+                        <!-- <small class="errormessage" *ngIf="submitted && popupForm.controls.email.hasError('required')">
+                            Email Address is required
+                        </small>
+                        <small class="errormessage" *ngIf="popupForm.controls.email.hasError('pattern')">
+                            Invalid Email Address
+                        </small> -->
+                    </div>
+                    <div class="col-sm-3" style="padding-top:3%;">
+                        <label style="color:floralwhite;">Phone</label>
+                        <input type="text" class="form-control" formControlName="phone1" (keypress)="allowNumbers($event)" maxlength="10">
+                        <!-- <small class="errormessage" *ngIf="submitted && popupForm.controls.phone.hasError('required')">
+                            Phone is required
+                        </small> -->
+                    </div>
+                </div>
+                <td style="padding-top:3%;">
+                    <!-- <button (click)="remove(i)" class="btn btn-danger">Remove</button> -->
+                    <img src="assets/remove.png" style="width: 35px;margin: 25px 0 0 9px;" (click)="remove(i)">
+                </td>
+
+            </div>
+        </div>
+        <td>
+            <!-- <span (click)="addUser()">
+                <i class="fa fa-plus-circle" style="color: grey;" aria-hidden="true">Add User</i>
+            </span> -->
+            <!-- <button type="submit" class="button" (click)="addUser()" [disabled]="popupForm.get('quantities').invalid">Add User</button> 
+                       -->
+            <img src="../assets/Images/Add-User.png" style="width: 97px;margin-right: 15px" (click)="addUser()">
+        </td>
+        <td>
+            <button type="submit" class="button" (click)="postUser()">Save</button>
+        </td>
+        <td>
+            <button mat-button class="button" (click)="closeDialog()">Close</button>
+        </td>
+    </form>
+</div>

@@ -1,0 +1,224 @@
+<div class="dashboard_bg">
+  <app-header></app-header>
+  <div class="container-fluid pt64">
+    <div class="row">
+      <div
+        class="col-2 collapse show d-md-flex bg-dark pl-0 min-vh-100 sidenav" id="sidebar">
+        <app-left-panel></app-left-panel>
+      </div>
+
+     
+
+      <div class="col-9 pt-3">
+         <div class="contentpanel_bg"> 
+
+           <!----------   rolesgrid start -------  -->               
+           
+           <div class="container">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+                <div class="panel panel-default">
+
+                  <div class="panel-body">
+                    <form role="form" [formGroup]="addRoleForm" (ngSubmit)="onSubmit()">
+                      <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                          <div class="form-group">
+                            <label for="Role_Name">Role Name:</label>
+                            <input
+                              type="text"
+                              formControlName="Role_Name"                     
+                              class="form-control"
+                              maxlength="51"
+                              [ngClass]="{ 'is-invalid': submitted &amp;&amp; addRoleForm.controls.Role_Name.errors }"
+                            />
+                            <div
+                              *ngIf="submitted &amp;&amp; addRoleForm.controls.Role_Name.errors"
+                              class="text-danger"
+                            >
+                              <div
+                                *ngIf="addRoleForm.controls.Role_Name.errors.required"
+                              >
+                                Role Name is required
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+        
+                      <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                          <div class="form-group">
+                            <label for="Role_UniqId">Role UniqId :</label>
+                            <input
+                              type="text"
+                              formControlName="Role_UniqId"
+                              class="form-control"
+                              maxlength="6"
+                              [ngClass]="{ 'is-invalid': submitted &amp;&amp; addRoleForm.controls.Role_UniqId.errors }"
+                            />
+                            <div
+                              *ngIf="submitted &amp;&amp; addRoleForm.controls.Role_UniqId.errors"
+                              class="text-danger"
+                            >
+                              <div
+                                *ngIf="addRoleForm.controls.Role_UniqId.errors.required"
+                              >
+                                Role UniqId is required
+                              </div>
+                              <div
+                                *ngIf="addRoleForm.controls.Role_UniqId.errors.pattern"
+                              >
+                                Role UniqId must be Number
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+        
+                      <div class="row">
+                        <div class="col-xs-3 col-sm-3 col-md-3">
+                          <div class="form-group">
+                            
+                            <label for="Role_Front">Frontend </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                value="Y"
+                                name="Role_Front"
+                                formControlName="Role_Front"
+                                checked="true"
+                              />
+                              <label>Yes</label>
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                value="N"
+                                name="Role_Front"
+                                formControlName="Role_Front"
+                                checked="true"
+                              />
+                              <label>No</label>
+                            </div>
+                          </div>
+                        </div>
+               
+        
+                        <div class="row">
+                          <div class="col-xs-3 col-sm-3 col-md-3">
+                            <div class="form-group">
+                              
+                              <label for="Role_Admin">Admin </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              <input
+                                  class="form-check-input"
+                                  type="radio"
+                                  value="Y"
+                                  name="Role_Admin"
+                                  formControlName="Role_Admin"
+                                  checked="true"
+                                />
+                                <label>Yes</label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input
+                                  class="form-check-input"
+                                  type="radio"
+                                  value="N"
+                                  name="Role_Admin"
+                                  formControlName="Role_Admin"
+                                  checked="true"
+                                />
+                                <label>No</label>
+                              </div>
+                            </div>
+                          </div>
+        
+                          <div class="row" style="display:none">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
+                              <div class="form-group">
+                                
+                                <label for="Role_Admin">Portal </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    value="N"
+                                    name="Role_Portal"
+                                    formControlName="Role_Portal"
+                                    checked="true"
+                                  />
+                                  <label>Yes</label>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    value="N"
+                                    name="Role_Portal"
+                                    formControlName="Role_Portal"
+                                    checked="true"
+                                  />
+                                  <label>No</label>
+                                </div>
+                              </div>
+                            </div>
+        
+                      <div class="row">
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                          <div class="form-group">
+                          <label for="Role_Status" class="form-check-label"
+                            >Status</label
+                          >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input
+                              type="checkbox"
+                              formControlName="Role_Status"
+                              value="y"
+                              class="form-check-input"
+                              [ngClass]="{ 'is-invalid': submitted &amp;&amp; addRoleForm.controls.Role_Status.errors }"
+                            />
+                            <div
+                              *ngIf="submitted &amp;&amp; addRoleForm.controls.Role_Status.errors"
+                              class="text-danger"
+                            >
+                              <div *ngIf="addRoleForm.controls.Role_Status.errors">
+                                Status required
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        
+        
+        
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                          <input
+                            type="submit"
+                            value="Save"
+                            class="savebtn"
+                          /> &nbsp;
+                          <input
+                          type="button"
+                          value="Cancel"
+                          [routerLink]="['/Roles']" routerLinkActive="router-link-active"
+                          class="savebtn"
+                        />
+                        </div>
+        
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+           <!----------   rolesgrid end -------  -->
+
+         </div> 
+      </div>
+      
+     
+
+    </div>
+  </div>
+</div>

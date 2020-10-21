@@ -1,0 +1,43 @@
+<div>
+  <div class="dashboard_bg">
+      <app-header></app-header>
+      <div class="container-fluid pt64">
+        <div class="row">
+          <div
+            class="col-2 collapse show d-md-flex bg-dark pl-0 min-vh-100 sidenav"
+            id="sidebar"
+          >
+            <app-left-panel></app-left-panel>
+          </div>
+    
+          <div class="col-9 pt-3">
+          
+            <app-dealership-header></app-dealership-header>
+             
+            <div class="row">
+                <div class="col pr-0">
+                    <div class="contentpanel_bg">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="grp_det pl-lg-4">
+                                    <label>Dealership Groups:</label>
+                                </div>
+                                <div id="scroll" class="col-lg- 12">
+                                   <div class="brand_style">
+                                    <div [ngClass]="{'active': (divActive == i)}" *ngFor="let dlgroup of getdealershipgroups.response; let i = index" (click)="dlgroupDetails(getdealershipgroups[i],i)">
+                                       <a href="">{{dlgroup.dg_name}}</a>
+                                    </div>                                      
+                                    </div>
+                                </div>                  
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+     
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  

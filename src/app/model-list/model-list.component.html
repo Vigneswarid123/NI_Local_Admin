@@ -1,0 +1,66 @@
+<div>
+   <div class="dashboard_bg">
+      <app-header></app-header>
+      <div class="container-fluid pt64">
+        <div class="row">
+          <div
+            class="col-2 collapse show d-md-flex bg-dark pl-0 min-vh-100 sidenav"
+            id="sidebar">
+            <app-left-panel></app-left-panel>
+          </div>
+    
+ <div class="col-9 pt-3">
+    <div class="login-container">
+        <form [formGroup]="modelForm" (ngSubmit)="onSubmit()">                                                  
+         <div>
+            <div class="form-group  drop_dwn">
+              <select formControlName="year" class="drop"  (change)="visible($event)">
+                <option value="2020">2020</option>
+                <option *ngFor="let yearlist of Years">{{yearlist.value}}</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <div class="form-group  drop_dwn">
+              <select formControlName="model" class="drop"  (change)="getid($event)">
+                <option value="">All</option>
+                <option *ngFor="let list of Brands.response" value="{{list.brand_chrome_id}}">{{list.brand_name}}</option>
+              </select>    
+            </div>
+          </div>                
+          <div>
+           <input type="submit" class="button" value="Search" >  
+          </div>
+        </form>       
+      </div>
+  
+            <div class="contentss">
+              <table class="dashboard">
+                <thead>
+                  <tr>
+                     <th>MODEL CODE</th>
+                     <th>MODEL NAME</th>
+                     <th>MODEL STATUS</th>
+                     <th>UPDATE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="hide">{{Result}}</tr>
+                  <tr *ngFor="let list of modelList.response">
+                    <td>{{list.modelCode}}</td>
+                    <td>{{list.modelYear}} {{list.div_name}} {{list.modelName}}
+                    </td>
+                      <td>{{list.modelstatus}}</td>
+                      <td>
+                          <a (click)="action(list)"><img
+                            src="assets/Images/edit_icon.png"></a>
+                      </td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>         
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
