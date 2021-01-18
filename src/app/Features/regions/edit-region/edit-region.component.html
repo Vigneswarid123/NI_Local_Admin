@@ -1,0 +1,142 @@
+<div class="dashboard_bg">
+    <app-header></app-header>
+    <div class="container-fluid pt64">
+      <div class="row">
+        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+            <app-left-panel class="w-100"></app-left-panel>
+        </div>
+  
+       
+  
+        <div class="col-9 pt-3">
+           <div class="contentpanel_bg"> 
+  
+          <!--                    edit roles start                    -->
+                 
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title"></h3>
+                  </div>
+                  <div class="panel-body">
+                    <form role="form" [formGroup]="addRegionForm" (ngSubmit)="onSubmit()">
+                      <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                          <div class="form-group">
+                            <label for="Role_Name">Region Name:</label>
+                            <input
+                              type="text" 
+                              [(ngModel)]="RegionDetails.region_name"
+  
+                              formControlName="Role_Name"                     
+                              class="form-control"
+                              maxlength="51"
+                              [ngClass]="{ 'is-invalid': submitted &amp;&amp; addRegionForm.controls.Role_Name.errors }"
+                            />
+                            <div
+                              *ngIf="submitted &amp;&amp; addRegionForm.controls.Role_Name.errors"
+                              class="text-danger"
+                            >
+                              <div
+                                *ngIf="addRegionForm.controls.Role_Name.errors.required"
+                              >
+                                Role Name is required
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+<div class="row">
+    <div class="col-xs-4 col-sm-4 col-md-4">
+      <div class="form-group">
+      <label for="Role_States" class="form-check-label"
+        >States</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <input type="text"  class="form-control" maxlength="100" formControlName="Role_States"  autofocus (keyup)="OnChangeEvent($event)"  #groupbrand>
+                               
+                                    <div *ngIf="showStateDiv" class="autofillcls" #menu>
+                                    <div *ngFor="let option of selectedStates ; let i=index" (mouseover)="highlightRow(option)" [ngClass] = "{'highlight' : option.sg_name == selectedItem}" >
+                                        <li style="list-style: none;padding: 8px;cursor: pointer" (click)="selectItem($event, option.sg_id, option.sg_name,i)">{{option.sg_name}}</li>
+                                    </div>
+                                    </div>
+                                    
+                                    <div style="display: flex;" *ngIf="selectedStateList!=''">
+                                      <div *ngFor="let item of selectedStateList;let i=index"  class="editdivbox">
+                                          <img src="../../assets/Images/remove-icon.png" class="closecls" (click)="removeBrandTag(item.sg_name,i,item.sg_id)">
+                                                 <div>{{item.sg_name}}</div> 
+                                              <div>{{item.region_name}}</div>
+
+                                      </div>
+                                      </div>
+                                      
+        <div
+          *ngIf="submitted &amp;&amp; addRegionForm.controls.Role_States.errors"
+          class="text-danger"
+        >
+          <div *ngIf="addRegionForm.controls.Role_States.errors">
+            States is required
+          </div>
+        </div>
+      </div>
+    </div>
+     </div>
+
+                 
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                      <div class="form-group">
+                      <label for="Role_Status" class="form-check-label"
+                        >Status</label
+                      >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input
+                          type="checkbox"
+                          formControlName="Role_Status"
+                          value="y"
+                          class="form-check-input"
+                          [(ngModel)]="RegionDetails.region_status"
+                          [ngClass]="{ 'is-invalid': submitted &amp;&amp; addRegionForm.controls.Role_Status.errors }"
+                        />
+                        <div
+                          *ngIf="submitted &amp;&amp; addRegionForm.controls.Role_Status.errors"
+                          class="text-danger"
+                        >
+                          <div *ngIf="addRegionForm.controls.Role_Status.errors">
+                            Status is required
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                     </div>
+                        
+  
+                      <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                          <input (click)="updateRoles()"
+                            type="submit"
+                            value="Save"
+                            class="savebtn"
+                          /> &nbsp;
+                          <input [routerLink]="['/regions']" routerLinkActive="router-link-active"
+                            type="button"
+                            value="Cancel"
+                            class="savebtn"
+                          />
+                        </div>
+  
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+               
+          <!--                            edit roles end                    -->
+           </div> 
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,78 @@
+ 
+ <div class="dashboard_bg">
+    <app-header></app-header>
+    <div class="container-fluid pt64">
+        <div class="row">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+                <app-left-panel class="w-100"></app-left-panel>
+            </div>
+        <div  class=" col-9 pt-3">
+<div  class="row">
+    <div class="col pr-0">
+        <div class="contentpanel_bg">
+            <div class="row" *ngIf="dealersList.length > 0">
+                <div class="col-md-5">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 pt-4">
+                            <div> 
+                                <img id="imglogo" class="img-fluid" style="height: 100px;" src="{{ImageFolder}}{{dealersDetails.dealer_logo}}">
+                                <!-- <img src="../../../../assets/Images/hendrick_logo.jpg" class="img-fluid"> -->
+                            </div>
+                            <div class="brand_det">
+                                <h6>{{dealersDetails.dealer_name}}</h6>
+                                <p>
+                                    {{dealersDetails.dealer_address1}},
+                                    <!-- <br>  {{dealersDetails.dealer_address2}}<br> {{dealersDetails.dealer_address3}} -->
+                                    <br> {{dealersDetails.dealer_city}} , &nbsp;{{dealersDetails.statename}}
+                                    <br> {{dealersDetails.dealer_zip}} &nbsp;&nbsp; {{dealersDetails.countryname}}
+                                    <br> {{dealersDetails.dealer_phone}}
+                                </p>
+                                <div class="side_head">Contacts:
+                                    
+                                    <div  *ngFor = "let item of dealersDetails.DealerDetails">
+                                    <p *ngIf="item.dd_type=='C'">
+                                        {{item.dd_name}},&nbsp;&nbsp;{{item.positionname}}
+                                    </p>
+                                </div>
+                                </div>
+                                <div class="side_head pt-3">Users:
+                                    
+                                    <div  *ngFor = "let item of dealersDetails.DealerDetails">
+                                        <p *ngIf="item.dd_type=='U'">
+                                            {{item.dd_name}},&nbsp;&nbsp;{{item.positionname}}
+                                        </p>
+                                    </div>
+                                   
+                                </div>
+                                <div  class="pt-4">
+                                    <a  [routerLink]="['/EditDealership', dealersDetails.dealer_id,  dealersDetails.dealer_dg_id] ">
+                                        <img src="assets/Images/Edit-Icon.png" (click)="EditDealerShip(dealersDetails.dealer_id, dealersDetails.dealer_dg_id)" style="cursor: pointer" title="Edit"  class="img-fluid"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="pl-lg-4 dheader" style="font-size: 14px;color: #bcbcbc;">
+                        <label>Dealerships:</label>
+                        </div>
+                    <div id="scroll" class="col-lg-12 scrolldash">
+                        <div class="brand_style">
+
+                            <div [ngClass]="{'active': (divActive == i)}" *ngFor="let drl of dealersList; let i = index" (click)="dealerDetails(dealersList[i],i)">
+                                {{drl.dealer_name}}
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <a style="margin-left: 15px;" [routerLink]="['/AddDealership', dealersDetails.dealer_dg_id] "><img src="assets/Images/Add-Dealership.png" class="img-fluid"></a>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+</div>

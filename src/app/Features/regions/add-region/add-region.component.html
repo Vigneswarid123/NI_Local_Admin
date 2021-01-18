@@ -1,0 +1,132 @@
+<div class="dashboard_bg">
+  <app-header></app-header>
+  <div class="container-fluid pt64">
+    <div class="row">
+      <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+          <app-left-panel class="w-100"></app-left-panel>
+      </div>
+
+     
+
+      <div class="col-9 pt-3">
+         <div class="contentpanel_bg"> 
+
+           <!----------   regiongrid start -------  -->               
+           
+           <div class="container">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+                <div class="panel panel-default">
+
+                  <div class="panel-body">
+                    <form role="form" [formGroup]="addRegionForm" (ngSubmit)="onSubmit()">
+                      <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                          <div class="form-group">
+                            <label for="RegionName">Region Name:</label>
+                            <input
+                              type="text"
+                              formControlName="RegionName"                     
+                              class="form-control"
+                              maxlength="51"
+                              [ngClass]="{ 'is-invalid': submitted &amp;&amp; addRegionForm.controls.RegionName.errors }"
+                            />
+                            <div
+                              *ngIf="submitted &amp;&amp; addRegionForm.controls.RegionName.errors"
+                              class="text-danger"
+                            >
+                              <div
+                                *ngIf="addRegionForm.controls.RegionName.errors.required"
+                              >
+                                Enter Region Name
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                       <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                          <div class="form-group">
+                            <label for="RegionStates">States:</label>
+                            <input type="text"  class="form-control" maxlength="100" formControlName="RegionStates"  autofocus (keyup)="OnChangeEvent($event)"  #groupbrand>
+                               
+                                    <div *ngIf="showStateDiv" class="autofillcls" #menu>
+                                    <div *ngFor="let option of selectedstate; let i=index" (mouseover)="highlightRow(option)" [ngClass] = "{'highlight' : option.sg_name == selectedItem}"  >
+                                        <li style="list-style: none;padding: 8px;cursor: pointer" (click)="selectItem($event, option.sg_id, option.sg_name,i)">{{option.sg_name}}</li>
+                                    </div>
+                                    </div>
+                                    
+                                    <div style="display: flex;" *ngIf="selectedStatesList!=''">
+                                      <div *ngFor="let item of selectedStatesList;let i=index"  class="editdivbox">
+                                          <img src="../../assets/Images/remove-icon.png" class="closecls" (click)="removeBrandTag(item.sg_name,i,item.sg_id)">
+                                                <div>{{item.sg_name}}</div>
+                                      </div>
+                                      </div>
+
+                                    
+
+
+                             
+                          </div>
+                        </div>
+                      </div>
+                     
+                      <div class="row">
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                          <div class="form-group">
+                          <label for="Status" class="form-check-label"
+                            >Status</label
+                          >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input
+                              type="checkbox"
+                              formControlName="Status"
+                              value="y"
+                              class="form-check-input"
+                              [ngClass]="{ 'is-invalid': submitted &amp;&amp; addRegionForm.controls.Status.errors }"
+                            />
+                            <div
+                              *ngIf="submitted &amp;&amp; addRegionForm.controls.Status.errors"
+                              class="text-danger"
+                            >
+                              <div *ngIf="addRegionForm.controls.Status.errors">
+                                Status is required
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                          <input
+                            type="submit"
+                            value="Save"
+                            class="savebtn"
+                          /> &nbsp;
+                          <input
+                          type="button"
+                          value="Cancel"
+                          [routerLink]="['/regions']" routerLinkActive="router-link-active"
+                          class="savebtn"
+                        />
+                        </div>
+        
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+           <!----------   regionsgrid end -------  -->
+
+         </div> 
+      </div>
+      
+     
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="container">
+    <form [formGroup]="VariablepopupForm">
+      <div class="varcls"> Variables </div>
+       
+        <div class="form-group row">
+            <label style="color:floralwhite;white-space: nowrap;" class="col-sm-4">Available Bonus</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control1" formControlName="availbonus" maxlength="6" (keypress)="onkeyPress($event)" >
+            </div>
+          </div>  
+      
+        <div class="form-group row">
+               
+                <label style="color:floralwhite;" class="col-sm-4">Region</label>
+                <div class="col-sm-6">
+              <select class="form-control1"  formControlName="region">
+                  <option value="">select</option>
+                  <option *ngFor="let r of regionsList" [value]="r.region_iD">{{r.region_name}}</option>
+              </select>
+                </div>
+        </div>
+
+        <div class="form-group row">
+                <label style="color:floralwhite;" class="col-sm-4">Date From</label>
+                <div class="col-sm-6">
+                <input type="date" class="form-control1" formControlName="datefrom"  >
+                </div>
+        </div>
+
+        <div class="form-group row">
+                <label style="color:floralwhite;" class="col-sm-4">Date To</label>
+                <div class="col-sm-6">
+                <input type="date" class="form-control1" formControlName="dateto" >
+                </div>
+        </div>
+       <div class="col-12">
+        <div class="row">
+            <button type="submit" class="savebutton" (click)="addVaribleData()" >ok</button>
+            <button class="cancelbutton" (click)="closeVariablePopup()" >close</button>
+        </div>
+        </div>
+    </form>
+</div>

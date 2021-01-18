@@ -1,0 +1,99 @@
+<div class="container">
+    <form [formGroup]="ContactpopupForm">
+        <div class="row">
+            
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="formgroup grp grp_det">
+                <label style="color:floralwhite;">Name</label>
+                <input type="text" class="form-control1" formControlName="cname">
+                <small class="errormessage" *ngIf="ContactpopupForm.controls.cname.hasError('required')">Name is required
+                    <br>
+                </small>
+                <small class="errormessage" *ngIf="ContactpopupForm.controls.cname.hasError('pattern')">
+                    Only alphabets are allowed for Name
+                    <br>
+                </small>
+                <small class="errormessage" *ngIf="ContactpopupForm.controls.cname.hasError('maxlength')">
+                    You have reached your maximum limit of characters allowed for Contact
+                </small>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="formgroup grp grp_det">
+                <label style="color:floralwhite;">Email</label>
+                <input type="email" class="form-control1" formControlName="cmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$">
+               
+                <small class="errormessage" *ngIf="ContactpopupForm.controls.cmail.hasError('pattern')">
+                    Invalid Email Address
+                </small>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="formgroup grp grp_det">
+                <label style="color:floralwhite;">Phone</label>
+                <input type="text" class="form-control1" formControlName="cphone"  maxlength="10">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="formgroup grp grp_det">
+                <label style="color:floralwhite;">Title</label>
+                <input type="text" class="form-control1" formControlName="ctitle"  maxlength="100">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="formgroup grp grp_det">
+                <label style="color:floralwhite;">Notes</label>
+                <input type="text" class="form-control1" formControlName="cnotes"  maxlength="500">
+                </div>
+            </div>
+        </div> 
+        
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="formgroup grp grp_det">
+                <label style="color:floralwhite;">Contact Type</label>
+                <!-- <input type="text" class="form-control" formControlName="ctype"  maxlength="500"> -->
+                <div style="display: flex;width: 303px;" *ngIf="selectedItem.length>0" >
+                  <div  *ngFor="let val of selectedItem;let i=index" class="divbox">
+                    {{val.type}} <img src="../../assets/Images/cancel-icon.png" class="closecontactcls" (click)="removeTag(val,i)"> </div>
+                </div>
+                <div  style="display: flex;width: 303px;padding-left: 2px;" *ngIf="contacttype.length>0">
+                <!-- <div *ngFor="let item of contacttype | keyvalue" class="editdivbox">
+                    <div (click)="selectVal(item)" >+{{item.key}}</div>
+                
+                </div> -->
+                <div *ngFor="let item of contacttype;let i=index"  formControlName="ctype" class="editdivbox">
+                    <div (click)="selectVal(item,i)" >+{{item.type}}</div>
+                
+                </div>
+                </div>
+                </div>
+            </div>
+        </div> 
+           
+         
+        
+       <div class="col-12">
+        <div class="row">
+           
+            <button type="submit" class="button" (click)="addContact()" style="margin-left: 12px;margin-top: 4%;margin-bottom: 5%;">ok</button>
+            <button mat-button class="button" (click)="closeDialog()" style="margin-left: 7px;margin-top: 4%;margin-bottom: 5%;">Close</button>
+        
+      
+        </div>
+        </div>
+    </form>
+</div>

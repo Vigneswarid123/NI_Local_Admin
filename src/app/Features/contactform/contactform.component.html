@@ -1,0 +1,454 @@
+<div class="dashboard_bg">
+    <app-header></app-header>
+    <div class="container-fluid pt64">
+        <div class="row">
+            <div class="col-2 collapse show d-md-flex pl-0 min-vh-100 sidenav" id="sidebar">
+          <app-left-panel></app-left-panel>
+        </div>
+        <div class="content_body" *ngIf="showgrid">
+            <table style="width: 1000px; float: left;">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td style="vertical-align: top;">
+                            <table class="gridheader">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 462px; font-weight: bold;">
+                                            <div style="float: left">
+                                                <div class="getuser">
+                                                    <label class="getuserlabel">Contract Form</label>
+                                                </div>
+                                                <div class="AddIcon">
+                                                    <a (click)="showAddPanel()"><img src="assets/Images/brand_plus.png"></a>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th style="width: 500px; text-align: center">
+                                            <div style="float: left">                                       
+                                            </div>
+                                        </th>              
+                                        <th style="width: 10%; text-align: center" colspan="2">
+                                            <div class="DivAZ1">A - Z</div>
+                                            <div class="DivAZ2">
+                                               <a><img src="assets/Images/sorting_img.png"></a>
+                                           </div> 
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div >
+                                <div  class="contentss">
+                                    <table class="dashboard">
+                                        <tbody *ngIf="contractsList.length > 0">
+                                            <tr *ngFor="let item of contractsList" >
+                                                <td style="width: 175px;text-align: center;"><div><span class="brandcontentcss">{{item.dsc_dlrshipname}}</span></div></td>
+                                               
+                                              
+                                                <td></td>
+                                                
+                                                <td style="width:10%; text-align: center; cursor: pointer;">
+                                                    <a (click)="editContractForm(item.dsc_id)"><img src="assets/Images/edt_icon.png"></a>
+                                                </td> 
+                                                <td style="width:10%; text-align: center; cursor: pointer;">
+                                                    <a (click)="deleteContractForm(item.dsc_id)"><img src="assets/Images/del_gry.png"></a>
+                                                </td> 
+                                                <!-- <td>
+                                                    <a (click)="ContactFormView(item.dsc_id)">View</a>
+                                                </td>                                                                                      -->
+                                                </tr>
+                                               
+                                        </tbody>
+                                        <tbody *ngIf="contractsList.length == 0">
+                                            <tr *ngIf="noContract">
+                                                <td style="text-align: center;">No Contract Found</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>   
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="contentpanel_bg col-9 pt-3" *ngIf="addclick">
+            <form [formGroup]="contactForm" (ngSubmit)="OnSubmit()">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="formgroup grp grp_det">
+                                <label>Group</label>
+                                <select formControlName="groupname" class="form-control" (change)="changeGroup($event)">
+                                    <option value="">select</option>
+                                    <option  *ngFor="let gn of dealergroups" [value]="gn.dg_id">
+                                        {{gn.dg_name}}
+                                    </option>
+                                </select>
+                                <small class="errormessage" *ngIf="(contactForm.get('groupname').touched || submitted) && contactForm.get('groupname').errors?.required">Group is
+                                    required
+                                    
+                                </small>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="formgroup grp grp_det">
+                                <label>Brand</label>
+                                <input type="text" class="form-control"  formControlName="brand" (keyup)="onchange($event)" autofocus>
+                                <small class="errormessage" *ngIf="(
+                                     submitted) && selectedbrandid.length == 0">Brand is
+                                    required
+                                    
+                                </small>
+                                <div *ngIf="showBrandDiv" class="autofillcls" #brandmenu>
+                                    <div *ngFor="let option of selectedBrands ; let i=index" (mouseover)="highlightBrandRow(option)" [ngClass] = "{'highlight' : option.brand_name == selectedBrandItem}" >
+                                        <li style="list-style: none;padding: 8px;cursor: pointer;"   (click)="selectBrandItem($event, option,i)">{{option.brand_name}}</li>
+                                    </div>
+                                </div>
+
+                                <div style="display: flex;" *ngIf="selectedBrandsList!=''">
+                               
+                                    <div *ngFor="let item of selectedBrandsList;let i=index"  class="editdivbox">
+                                        <img src="../../assets/Images/cancel-icon.png" class="closeimg" (click)="removeBrandTag(item.brand_name,i,item.brand_id)">
+                                              <div>{{item.brand_name}}</div>
+                                    </div>
+                                  
+                                    </div>
+                               
+                            </div>
+                        </div>
+                      
+                    </div>
+
+                    <!-- <div class="col-12"> -->
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Dealership Name</label>
+                                    <input type="text" class="form-control" maxlength="51" formControlName="dealershipname" (keyup)="getDealershiponchange($event)" autofocus>
+                                    <div *ngIf="showDealershipDiv" class="autofillcls" #dealermenu>
+                                        <div *ngFor="let option of selectingdealershiplist ; let i=index" (mouseover)="highlightRow(option)" [ngClass] = "{'highlight' : option.dealer_name == selectedItem}" >
+                                        <li style="list-style: none;padding: 8px;cursor: pointer;"   (click)="selectItem($event, option,i)">{{option.dealer_name}}</li>
+                                        </div>
+                                    </div>
+                                    <small class="errormessage" *ngIf="(contactForm.get('dealershipname').touched || submitted) && contactForm.get('dealershipname').errors?.required">Dealership Name is
+                                        required
+                                        
+                                    </small>
+                                    <!-- <small class="errormessage" *ngIf="contactForm.controls.dealershipname.hasError('maxlength')">
+                                        You have reached your maximum limit of characters allowed for Brand Name
+                                    </small> -->
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+
+                    <!-- <div class="col-12"> -->
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Address1</label>
+                                    <input type="text" class="form-control" maxlength="51" formControlName="addrs1" autofocus>
+                                    <small class="errormessage" *ngIf="(contactForm.get('addrs1').touched || submitted) && contactForm.get('addrs1').errors?.required">Address1 is
+                                        required
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>DMS</label>
+                                    <select formControlName="dms" class="form-control">   
+                                        <option value="" >select</option>
+                                        <option value="1">Dealer Track</option>                                    
+                                        <option value="2">CDK</option>
+                                    </select>
+                                    <small class="errormessage" *ngIf="(contactForm.get('dms').touched || submitted) && contactForm.get('dms').errors?.required">DMS is
+                                        required
+                                    </small>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+        
+                    <!-- <div class="col-12"> -->
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Address2</label>
+                                    <input type="text" class="form-control" maxlength="51" formControlName="addrs2" autofocus>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Contract Date</label><br>
+                                    <!-- <input type="text" class="form-control" maxlength="51" formControlName="contractdate" autofocus> -->
+                                    <mat-form-field class="no-line" style="margin-top: -15px;">
+                                        <input matInput [matDatepicker]="picker" class="form-control"  formControlName="contractdate" (dateChange)="addEvent('change', $event)" style="background: #fff;color: #000;padding: 7px;">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                      </mat-form-field>
+                                      <br>
+                                    <small style="margin-top: -16px;margin-bottom: -21px;" class="errormessage" *ngIf="(contactForm.get('contractdate').touched || submitted) && contactForm.get('contractdate').errors?.required">Contract Date is
+                                        required
+                                    </small>
+                                </div>
+                            </div>
+
+                        </div>
+                    <!-- </div> -->
+
+                    <!-- <div class="col-12"> -->
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>City</label>
+                                    <input type="text" class="form-control" maxlength="51" formControlName="city" autofocus>
+                                    <small class="errormessage" *ngIf="(contactForm.get('city').touched || submitted) && contactForm.get('city').errors?.required">City is
+                                        required
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Agent</label>
+                                    <input type="text" class="form-control" maxlength="51" formControlName="agent" autofocus>
+                                    <small class="errormessage" *ngIf="(contactForm.get('agent').touched || submitted) && contactForm.get('agent').errors?.required">Agent is
+                                        required
+                                    </small>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    <!-- </div> -->
+
+                    <!-- <div class="col-12"> -->
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>State</label>
+                                    <select formControlName="state" class="form-control">
+                                        <option value="">select</option>
+                                        <option *ngFor="let st of stateslist" [value]="st.sg_id">{{st.sg_name}}</option>
+                                    </select>
+                                    <small class="errormessage" *ngIf="(contactForm.get('state').touched || submitted) && contactForm.get('state').errors?.required">State is
+                                        required
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Dealer Contact Name</label>
+                                    <input type="text" class="form-control" maxlength="51" formControlName="contactname" autofocus>
+                                    <small class="errormessage" *ngIf="(contactForm.get('contactname').touched || submitted) && contactForm.get('contactname').errors?.required">ContactName is
+                                        required
+                                    </small>
+                                </div>
+                            </div>
+
+                          
+                        </div>
+                    <!-- </div> -->
+
+                    <!-- <div class="col-12"> -->
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Country</label>
+                                    <select formControlName="country" class="form-control">
+                                        <option value="">select</option>
+                                        <option value="185">USA</option>
+                                    </select>
+                                    <small class="errormessage" *ngIf="(contactForm.get('country').touched || submitted) && contactForm.get('country').errors?.required">Country is
+                                        required
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Dealer Contact Phone</label>
+                                    <input type="text" class="form-control"  formControlName="contactphone" pattern="[0-9+( )-]{14}$" [textMask]="{mask: phoneFormat}" autofocus>
+                                    <small class="errormessage" *ngIf="(contactForm.get('contactphone').touched || submitted) && contactForm.get('contactphone').errors?.required">Contact Phone is
+                                        required
+                                    </small>
+                                    <small class="errormessage" *ngIf="contactForm.controls.contactphone.hasError('pattern')">
+                                        Pls enter minimum length
+                                    </small>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    <!-- </div> -->
+
+                    <!-- <div class="col-12"> -->
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Zip</label>
+                                    <input type="text" class="form-control" (keypress)="onkeyPress($event)"  formControlName="zip" maxlength="6" minlength="5" autofocus>
+                                    <small class="errormessage" *ngIf="(contactForm.get('zip').touched || submitted) && contactForm.get('zip').errors?.required">Zip is
+                                        required
+                                    </small>
+                                    <small class="errormessage" *ngIf="contactForm.controls.zip.hasError('maxlength')">
+                                        You have reached your maximum limit of zip
+                                    </small>
+                                    <small class="errormessage" *ngIf="contactForm.controls.zip.hasError('minlength')">
+                                        Pls enter minimum limit of zip
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Dealer Contact Email</label>
+                                    <input type="text" class="form-control" maxlength="51" formControlName="contactemail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$" autofocus>
+                                    <small class="errormessage" *ngIf="(contactForm.get('contactemail').touched || submitted) && contactForm.get('contactemail').errors?.required">Contact Email is
+                                        required
+                                    </small><small class="errormessage" *ngIf="contactForm.get('contactemail').hasError('pattern')">
+                                        Invalid Contact Email
+                                    </small>
+
+                                </div>
+                            </div>
+                           
+                        </div>
+                    <!-- </div>
+
+                    <div class="col-12"> -->
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Phone</label>
+                                    <input type="text" class="form-control"  formControlName="phone" pattern="[0-9+( )-]{14}$" [textMask]="{mask: phoneFormat}"  autofocus>
+                                    <small class="errormessage" *ngIf="(contactForm.get('phone').touched || submitted) && contactForm.get('phone').errors?.required">Phone is
+                                        required
+                                    </small>
+                                    <small class="errormessage" *ngIf="contactForm.controls.phone.hasError('pattern')">
+                                        Please enter minimum length
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Dealer Title</label>
+                                    <input type="text" class="form-control" maxlength="51" formControlName="dealertitle" autofocus>
+                                    <small class="errormessage" *ngIf="(contactForm.get('dealertitle').touched || submitted) && contactForm.get('dealertitle').errors?.required">Dealer Title is
+                                        required
+                                    </small>                                         
+                                </div>
+                            </div>
+                            
+                        </div>
+                    <!-- </div>
+
+                    <div class="col-12"> -->
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>NI Terms</label>
+                                    <select formControlName="niterms" class="form-control">
+                                        <option value="" selected>select</option>
+                                        <option value="1">Quarterly</option>
+                                        <option value="2">Monthly</option>
+                                        <option value="3">Yearly</option>
+                                    </select>
+                                    <small class="errormessage" *ngIf="(contactForm.get('niterms').touched || submitted) && contactForm.get('niterms').errors?.required">NI Terms is
+                                        required
+                                    </small>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Monthly Fee</label>
+                                    <input type="text" class="form-control" maxlength="5" formControlName="monthfee" (keypress)="onkeyPress($event)" placeholder="$" autofocus>
+                                    <small class="errormessage" *ngIf="(contactForm.get('monthfee').touched || submitted) && contactForm.get('monthfee').errors?.required">Monthly Fee is
+                                        required
+                                    </small>                                        
+                                </div>
+                            </div>
+                            
+                        </div>
+                    <!-- </div>
+
+                    <div class="col-12"> -->
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Setup Fee</label>
+                                    <input type="text" class="form-control" maxlength="4" formControlName="setupfee" (keypress)="onkeyPress($event)" placeholder="$" autofocus>
+                                    <small class="errormessage" *ngIf="(contactForm.get('setupfee').touched || submitted) && contactForm.get('setupfee').errors?.required">SetUp Fee is
+                                        required
+                                    </small>                                        
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Setup Fee Credit</label>
+                                    <input type="text" class="form-control" maxlength="4" formControlName="setupfeecredit" (keypress)="onkeyPress($event)" placeholder="$" autofocus>
+                                    <small class="errormessage" *ngIf="(contactForm.get('setupfeecredit').touched || submitted) && contactForm.get('setupfeecredit').errors?.required">SetUp Fee Credit is
+                                        required
+                                    </small> 
+                                                                            
+                                </div>
+                            </div>
+                           
+                        </div>
+                    <!-- </div>
+
+                    <div class="col-12"> -->
+                       
+                    <!-- </div> -->
+
+                    <!-- <div class="col-12"> -->
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="formgroup grp grp_det">
+                                    <label>Product</label>
+                                    <select type="text" class="form-control" maxlength="51" formControlName="productname" autofocus>
+                                        <option [value]="">select</option>
+                                        <option value="1">Net Impact 180</option>
+                                        <option value="2">Net Impact 270</option>
+                                        <option value="3">Net Impact 360</option>
+                                    </select>
+                                    <small class="errormessage" *ngIf="(contactForm.get('productname').touched || submitted) && contactForm.get('productname').errors?.required">Product is
+                                        required
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                    <div class="row" style="padding-bottom: 4%;">
+                        <div class="col-sm-1">
+                        </div>
+                        <div class="col-sm-1" style="padding-top: 2%">
+                            <a href="_blank"><button type="submit" class="button" (click)="ContactFormView(contactId)">preview</button></a>
+                        </div>
+                        <div class="col-sm-1" style="padding-top: 2%;margin-left: 5%;">
+                            <button type="submit" class="button">Save</button>
+                        </div>
+                        <div class="col-sm-1" style="padding-top: 2%">
+                           
+                            <a  style="padding-left: 47px;" ><button  class="button" (click)="showGridPanel()">cancel</button></a> 
+                            
+                        </div>
+                        <div class="col-sm-1" style="padding-top: 2%;padding-left: 105px;">
+                            <button type="submit" class="button">send</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+
+
+        </div>
+    </div>
+</div>

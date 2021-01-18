@@ -1,0 +1,86 @@
+<div class="dashboard_bg">
+  <app-header></app-header>
+  <div class="container-fluid pt64">
+    <div class="row">
+      <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+        <app-left-panel class="w-100"></app-left-panel>
+    </div>
+
+     
+
+      <div class="col-9 pt-3">
+         <div class="contentpanel_bg"> 
+
+        <!--                    edit Terms start                    -->
+               
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title"></h3>
+                </div>
+                <div class="panel-body">
+                  <form [formGroup]="addTermForm">
+                    <div class="container">
+                      <div class="row ">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                          <label for="rule">Incentive Type:</label>
+                          <input type="text" class="form-control" placeholder="Enter incentive type"
+                          formControlName="incentivetype_name" 
+                          [(ngModel)]="termDetails.incentivetype_name" [ngClass]="{ 'is-invalid': submitted &amp;&amp; addTermForm.controls.incentivetype_name.errors }">   
+                
+                          <div *ngIf="submitted &amp;&amp; addTermForm.controls.incentivetype_name.errors" class="text-danger">
+                          <div *ngIf="addTermForm.controls.incentivetype_name.errors.required">Please enter incentive type</div>
+                          </div>
+                         </div>
+                    </div> 
+                
+                    <br>
+                    <br>
+
+                  <div class="row ">
+                   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">  
+                    <label>Status:</label>
+                    <span style="padding-left: 10px;"></span> 
+                    <input type="checkbox" value="termDetails.incentivetype_status"
+                    (change)="handleStatus($event)" style="margin-left: 10px;" [checked]="termDetails.incentivetype_status=='Y'" > 
+                   </div>
+                  </div>
+                   <!-- (change)="statusValueChange($event)" -->
+                      
+                  
+                    <br>
+                
+                  
+                    <div class="row buttons">
+                      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                          <input type="Submit" (click)="updateTerms()" class="savebtn" Value="Save" Style="width: 100px;"/>&nbsp;
+                          <input type="button" class="savebtn" [routerLink]="['/incentiveTypes']" Value="Cancel" Style="width: 100px;"/>
+                         </div>
+                    </div>
+
+                  </div>                 
+
+                  </form>
+
+                </div> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      
+     
+             
+        <!--                            edit Terms end                    -->
+    
+
+         </div> 
+      </div>
+      
+     
+
+    </div>
+  </div>

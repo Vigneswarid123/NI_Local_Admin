@@ -1,0 +1,170 @@
+<div class="dashboard_bg invtry" >
+  <div >
+      <app-header></app-header>
+      <div class="container-fluid pt64">
+        <div class="row">
+          <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+            <app-left-panel class="w-100"></app-left-panel>
+            </div>
+            <div class="col-9 pt-3">
+
+              
+
+              <div class="row">
+                  <table class="gridheader">
+                    <thead>
+                        <tr>
+                            <th style="width: 462px; font-weight: bold;">
+                              <div style="float: left">
+                                  <div class="getuser">
+                                      <label class="getuserlabel">Inventory</label>
+                                  </div>
+                              </div>
+                            </th>
+                            <th style="width: 500px; text-align: center">
+                              <div style="float: right">   
+                                <div style="width: 100%;">
+
+                                  <div style="float: left;" >
+                                    <div style="width:80px; cursor: pointer;" (click)="atoZClick()">
+                                      <div style="float: left;" class="DivAZ1">A - Z</div>
+                                      <div class="DivAZ2">
+                                         <a><img src="assets/Images/sorting_img.png"></a>
+                                     </div>  
+                                    </div> 
+                                  </div>
+                                                                    
+                                  </div>
+                                
+                              </div>
+                          </th>              
+                        </tr>
+                        
+                    </thead>
+                </table>
+              </div>
+              <div class="row  fltrSelect" style="width:100%;flex-direction: column;">
+                <div class="login-container" style="flex-direction: column;">
+                    <div class="d-flex justify-content-end" style="width:100%;">
+                      <div class="text-right"><label style="margin-top:3px;padding-right: 10px;">Filter by:</label></div>
+                      <form [formGroup]="modelForm" (ngSubmit)="onSubmit()">
+                        <div>
+                          <div class="form-group  drop_dwn">
+                              <select formControlName="ddlYear" class="drop" (change)="assignDropDownInfo('year')">
+                                <option value="0">All</option>
+                                <option *ngFor="let yearInfo of Years" value="{{yearInfo.value}}">{{yearInfo.Year}}</option>
+                              </select>
+                          </div>
+                        </div>
+                      
+                        <div>
+                            <div class="form-group  drop_dwn">
+                              <select formControlName="ddlBrand" class="drop"   (change)="assignDropDownInfo('brand')">
+                                  <option value="0" >All</option>
+                                  <option *ngFor="let brandInfo of Brands" value="{{brandInfo.brand_chrome_id}}">{{brandInfo.brand_name}}</option>
+                                </select>  
+                            </div>
+                        </div>
+
+                        <div>
+                          <div class="form-group  drop_dwn">
+                            <select formControlName="ddlModel" class="drop"  (change)="assignDropDownInfo('model')">
+                              <option value="0">All</option>
+                              <option *ngFor="let modelInfo of modelData" value="{{modelInfo.modelCode}}">{{modelInfo.modelName}}</option>
+                            </select>
+                        </div>
+                      </div>
+
+                      <!-- <div>
+                          <div class="form-group  drop_dwn">
+                            <select formControlName="ddlStyle" class="drop" (change)="assignDropDownInfo('style')">
+                              <option value="0">All</option>
+                              <option *ngFor="let styleInfo of Styles" value="{{styleInfo.styleid}}">{{styleInfo.stylename}}</option>
+                            </select>
+                        </div>
+                      </div> -->
+
+                      <div>
+                          <div class="form-group  drop_dwn">
+                            <select formControlName="ddlStock" class="drop"  (change)="assignDropDownInfo('stock')">
+                              <option value="0">All</option>
+                              <option value="NEW">NEW</option>
+                              <option value="USED">USED</option>
+                              <option value="CPO">CPO</option>
+                            </select>
+                        </div>
+                      </div>
+
+                      <div>
+                          <div class="form-group" style="margin-right:10px;">
+                            <div class="input-group search" style="width:100%">
+                              <input style="background-color: white;" formControlName="txtVin"  placeholder="vin" required txtVin  (keyup.enter)="onEnter($event)">
+                              <div class="input-group-btn">
+                                <button class="btn" type="submit" (submit)="onSubmit()">
+                                  <img src="../assets/Images/Search-Icon.png">
+                                </button>
+                              </div>
+                            </div>
+                            <!-- <input class="txtVin textbox" formControlName="txtVin"  placeholder="vin" required txtVin  (keyup.enter)="onEnter($event)"  /> -->
+                          </div>
+                      </div>
+
+                        <!-- <div>
+                            <input type="submit"  class="button" value="search" (submit)="onSubmit()">
+                        </div> -->
+                      </form>
+                    </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="atozFltr" style="height: 50px;margin-bottom: 10px;">
+                <div style="width:100%;">
+                   <app-atoz-filter (onAlphaClick)="onAlphaCatch($event)"></app-atoz-filter>
+                  </div>
+                 
+              </div>
+              <div class="row">
+                 <div class="contentss">
+                  <table class="dashboard"> 
+                    <thead >
+                       <tr>
+                           <th style="width:5%;padding-left: 4%;"><b>STOCKTYPE</b></th>
+                           <th style="width:10%;"><b>MODEL CODE</b></th>
+                           <th style="width:6%;padding-left: 5%;"><b>VIN</b></th>
+                           <!-- <th>INTERIOR COLOR</th>
+                           <th>EXTERIOR COLOR</th> -->
+                           <th style="width:6%;"><b>AGE</b></th>
+                           <th style="width:5%;"><b>PRICE</b></th>
+                           <th style="width:5%;"><b>MILES</b></th>
+                           <!-- <th>TRIM</th> -->
+                       </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngIf="inventryInfo | alphaFilter : alphaSrch: alphaColumns :'inventory'  as invResult; else noItems">
+                        <tr style="width:100%;" *ngFor="let invtry of invResult">
+                          
+                            <td style="width:5%;padding-left:4%;">{{invtry.StockType}}</td>
+                            <td style="width:10%;">{{invtry.Year}} {{invtry.MakeName}} {{invtry.ModelName}}</td>
+                            <td style="width:6%">{{invtry.Vin}}</td>
+                            <!-- <td style="width:10%;">{{invtry.InteriorColor}}</td>
+                            <td style="width:10%;">{{invtry.ExteriorColor}}</td> -->
+                            <td style="width:6%;">{{invtry.Age}} days</td>
+                            <td style="width:5%;">{{invtry.Price.toString() | number | ifEmpty:'N/A'}}</td>
+                            <td style="width:5%;">{{invtry.Miles}} Miles</td>
+                            <!-- <td style="width:10%;">{{invtry.Trim}}</td> -->
+                        </tr>
+                       <ng-container *ngIf="!invResult.length && hide" [ngTemplateOutlet]="noItems"></ng-container>
+                      </ng-container>
+
+                      <ng-template #noItems >
+                         <tr><td colspan="9" style="text-align: center;">No Inventories Available!</td></tr>
+                      </ng-template>
+                   </tbody>
+                  </table>
+                 </div>
+              </div>
+
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>

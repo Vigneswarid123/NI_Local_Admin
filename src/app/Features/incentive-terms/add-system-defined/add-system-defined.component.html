@@ -1,0 +1,137 @@
+<div class="dashboard_bg">
+      <app-header></app-header>
+      <div class="container-fluid pt64">
+        <div class="row">
+          <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+            <app-left-panel class="w-100"></app-left-panel>
+        </div>
+    
+         
+    
+          <div class="col-9 pt-3">
+             <div class="contentpanel_bg"> 
+    
+            <!--                    add Terms start                    -->
+                   
+            <div class="container">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title"></h3>
+                    </div>
+                    <div class="panel-body">
+                      <form [formGroup]="addTermForm" (ngSubmit)="onSubmit()">
+                        <div class="container">
+                          <div class="row ">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                              <label for="rule">Term:</label>
+                              <input type="text" class="form-control" placeholder="Enter term"
+                              formControlName="rulename" [ngClass]="{ 'is-invalid': submitted &amp;&amp; addTermForm.controls.rulename.errors }">   
+                
+                              <div *ngIf="submitted &amp;&amp; addTermForm.controls.rulename.errors" class="text-danger">
+                              <div *ngIf="addTermForm.controls.rulename.errors.required">Please enter term</div>
+                              <div *ngIf="addTermForm.controls.rulename.errors.pattern">Enter only characters</div>
+
+                              </div>
+                             </div>
+                        </div> 
+                    
+                        <br>
+                
+                        <div class="row " style="display: none;">
+                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label for="rule">Dealer Id:</label>
+                            <input type="text" class="form-control" placeholder="Enter Id"
+                            formControlName="dealer_id" [ngClass]="{ 'is-invalid': submitted &amp;&amp; addTermForm.controls.dealer_id.errors }">   
+                
+                            <div *ngIf="submitted &amp;&amp; addTermForm.controls.dealer_id.errors" class="text-danger">
+                            <div *ngIf="addTermForm.controls.dealer_id.errors.required">
+                              Dealer Id is required
+                            </div>
+                            <div *ngIf="addTermForm.controls.dealer_id.errors.pattern">
+                              Dealer Id must be Number
+                            </div>
+                          </div>
+                            </div>
+                           </div>
+                      </div> 
+                
+                      <br>
+                      
+                        <div class="row " style="display: none;">
+                       
+                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="display: none;">
+                            <label for="Type">Term Type: </label><br>
+                            <input style="margin-left: 10px;" class="form-check-input" type="radio"
+                                value="S" name="type" formControlName="type"
+                                [ngClass]="{ 'is-invalid': submitted &amp;&amp; addTermForm.controls.type.errors }"/>                
+                                
+                               <label style="padding-left: 30px;">System defined</label>
+                               
+                               <span style="padding-left: 30px;"></span>
+                              <input class="form-check-input" type="radio" value="U" name="type" 
+                              [ngClass]="{ 'is-invalid': submitted &amp;&amp; addTermForm.controls.type.errors }" formControlName="type"/>
+                   
+                              <label>User defined</label>
+                              <div *ngIf="submitted &amp;&amp; addTermForm.controls.type.errors"  class="text-danger">
+                                <div *ngIf="addTermForm.controls.type.errors.required">
+                                <span style="padding-left: 15px;"> Type is required</span>
+                                </div>
+                                </div>
+                
+                           </div>
+                
+    
+                           
+                
+                        </div> 
+                        
+                        <br>
+                <div>
+                        <label style="padding-left: 15px;">Status:</label>
+                        <span style="padding-left: 10px;"></span> 
+                        <input type="checkbox" value="Y"
+                        formControlName="status"
+                        [ngClass]="{ 'is-invalid': submitted &amp;&amp; addTermForm.controls.status.errors }">
+                        
+                
+                        <div *ngIf="submitted &amp;&amp; addTermForm.controls.status.errors" class="text-danger">
+                        <div *ngIf="addTermForm.controls.status.errors">
+                          Status is required
+                        </div>
+                        </div>
+               </div>          
+                        <br>
+                        <br>
+                      
+                          <div class="row buttons">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                              <!-- <span style="padding-left: 15px;"></span> -->
+                              <input type="Submit" class="savebtn" Value="Save" Style="width: 100px;"/>&nbsp;
+                              <input type="button" class="savebtn" [routerLink]="['/incentiveTerms']" Value="Cancel" Style="width: 100px;"/>
+                             </div>
+                        </div>
+                        
+                      
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          
+         
+                 
+            <!--                            add Terms end                    -->
+        
+    
+             </div> 
+          </div>
+          
+         
+    
+        </div>
+      </div>
+    </div>

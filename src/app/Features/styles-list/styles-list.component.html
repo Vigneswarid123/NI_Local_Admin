@@ -1,0 +1,132 @@
+
+<div class="dashboard_bg">
+    <app-header></app-header>
+    <div class="container-fluid pt64">
+      <div class="row">
+        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+            <app-left-panel class="w-100"></app-left-panel>
+        </div>
+
+
+<div class="content_body">
+    <div style="margin-top: 1.1rem;">
+        <form #monForm="ngForm" (ngSubmit)="OnSubmit()">
+            <div style="width: 6%;float: left;margin-left: 39%;margin-top: 2px;font-size: 13px;">Filter by:</div>
+            <div class="form-group drop_dwn" style="width: 13%;float: left;margin:0 10px 2% 0;">                                       
+                <select class="form-control" style="height: calc(1.50rem + 5px);font-size: 11px;" id="Brand" [ngModel]="BrandContant" (change)="synchroMembre($event,'B');" required name="Brand">
+                    <option [value]="0">Select Brand</option>
+                  <option *ngFor="let Bnd of Brands.response" [value]="Bnd.brand_chrome_id">{{ Bnd.brand_name }}</option>
+                </select>
+                <small class="errormessage" style="color: #dc3545;position: absolute;margin: 23px 0px 0px 23px;" *ngIf="Band">Brand is required</small>
+          </div>                              
+             <div class="form-group drop_dwn" style="width: 13%;float: left;margin:0 10px 2% 0;">
+                <select class="form-control" style="height: calc(1.50rem + 5px);font-size: 11px;" id="Year" [(ngModel)]="YearContant" (ngModelChange)="synchroMembre($event,'Y')" required name="Year">        
+                  <option *ngFor="let Yrs of Years" [value]="Yrs.value">{{Yrs.Year}}</option>
+                </select>
+                <small class="errormessage" style="color: #dc3545;position: absolute;margin: 23px 0px 0px 23px;" *ngIf="Yar">Year is required</small>
+          </div>
+          <div class="form-group drop_dwn" style="width: 13%;float: left;margin:0 10px 2% 0;">
+              <select class="form-control" style="height: calc(1.50rem + 5px);font-size: 11px;" id="Model" [(ngModel)]="ModelContant" (ngModelChange)="synchroMembre($event,'M')" required name="Model">
+                <option [value]="0">Select Model</option>
+                <option *ngFor="let Mod of Models.response" [value]="Mod.modelCode">{{Mod.modelName}}</option>
+              </select>
+              <small class="errormessage" style="color: #dc3545;position: absolute;margin: 23px 0px 0px 23px;" *ngIf="Mdel">Model is required</small>
+          </div>
+          <input type="submit" value="Search" style="width: 13%;background-color: #fff;float: right;font-size: 12px;">
+        </form>
+    </div>
+    
+    <table style="width: 1000px; float: left;">
+        <tbody>
+            <tr>
+                <td style="vertical-align: top;">
+                    <table class="gridheader">
+                        <thead>
+                            <tr>
+                                <th style="width: 462px; font-weight: bold;">
+                                    <div style="margin-top: 6px; float: left">
+                                        <!-- <div class="getdiv">
+                                            <label class="getlabel">Get</label>
+                                        </div> -->
+                                        <div class="getuser">
+                                            <label class="getuserlabel">Styles</label>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="getstylediv">
+                                        <label class="getstylelbl">Styles</label>
+                                    </div> -->
+                                </th>
+                                <th style="width: 500px; text-align: center">
+                                    <div style="float: left">
+                                    </div>
+                                </th>
+
+                                <th style="width: 30px; text-align: center" colspan="2">
+                                   </th>
+                            </tr>
+
+                        </thead>
+                    </table>
+                    <div *ngIf="GridView">
+                       <table style="display: none;" class="dashboard">
+                        <thead>
+                            <tr class="colHeader">
+                                <th style="width:6%;"></th>
+                                <th align="center" scope="col" style="width: 41%;">
+                                   Style
+                                </th>
+                                <th align="center" scope="col" style="width: 30%;">
+                                    marketclass
+                                </th>
+                                <th align="center" scope="col" style="width: 18%;">
+                                    trim
+                                </th>
+                                <th align="center" scope="col" style="width: 18%;">
+                                    consumerfriendlystylename
+                                </th>                               
+                                 <th align="center" scope="col" style="width: 9%;"></th>
+                            </tr>
+                          </thead>
+                       </table>
+                       <div class="col-md-8" style="padding-left: 0px;">
+                        <div class="contentss">
+                            <table class="dashboard">
+                                <tbody>
+                                    <tr *ngFor="let list of Styles.response">
+                                        <td style="width: 55%;">{{ list.modelyear }} - {{ list.divisionname }} - {{ list.modelname }} - {{ list.stylename }}</td>
+                                        <td style="width: 30%;">{{list.marketclassname}}</td>
+                                        <!-- <td >{{list.status}}</td> -->
+                                        
+                                        <td style="width: 15%;" *ngIf="list.status === 'Y'; else elseBlock">
+                                            <div class="Active"><span> Active</span>
+                                            </div>
+                                          </td>
+                                        
+                                          <ng-template #elseBlock>
+                                            <td>
+                                              <div class="InActive" ><span>Inactive</span>
+                                              </div>
+                                              </td>
+                                          </ng-template>
+
+
+                                        <!-- <td style="width: 18%;text-align: center;">{{list.trimname =="" ? '--' : list.trimname }}</td>
+                                        <td style="width: 25%;">{{list.consumerfriendlystylename}}</td>   -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>   
+                    </div>               
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</div>
+</div>
+<!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+    <p style="color: white">Please Wait. </p>  
+    </ngx-spinner>  -->

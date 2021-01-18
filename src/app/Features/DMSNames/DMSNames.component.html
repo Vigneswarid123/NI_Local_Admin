@@ -1,0 +1,156 @@
+
+ <div class="dashboard_bg">
+  <app-header></app-header>
+  <div class="container-fluid pt64">
+    <div class="row">
+      <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+          <app-left-panel class="w-100"></app-left-panel>
+      </div>
+
+
+<div class="content_body" *ngIf="Dashboard">
+  <table style="width: 1000px; float: left;">
+           <tbody>
+               <tr>
+                   <td></td>
+                   <td style="vertical-align: top;">
+                        <table class="gridheader">
+                            <thead>
+                                <tr>
+                                    <th style="width: 462px; font-weight: bold;">
+                                      <div style="float: left">
+                                          <div class="getuser">
+                                              <label class="getuserlabel">DMSNames</label>
+                                          </div>
+                                          <div class="AddIcon">
+                                              <a (click)="adddms()"><img src="assets/Images/brand_plus.png"></a>
+                                          </div>
+                                      </div>
+                                      <!-- <div class="getrolediv">
+                                          <label class="getrolelbl">Brands</label>
+                                      </div> -->
+                                    </th>
+                                    <th style="width: 500px; text-align: center">
+                                      <div style="float: left">
+                                      </div>
+                                  </th>
+                                  <th style="width:10%; text-align: center" colspan="2">
+
+                                              <div class="DivAZ1">A - Z</div>
+                                              <div class="DivAZ2">
+                                                 <a><img src="assets/Images/sorting_img.png"></a>
+                                             </div>
+                                  </th>
+
+                                </tr>
+                            </thead>
+                        </table>
+                        <div>
+                          <table class="dashboardHeader">
+                              <thead>
+                                  <tr class="colHeader">
+                                      <th style="width:4%;"></th>
+                                      <th align="center" scope="col" style="width: 35px;">
+                                         ID
+                                      </th>
+                                      <th align="center" scope="col" style="width: 190px;text-align: center;">
+                                         Name
+                                      </th>
+                                      <th align="center" scope="col" style="width: 100px;text-align: center;">
+                                          Status
+                                      </th>
+                                      <th align="center" scope="col" style="width: 100px;text-align: center;">
+                                        TS
+                                    </th>
+                                      <th scope="col" style="width: 37px;">&nbsp;</th>
+                                  </tr>
+                                </thead>
+                             </table>
+                             <div>
+                              <div class="contentss">
+                                  <table class="dashboard">
+                                      <tbody>
+                                        <tr *ngFor="let items of dmsnames">
+                                               <!-- <td style="width:25%;margin-left:10%;"><div style="margin-left: 15%;"><span style="font-size: 12px;">{{items.ttl_dms_id}}</span></div></td> -->
+                                              <td style="width:40%;"><div style="margin-left: 15%;"><span style="font-size: 12px;">{{items.ttl_dms_name}}</span></div></td>
+                                              <td style="width:40%;">
+                                                <!-- <div style="margin-left: 15%;"><span style="font-size: 12px;">{{items.ttl_dms_status}}</span></div> -->
+                                                <div style="margin-left: 15%;"><span *ngIf="items.ttl_dms_status == 'Y'" class="a" id="active">Active</span>
+                                                <span *ngIf="items.ttl_dms_status == 'N'" class="ina" id="active">In-Active</span></div>
+                                              </td>
+                                              <td style="width:40%;"><div style="margin-left: 15%;"><span style="font-size: 12px;">{{items.ttl_dms_ts | date: 'dd/MM/yyyy'}}</span></div></td>
+                                              <td style="width:10%; text-align: center; cursor: pointer;">
+                                                  <a (click)="editButtonClick(items.ttl_dms_id)"><img src="assets/Images/edt_icon.png"></a>
+                                              </td>
+                                              <td style="width:40%; text-align: center; cursor: pointer;">
+                                                <a (click)="Delete(items.ttl_dms_id)"><img src="assets/Images/del_gry.png"></a>
+                                            </td>
+                                              </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                   </td>
+               </tr>
+           </tbody>
+  </table>
+</div>
+
+<div class="contentpanel_bg col-9 pt-3" *ngIf="AddShow">
+  <form [formGroup]="UserForm" >
+
+      <div class="col-12">
+          <div class="row">
+              <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                  <div class="formgroup grp grp_det">
+                    <label for="Name">DmsNames<span style="color:red">*</span></label>
+                    <input type="text" class="form-control" formControlName="Name"
+                      [ngClass]="{ 'is-invalid': submitted && UserForm.controls.Name.errors }">
+                    <div *ngIf="submitted && UserForm.controls.Name.errors" class="invalid-feedback">
+                      <div *ngIf="UserForm.controls.Name.errors.required"> Name is required</div>
+                    </div>
+
+                  </div>
+              </div>
+            </div>
+
+           <div class="form-check" *ngIf="action=='U'">
+            <input type="checkbox" value="Y"  [checked]="status =='Y'" (change)="checkstatus($event)">
+
+            <label style="margin-left: 0.5rem;"> {{status =='Y'?'  ACTIVE':'  IN-ACTIVE'}}</label>
+
+          </div>
+        </div>
+        <!-- <div class="col-12" ngif="showhide" >
+          <div class="row">
+              <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                  <div class="formgroup grp grp_det">
+                    <label>Status</label>&nbsp;
+                    <input type="checkbox" value='Y'>
+
+
+                  </div>
+              </div>
+          </div>
+        </div> -->
+
+      <div class="row" style="padding-bottom: 4%;">
+              <div class="col-sm-1">
+              </div>
+              <div class="col-sm-1" style="padding-top: 2%">
+                  <button type="submit" class="button" (click)="Save()">Save</button>
+              </div>
+              <div class="col-sm-1" style="padding-top: 2%">
+                  <!-- <button type="submit" [routerLink]="['/BrandList']" class="button">cancel</button> -->
+                  <!-- <a routerLink="/BrandList" style="padding-left: 47px;"><button  class="button">cancel</button></a> -->
+                  <a  style="padding-left: 47px;" ><button  class="button" (click)="showGridPanel()">cancel</button></a>
+
+              </div>
+          </div>
+  </form>
+
+  </div>
+  </div>
+</div>
+</div>

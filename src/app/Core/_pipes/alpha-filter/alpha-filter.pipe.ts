@@ -1,0 +1,38 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'alphaFilter'
+})
+export class AlphaFilterPipe implements PipeTransform {
+
+ 
+
+  transform(items: any,searchText: string="",columnNames:any[]=[],fromPage:string=""): any[] {
+  
+      console.log("Reached pipe");
+    let exprData:string="";
+      
+    if(!items) return [];
+    if(!searchText) return items;
+ 
+    return items.filter( (itm:any) => {
+     
+      if(columnNames!=null && columnNames.length!=0){
+
+        if(fromPage=="inventory")
+        exprData=itm[columnNames[0]]+" "+itm[columnNames[1]];
+        else
+        exprData=itm[columnNames[0]];
+
+      }
+      else
+        return items;
+      
+     
+    return  exprData.toString().toLowerCase().includes(searchText.toLowerCase());
+    });
+    }
+
+}
+
+

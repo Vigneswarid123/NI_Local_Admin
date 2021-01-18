@@ -1,0 +1,98 @@
+<div class="dashboard_bg">
+  <app-header></app-header>
+  <div class="container-fluid pt64">
+    <div class="row">
+      <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav"
+        id="sidebar">
+        <app-left-panel class="w-100"></app-left-panel>
+      </div>
+
+
+
+      <div class="col-9 pt-3">
+        <div class="contentpanel_bg">
+
+          <!----------   usersgrid start -------  -->
+
+          <div class="container">
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+
+
+                <div class="panel panel-default">
+
+
+                  <div class="panel-body">              
+
+      <!-- ------------- using checkbox selection begin------------- -->
+
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+  <span> Incentive type: </span>
+  
+  <!-- --------------------selected terms begin-------- -->
+  <div>
+    <div *ngFor="let selectedValue of selectedTermsArray ; let i = index" class="selectedTerms">     
+       
+      <span>{{selectedValue}}</span>
+      <img src="../../assets/Images/cancel-icon.png" class="closecls" (click)="removeOnCloseClick(i, selectedValue)">
+
+       <!-- <mat-icon class="closeicon" (click)="removeOnCloseClick(i, selectedValue)">close</mat-icon>  -->
+                                        
+    </div>
+</div>
+<!-- --------------------selected terms end-------- -->
+</div>
+
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+   
+  <div class="termsList">
+    <span class="suggestermsSpan" >Suggested incentive types </span> <br>
+    <div *ngFor="let list of incentiveTypesArray" class="suggestedTerms">
+      <div [hidden]="list.isChecked">
+    <span>
+      <input
+        name="checkboxName"
+        class="checkmark"
+        id="checkbox1"
+        type="checkbox"
+        value="{{list.incentivetype_name}}"
+        [(ngModel)]="list.isChecked"
+        (ngModelChange)="onCheckboxChange($event,list.incentivetype_name)"
+      />
+      {{list.incentivetype_name}}
+    </span>
+     </div>
+  </div>
+  </div>
+
+</div>
+
+    
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">     
+      <div class="row buttonsDiv">   
+        <input type="Submit" class="savebtn" Value="Save" Style="width: 100px;"/>&nbsp;
+        <input type="button" class="savebtn" Value="Cancel" Style="width: 100px;"/>
+      </div>
+   </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!----------   user add  end -------  -->
+
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+

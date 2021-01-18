@@ -13,7 +13,8 @@
 export const environment = {​​​​​​​​
 production:false,
 //  apiUrl: 'http://aaatapi.azaz.com/api/'
-  apiUrl:'http://throttleapi.azaz.com/api/'
+  // apiUrl:'http://throttleapi.azaz.com/api/'
+  apiUrl: 'http://niapi.local.com/api/'
   //apiUrl: 'http://localapi.throttle.com/api/'
 }​​​​​​​​;
 

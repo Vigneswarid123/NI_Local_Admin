@@ -1,0 +1,77 @@
+<div class="dashboard_bg">
+  <app-header></app-header>
+  <div class="container-fluid pt64">
+    <div class="row">
+        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+            <app-left-panel class="w-100"></app-left-panel>
+        </div>
+      <div  class=" col-9 pt-3">
+<div class="row">
+  <div class="col pr-0">
+      <div class="contentpanel_bg">
+        
+        <div class="row">
+          <div class="col-4" style="width: 40%;margin-top: 20px;margin-left: 80px;">
+          <!-- <div class="row justify-content-center"> -->
+              <!-- <div class="col-lg-8 pt-4"> -->
+                      <div >
+                          <tr>
+                                  <img style="width: 150px;height: 100px;" src="http://niapi.local.com/api/resources/images/{{getdgroups.dg_logo}}">
+                          </tr>
+                      
+                  </div>
+                  <div class="branddet" *ngIf="getdgroups">
+                      <h6>{{getdgroups.dg_name}}</h6>                      
+                      <p>
+                          {{getdgroups.dg_address1}}
+                          <br> {{getdgroups.dg_city}}, {{getstatesresp.sg_name}}
+                          <br> {{getdgroups.dg_zip}}, USA
+                          <br> {{getdgroups.dg_phone}}
+                      </p>
+                      <br>
+                      <div class="side_head">Contact Name:
+                        <p *ngFor="let contacts of conts">
+                            {{contacts.dgd_name}},&nbsp;&nbsp;{{contacts.positionname}}
+                        </p>
+                    </div>
+                    <div class="side_head pt-3">User Name:
+                        <p *ngFor="let urs of users">
+                            {{urs.dgd_name}},&nbsp;&nbsp;{{urs.positionname}}
+                        </p>
+                    </div>
+                      <div class="pt-4">
+                          <a [routerLink]="['/AddGroupComponent', getdgroups.dg_id]">
+                              <img src="assets/Images/Edit-Icon.png" class="img-fluid">
+                          </a>
+                      </div>
+                  </div>
+                  
+              <!-- </div> -->
+          <!-- </div> -->
+
+      </div>
+      
+          <div class="col-lg-6">
+               <div class="grp_det pl-lg-4" style="font-size: 14px;color: #bcbcbc;">
+                   <label>Dealerships:</label>
+               </div>
+               <div id="scroll" class="col-lg- 12 scrolldash" style="overflow-y: auto;">
+                <div class="brand_style">
+                    <div  *ngFor="let drl of GetDealershipsList; let i = index" (click)="DealersDetails()">
+                        <a [routerLink]="['/DealershipDetails', getdgroups.dg_id,i]" class="select">{{drl.dealer_name}}</a>
+                    </div>
+                  <!-- <div *ngFor="let item of GetDealershipsList.response" >
+                      <div class="active"><a routerLink="/DealershipList" >{{item.dealer_name}}</a>
+                         </div>
+                     </div> -->
+               </div>
+          <br>
+          <div class="mt-8" style="margin-left: 20px;">
+                   <a [routerLink]="['/AddDealership', getdgroups.dg_id]"><img src="assets/Images/Add-Dealership.png" class="img-fluid"></a>
+               </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ </div>
+ 

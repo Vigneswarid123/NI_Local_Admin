@@ -1,0 +1,102 @@
+.savebtn{
+  background-color: #577f63;
+  border-style: none;
+  color: whitesmoke;
+  width: 100px;
+border: none;
+}
+
+.form-control {
+  display: block;
+  width: 80%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  // text-align: center;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.poptitle{
+  text-align: center;
+}
+
+.changepwd {
+  background-color: #577f63;
+  color: whitesmoke;
+}
+
+.poptitle {
+  text-align: center;
+  color: black;
+  font-weight: bold;
+}
+
+.popupheader {
+  // background-color: #fff;
+  color: whitesmoke;
+  background-image: linear-gradient(to right, #b9babe, #f8f8fa, #c1c3c6) !important;
+}
+
+.popupsave {
+  background-color: #577f63;
+  color: whitesmoke;
+}
+.popupclose {
+  color: whitesmoke;
+}
+
+.modal-body {
+
+  position: relative;
+  flex: 1 1 auto;
+  padding: 1rem;
+  background-color: #252525
+}
+
+.modal-footer{
+  background-color: #252525
+}
+
+button.close {
+  
+  background-color: #577f63;
+ 
+}
+
+img{
+  cursor: pointer;
+}
+
+label{
+  color: #a6a6a6; 
+
+
+}
+
+.dash {
+  // width: 100%;
+  // height: 32px;
+  // float: right;
+  // margin: 0 0 1rem 0;
+  border: 0px solid #ffffff;
+border-radius:
+3px;
+overflow: hidden;
+font-family: 'Roboto-Medium';
+// font-size: 13px;color: #000;outline: none;-webkit-appearance:none;
+// background: url(../../../assets/Images/Arrow1.png) 92% no-repeat #ffffff;
+}
+.dash select option {
+background: rgba(0, 0, 0, 0.8); color: #fff;
+}
+
+.usertype{
+
+  display: none;
+}

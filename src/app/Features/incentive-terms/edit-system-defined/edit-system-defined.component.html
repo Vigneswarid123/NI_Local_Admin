@@ -1,0 +1,126 @@
+<div class="dashboard_bg">
+      <app-header></app-header>
+      <div class="container-fluid pt64">
+        <div class="row">
+          <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+            <app-left-panel class="w-100"></app-left-panel>
+        </div>
+    
+         
+    
+          <div class="col-9 pt-3">
+             <div class="contentpanel_bg"> 
+    
+            <!--                    edit Terms start                    -->
+                   
+            <div class="container">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title"></h3>
+                    </div>
+                    <div class="panel-body">
+                      <form [formGroup]="addTermForm">
+                        <div class="container">
+                          <div class="row ">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                              <label for="rule">Term:</label>
+                              <input type="text" class="form-control" placeholder="Enter rule"
+                              formControlName="RuleName" 
+                              [(ngModel)]="termDetails.RuleName" [ngClass]="{ 'is-invalid': submitted &amp;&amp; addTermForm.controls.RuleName.errors }">   
+                    
+                              <div *ngIf="submitted &amp;&amp; addTermForm.controls.RuleName.errors" class="text-danger">
+                              <div *ngIf="addTermForm.controls.RuleName.errors.required">Please enter term</div>
+                              </div>
+                             </div>
+                        </div> 
+                    
+                        <br>
+                    
+                         <div class="row " style="display: none;">
+                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label for="id">Dealer Id:</label>
+                            <input type="text" class="form-control" placeholder="Enter Id"
+                            formControlName="Dealer_Id" [(ngModel)]="termDetails.Dealer_Id" [ngClass]="{ 'is-invalid': submitted &amp;&amp; addTermForm.controls.Dealer_Id.errors }">   
+                    
+                            <div *ngIf="submitted &amp;&amp; addTermForm.controls.Dealer_Id.errors" class="text-danger">
+                            <div *ngIf="addTermForm.controls.Dealer_Id.errors.required">
+                              Dealer Id is required
+                            </div>
+                            <div *ngIf="addTermForm.controls.Dealer_Id.errors.pattern">
+                              Dealer Id must be Number
+                            </div>
+                          </div>
+                            </div>
+                           </div> 
+                      </div> 
+                    
+                      <br>
+                      
+                        <div class="row " style="display: none;">   
+                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <span style="padding-left: 15px;"></span>
+                            <label for="type">Term Type:</label>
+                            <div>
+                              <span style="padding-left: 15px;"></span>
+                            <input class="form-check-input"  type="radio" value="S"  name="Type" formControlName="Type"  [(ngModel)]="termDetails.Type" style="margin-left: 10px;" >
+                            <label style="padding-left: 30px;">System Defined</label>     
+                    
+                            <span style="padding-left: 30px;"></span>
+                            <input class="form-check-input" type="radio" value="U" name="Type" formControlName="Type"  [(ngModel)]="termDetails.Type">
+                            <label> User Defined </label>
+                            </div>
+                    </div>
+                  </div>    
+                    
+                       <br>                    
+                       
+                       
+                       <div class="col-sm-12">  
+                        <label style="padding-left: 6px;">Status:</label>
+                        <span style="padding-left: 10px;"></span>   
+                       <input type="checkbox" value="Y"
+                       formControlName="Status" style="margin-left: 10px;" [(ngModel)]="termDetails.Status"
+                       [ngClass]="{ 'is-invalid': submitted &amp;&amp; addTermForm.controls.Status.errors }">
+                    
+                       <div *ngIf="submitted &amp;&amp; addTermForm.controls.Status.errors" class="text-danger">
+                       <div *ngIf="addTermForm.controls.Status.errors">
+                         Status is required
+                       </div>
+                       </div>
+                     </div>
+                          
+                      
+                        <br>
+                    
+                      
+                          <div class="row " style="margin-left: 10px;">
+                            <div class="col-sm-12">
+                              <input type="Submit" (click)="updateTerms()" class="savebtn" Value="Save" Style="width: 100px;"/>&nbsp;
+                              <input type="button" class="savebtn" [routerLink]="['/incentiveTerms']" Value="Cancel" Style="width: 100px;"/>
+                             </div>
+                        </div>
+                        
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          
+         
+                 
+            <!--                            edit Terms end                    -->
+        
+    
+             </div> 
+          </div>
+          
+         
+    
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,730 @@
+
+<div class="dashboard_bg">
+    <app-header></app-header>
+    <div class="container-fluid pt64">
+      <div class="row">
+        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+          <app-left-panel class="w-100"></app-left-panel>
+      </div>
+  
+        <div *ngIf="grid"  class="content_body">
+          <table style="width: 1000px; float: left">
+            <tbody>
+              <tr>
+                <td></td>
+                <td style="vertical-align: top">
+                  
+                  <table class="gridheader">
+                    <thead>
+                        <tr>
+                            <th style="width: 462px; font-weight: bold;">
+                              <div style="float: left">
+                                  <div class="getuser">
+                                      <label class="getuserlabel">Admin</label>
+                                  </div>
+                                  <div class="AddIcon">
+                                    <a
+                                    (click)="addAdmin()"
+                                    style="cursor: pointer;"
+                                    ><img src="assets/Images/brand_plus.png"></a>
+                                  </div>
+                              </div>
+                            </th>
+                            <th style="width: 500px; text-align: center">
+                              <div style="float: left">                                       
+                              </div>
+                          </th>  
+                          <th><div class= "search">
+                            <input type="text" placeholder="Search" [(ngModel)]="SearchText" />
+                          </div></th>               
+                          <th style="width:10%; text-align: center" colspan="2">
+                                      <div class="DivAZ1">A - Z</div>
+                                      <div class="DivAZ2">
+                                         <a><img src="assets/Images/sorting_img.png"></a>
+                                     </div>  
+                          </th>
+                         
+                        </tr>
+                    </thead>
+                </table>
+  
+  
+                  <div>
+                    <table style="display: none;" class="dashboard">
+                      <thead>
+                        <tr class="colHeader">
+                          <th style="width: 6%"></th>
+                          <!-- <th align="center" scope="col" style="width: 150px;">
+    Id
+    </th> -->
+                          <th
+                            align="center"
+                            scope="col"
+                            style="width: 70px; text-align: center"
+                          >
+                          Module Name
+                          </th>
+                          <th
+                            align="center"
+                            scope="col"
+                            style="width: 100px; text-align: center"
+                          >
+                            Admin
+                          </th>
+                          <th
+                            align="center"
+                            scope="col"
+                            style="width: 100px; text-align: center"
+                          >
+                            Frontend
+                          </th>
+                          <th
+                            align="center"
+                            scope="col"
+                            style="width: 100px; text-align: center"
+                          >
+                            Status
+                          </th>
+                          <th
+                            align="center"
+                            scope="col"
+                            style="width: 100px; text-align: center"
+                          >
+                            Edit
+                          </th>
+  
+                          <th scope="col" style="width: 37px">&nbsp;</th>
+                        </tr>
+                      </thead>
+                    </table>
+                    <div class="col-md-8" style="padding-left: 0px">
+                      <div class="contentss">
+                        <table class="dashboard">
+                          <tbody>
+                            <tr *ngFor="let list of globalResponse.response | filter:SearchText">
+                              <td style="width: 120px;">
+                                <div style="margin-left: 50px;">
+                                  <span> 
+                                  
+                                {{list.mod_name}}
+                                   </span>
+                                </div>
+                              </td>
+                           
+                              <td *ngIf="list.mod_admin === 'Y'; else adminBlock" style="width: 100px;">
+                                <div style="text-align: center;"><span
+                                >Admin</span>
+                                </div>
+                              </td>
+                            
+                              <ng-template #adminBlock>
+                                <td style="width: 100px;">
+                                  <div style="text-align: center;"><span
+                                  >--</span>
+                                  </div>
+                                  </td>
+                              </ng-template>
+                                <td *ngIf="list.mod_front === 'Y'; else frontBlock" style="width: 100px;">
+                                  <div style="text-align: center;"><span
+                                   >Front End</span>
+                                  </div>
+                                </td>
+                              
+                                <ng-template #frontBlock>
+                                  <td style="width: 100px;">
+                                    <div style="text-align: center;"><span
+                                   >--</span>
+                                    </div>
+                                    </td>
+                                </ng-template>
+                            
+  
+                              <!-- <td style="width: 100px;">
+        <div style="text-align: center;"><span
+        style="font-size: 12px;">{{list.Role_Status}}</span>
+        </div>
+        </td> -->
+  
+                              <td
+                                *ngIf="list.mod_status === 'Y'; else elseBlock"
+                                style="width: 100px"
+                              >
+                                <div class="Active" style="text-align: center">
+                                  <span>Active</span>
+                                </div>
+                              </td>
+  
+                              <ng-template #elseBlock>
+                                <td style="width: 100px">
+                                  <div
+                                    class="InActive"
+                                    style="text-align: center"
+                                  >
+                                    <span>Inactive</span>
+                                  </div>
+                                </td>
+                              </ng-template>
+  
+                              <td align="center" style="width: 37px; cursor: pointer;">
+                                <a (click)="ActionAdmin(list)"
+                                  ><img src="assets/Images/edt_icon.png"
+                                /></a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+     <div  class="col-9 pt-3">
+<div *ngIf="editadmin">
+            <div  class="contentpanel_bg"> 
+              <div class="container">
+               <div class="row">
+                 <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+                   <div class="panel panel-default">
+   
+                     <div class="panel-body">
+                       <form role="form" [formGroup]="adminModuleForm" (ngSubmit)="onSubmit()">
+                         <div class="row">
+                           <div class="col-xs-6 col-sm-6 col-md-6">
+                             <div class="form-group">
+                                 
+                               <label for="mod_name">Module Name:</label>
+                               <input type="text" formControlName="mod_name" class="form-control" maxlength="51" [(ngModel)]="editAdminModule.mod_name" [ngClass]="{ 'is-invalid': submitted &amp;&amp; adminModuleForm.controls.mod_name.errors }" />
+                               <div *ngIf="submitted &amp;&amp; adminModuleForm.controls.mod_name.errors" class="text-danger">
+                                   <div *ngIf="adminModuleForm.controls.mod_name.errors.required">Module Name is required</div>
+                                   <div *ngIf="adminModuleForm.controls.mod_name.errors.pattern">Module Name must be String</div>
+                                   <div *ngIf="adminModuleForm.controls.mod_name.errors.maxlength">Module Name Limit is Exceeded</div>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+           
+                         <div class="row" >
+                           <div class="col-xs-6 col-sm-6 col-md-6">
+                             <div class="form-group">
+                             
+                                 <label for="mod_seq">Sequence :</label>
+                                 <input type="text" formControlName="mod_seq" class="form-control"maxlength="6"  [(ngModel)]="editAdminModule.mod_seq"  [ngClass]="{ 'is-invalid': submitted &amp;&amp; adminModuleForm.controls.mod_seq.errors }" />
+                                 <div *ngIf="submitted &amp;&amp; adminModuleForm.controls.mod_seq.errors" class="text-danger">
+                                     <div *ngIf="adminModuleForm.controls.mod_seq.errors.required">Sequence is required</div>
+                                     <div *ngIf="adminModuleForm.controls.mod_seq.errors.pattern">Sequence must be Number</div>
+                                     <div *ngIf="adminModuleForm.controls.mod_seq.errors.maxlength">Sequence limit Exceeded</div>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                        
+   
+                         <div class="row">
+                           <div class="col-xs-3 col-sm-3 col-md-3">
+                             <div class="form-group">
+                               
+                             
+                               <label for="mod_admin">Admin:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                               <input class="form-check-input"  type="radio" value="Y"  name="mod_admin" [(ngModel)]="editAdminModule.mod_admin"  formControlName="mod_admin"  >
+                               <label for="admin">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                               <input class="form-check-input" type="radio" value="N" name="mod_admin" [(ngModel)]="editAdminModule.mod_admin" formControlName="mod_admin" >
+                               <label for="frontend">No</label>
+       
+                             </div>
+                             </div>
+                           </div>
+           
+                         <div class="row">
+                           <div class="col-xs-3 col-sm-3 col-md-3">
+                             <div class="form-group">
+                               
+                           
+        <label for="mod_front">Frontend:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input class="form-check-input"  type="radio" value="Y"  name="mod_front" [(ngModel)]="editAdminModule.mod_front" formControlName="mod_front"  >
+        <label for="admin">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input class="form-check-input" type="radio" value="N" name="mod_front" [(ngModel)]="editAdminModule.mod_front" formControlName="mod_front">
+        <label for="frontend">No</label>
+                             </div>
+   
+                             </div>
+                           </div>
+           
+                         <div class="row">
+                           <div class="col-xs-4 col-sm-4 col-md-4">
+                             <div class="form-group">
+
+                                 <label for="mod_status" class="form-check-label">Status :</label>             
+                                 <input type="checkbox" formControlName="mod_status" value="y" class="offset-lg-1 larger"  [(ngModel)]="editAdminModule.mod_status" [ngClass]="{ 'is-invalid': submitted &amp;&amp; adminModuleForm.controls.mod_status.errors }" />
+                                 <div *ngIf="submitted &amp;&amp; adminModuleForm.controls.mod_status.errors" class="text-danger">
+                                 <div *ngIf="adminModuleForm.controls.mod_status.errors">Status required</div>
+                             </div>
+                               </div>
+                             </div>
+                           </div>
+                           
+                           
+           
+           
+                       
+                         <div class="row">
+                           <div class="col-xs-6 col-sm-6 col-md-6">
+                         
+                           <div class="col-md-8">
+                            <button type="button" (click)="updateAdminonSubmit()" class="btnSubmit">Save</button>&nbsp;&nbsp;
+                            <button type="button" (click)="backgrid()" class="btnSubmit">Cancel</button>
+                           </div>
+           
+                         </div>
+                         </div>
+                       </form>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+            </div>
+      
+                        <div class="content_body">
+                          <table style="width: 1000px; float: left">
+                            <tbody>
+                              <tr>
+                                <td></td>
+                                <td style="vertical-align: top">
+                                  
+                                  <table class="gridheader">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 462px; font-weight: bold;">
+                                              <div style="float: left">
+                                                  <div class="getuser">
+                                                      <label class="getuserlabel">Modules</label>
+                                                  </div>
+                                                  <div class="AddIcon">
+                                                    <a
+                                                    (click)="addSubMod()"
+                                                    style="cursor: pointer;"
+                                                    ><img src="assets/Images/brand_plus.png"></a>
+                                                  </div>
+                                              </div>
+                                            </th>
+                                            <th style="width: 500px; text-align: center">
+                                              <div style="float: left">                                       
+                                              </div>
+                                          </th>    
+                                          <th><div class= "search">
+                                            <input type="text" placeholder="Search" [(ngModel)]="SearchText" />
+                                          </div></th>           
+                                          <th style="width:10%; text-align: center" colspan="2">
+                                                      <div class="DivAZ1">A - Z</div>
+                                                      <div class="DivAZ2">
+                                                         <a><img src="assets/Images/sorting_img.png"></a>
+                                                     </div>  
+                                          </th>
+                                         
+                                        </tr>
+                                    </thead>
+                                </table>
+                  
+                  
+                                  <div>
+                                    <table style="display: none;" class="dashboard">
+                                      <thead>
+                                        <tr class="colHeader">
+                                          <th style="width: 6%"></th>
+                                          <!-- <th align="center" scope="col" style="width: 150px;">
+                    Id
+                    </th> -->
+                                          <th
+                                            align="center"
+                                            scope="col"
+                                            style="width: 70px; text-align: center"
+                                          >
+                                          Module Name
+                                          </th>
+                                          <th
+                                            align="center"
+                                            scope="col"
+                                            style="width: 100px; text-align: center"
+                                          >
+                                          Module Path
+                                          </th>
+                                          <th
+                                            align="center"
+                                            scope="col"
+                                            style="width: 100px; text-align: center"
+                                          >
+                                            Status
+                                          </th>
+                                          <th
+                                            align="center"
+                                            scope="col"
+                                            style="width: 100px; text-align: center"
+                                          >
+                                           Edit
+                                          </th>
+                                         
+                  
+                                          <th scope="col" style="width: 37px">&nbsp;</th>
+                                        </tr>
+                                      </thead>
+                                    </table>
+                                    <div class="col-md-8" style="padding-left: 0px">
+                                      <div class="contentss">
+                                        <table class="dashboard">
+                                          <tbody>
+                                            <tr *ngFor="let list of subModuleResponse.response | filter:SearchText">
+                                              <td style="width: 120px;">
+                                                <div style="margin-left: 50px;">
+                                                  <span> 
+                                                  
+                                                    {{list.smod_name}}
+                                                   </span>
+                                                </div>
+                                              </td>
+                                              <td style="width: 120px;">
+                                                <div style="margin-left: 50px;">
+                                                  <span> 
+                                                  
+                                                    {{list.smod_filename}}
+                                                   </span>
+                                                </div>
+                                              </td>
+                                         
+                                              <td
+                                                *ngIf="list.smod_active === 'Y'; else elseBlock"
+                                                style="width: 100px"
+                                              >
+                                                <div class="Active" style="text-align: center">
+                                                  <span>Active</span>
+                                                </div>
+                                              </td>
+                  
+                                              <ng-template #elseBlock>
+                                                <td style="width: 100px">
+                                                  <div
+                                                    class="InActive"
+                                                    style="text-align: center"
+                                                  >
+                                                    <span>Inactive</span>
+                                                  </div>
+                                                </td>
+                                              </ng-template>
+                  
+                                              <td align="center" style="width: 37px">
+                                                <a (click)="ActionSubAdmin(list)"
+                                                  ><img src="assets/Images/edt_icon.png"
+                                                /></a>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                          <p style="color: whitesmoke; ">{{subResult}}</p>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                
+                        </div>
+
+                        <div *ngIf="editsubmodule">
+                          <div  class="contentpanel_bg"> 
+                            <div class="container">
+                             <div class="row">
+                               <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+                                 <div class="panel panel-default">
+                 
+                                   <div class="panel-body">
+                                     <form role="form" [formGroup]="subModuleForm" (ngSubmit)="onSubmit()">
+                                       <div class="row">
+                                         <div class="col-xs-6 col-sm-6 col-md-6">
+                                           <div class="form-group">
+                                               
+                                            <label for="smod_name">Module Name:</label>
+                                                <input type="text" formControlName="smod_name" class="form-control" maxlength="51" [(ngModel)]="editAdminSubModule.smod_name"  [ngClass]="{ 'is-invalid': submitted &amp;&amp; subModuleForm.controls.smod_name.errors }" />
+                                                        <div *ngIf="submitted &amp;&amp; subModuleForm.controls.smod_name.errors" class="text-danger">
+                                                            <div *ngIf="subModuleForm.controls.smod_name.errors.required">Module Name is required</div>
+                                                            <div *ngIf="subModuleForm.controls.smod_name.errors.pattern">Module Name must be String</div>
+                                                            <div *ngIf="subModuleForm.controls.smod_name.errors.maxlength">Module Name Limit is Exceeded</div>
+                                                        </div>
+                                           </div>
+                                         </div>
+                                       </div>
+                         
+                                       <div class="row">
+                                         <div class="col-xs-6 col-sm-6 col-md-6">
+                                           <div class="form-group">
+                                           
+                                            <label for="smod_filename">Module Path:</label>
+                                          <input type="text" formControlName="smod_filename"  class="form-control" maxlength="51" [(ngModel)]="editAdminSubModule.smod_filename" [ngClass]="{ 'is-invalid': submitted &amp;&amp; subModuleForm.controls.smod_filename.errors }" />
+                                                        <div *ngIf="submitted &amp;&amp; subModuleForm.controls.smod_filename.errors" class="text-danger">
+                                                            <div *ngIf="subModuleForm.controls.smod_filename.errors.required">Module Path  is required</div>
+                                                            <div *ngIf="subModuleForm.controls.smod_filename.errors.pattern">Module Path  must be String</div>
+                                                            <div *ngIf="subModuleForm.controls.smod_filename.errors.maxlength">Module Path  Limit is Exceeded</div>
+                                                        </div>
+                                             </div>
+                                           </div>
+                                         </div>
+                                      
+                 
+                                       <div class="row">
+                                         <div class="col-xs-6 col-sm-6 col-md-6">
+                                           <div class="form-group">
+                                             
+                                           
+                                            <label for="mod_seq">Sequence :</label>
+                    <input type="text" formControlName="smod_seq"  class="form-control"maxlength="6" [(ngModel)]="editAdminSubModule.smod_seq"  [ngClass]="{ 'is-invalid': submitted &amp;&amp; subModuleForm.controls.smod_seq.errors }" />
+                              <div *ngIf="submitted &amp;&amp; subModuleForm.controls.smod_seq.errors" class="text-danger">
+                                  <div *ngIf="subModuleForm.controls.smod_seq.errors.required">Sequence is required</div>
+                                  <div *ngIf="subModuleForm.controls.smod_seq.errors.pattern">Sequence must be Number</div>
+                                  <div *ngIf="subModuleForm.controls.smod_seq.errors.maxlength">Sequence limit Exceeded</div>
+                              </div>
+                     
+                                           </div>
+                                           </div>
+                                         </div>
+                         
+                                       <div class="row">
+                                         <div class="col-xs-3 col-sm-3 col-md-3">
+                                           <div class="form-group">
+                                             
+                                         
+                                            <label for="smod_active" class="form-check-label">Status :</label>                 
+                                            <input type="checkbox" formControlName="smod_active" value="y" class="offset-lg-1 larger" [(ngModel)]="editAdminSubModule.smod_active" [ngClass]="{ 'is-invalid': submitted &amp;&amp; subModuleForm.controls.smod_active.errors }" />
+                                            <div *ngIf="submitted &amp;&amp; subModuleForm.controls.smod_active.errors" class="text-danger">
+                                            <div *ngIf="subModuleForm.controls.smod_active.errors">Status required</div>
+                                        </div>
+                                           </div>
+                 
+                                           </div>
+                                         </div>
+                          <div class="row">
+                                         <div class="col-xs-6 col-sm-6 col-md-6">
+                                       
+                                         <div class="col-md-8">
+                                          <button type="button" (click)="updateSubModuleonSubmit()" class="btnSubmit">Save</button>&nbsp;&nbsp;
+                                          <button (click)="backeditadmin()" class="btnSubmit">Cancel</button>
+                                         </div>
+                         
+                                       </div>
+                                       </div>
+                                     </form>
+                                   </div>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                          </div>
+                           
+                                      </div>
+   
+                                      <div *ngIf="addsubmodule">
+                                        <div  class="contentpanel_bg"> 
+                                          <div class="container">
+                                           <div class="row">
+                                             <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+                                               <div class="panel panel-default">
+                               
+                                                 <div class="panel-body">
+                                                   <form role="form" [formGroup]="addSubModuleForm" (ngSubmit)="onSubmit()">
+                                                     <div class="row">
+                                                       <div class="col-xs-6 col-sm-6 col-md-6">
+                                                         <div class="form-group">
+                                                             
+                                                          <label for="smod_name">Module Name:</label>
+                                                           <input type="text" formControlName="smod_name" class="form-control" maxlength="51"  [ngClass]="{ 'is-invalid': submitted &amp;&amp; addSubModuleForm.controls.smod_name.errors }" />
+                                                                      <div *ngIf="submitted &amp;&amp; addSubModuleForm.controls.smod_name.errors" class="text-danger">
+                                                                          <div *ngIf="addSubModuleForm.controls.smod_name.errors.required">Module Name is required</div>
+                                                                          <div *ngIf="addSubModuleForm.controls.smod_name.errors.pattern">Module Name must be String</div>
+                                                                          <div *ngIf="addSubModuleForm.controls.smod_name.errors.maxlength">Module Name Limit is Exceeded</div>
+                                                                      </div>
+                                                         </div>
+                                                       </div>
+                                                     </div>
+                                       
+                                                     <div class="row">
+                                                       <div class="col-xs-6 col-sm-6 col-md-6">
+                                                         <div class="form-group">
+                                                         
+                                                          <label for="smod_filename">Module Path:</label>
+                  
+                            <input type="text" formControlName="smod_filename"  class="form-control" maxlength="51"  [ngClass]="{ 'is-invalid': submitted &amp;&amp; addSubModuleForm.controls.smod_filename.errors }" />
+                                    <div *ngIf="submitted &amp;&amp; addSubModuleForm.controls.smod_filename.errors" class="text-danger">
+                                        <div *ngIf="addSubModuleForm.controls.smod_filename.errors.required">Module Path  is required</div>
+                                        <div *ngIf="addSubModuleForm.controls.smod_filename.errors.pattern">Module Path  must be String</div>
+                                        <div *ngIf="addSubModuleForm.controls.smod_filename.errors.maxlength">Module Path  Limit is Exceeded</div>
+                                    </div>
+                                                           </div>
+                                                         </div>
+                                                       </div>
+                                                    
+                               
+                                                     <div class="row">
+                                                       <div class="col-xs-6 col-sm-6 col-md-6">
+                                                         <div class="form-group">
+                                                           
+                                                         
+                                                          <label for="mod_seq">Sequence :</label>
+                                  
+                                                                <input type="text" formControlName="smod_seq" class="form-control"maxlength="6"   [ngClass]="{ 'is-invalid': submitted &amp;&amp; addSubModuleForm.controls.smod_seq.errors }" />
+                                                                <div *ngIf="submitted &amp;&amp; addSubModuleForm.controls.smod_seq.errors" class="text-danger">
+                                                                    <div *ngIf="addSubModuleForm.controls.smod_seq.errors.required">Sequence is required</div>
+                                                                    <div *ngIf="addSubModuleForm.controls.smod_seq.errors.pattern">Sequence must be Number</div>
+                                                                    <div *ngIf="addSubModuleForm.controls.smod_seq.errors.maxlength">Sequence limit Exceeded</div>
+                                                                </div>
+                                   
+                                                         </div>
+                                                         </div>
+                                                       </div>
+                                       
+                                                     <div class="row">
+                                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                                         <div class="form-group">
+                                                           
+                                                       
+                                                          <label for="smod_active" class="form-check-label">Status :</label>                 
+                                                          <input type="checkbox" formControlName="smod_active" value="y" class="larger" [ngClass]="{ 'is-invalid': submitted &amp;&amp; addSubModuleForm.controls.smod_active.errors }" />
+                                                          <div *ngIf="submitted &amp;&amp; addSubModuleForm.controls.smod_active.errors" class="text-danger">
+                                                          <div *ngIf="addSubModuleForm.controls.smod_active.errors">Status required</div>
+                                                      </div>
+                                                         </div>
+                               
+                                                         </div>
+                                                       </div>
+                                        <div class="row">
+                                                       <div class="col-xs-6 col-sm-6 col-md-6">
+                                                     
+                                                       <div class="col-md-8">
+                                                        <button type="button" (click)="addSubModuleonSubmit()" class="btnSubmit">Save</button>&nbsp;&nbsp;
+                                                        <button type="button" (click)="backeditadmin()" class="btnSubmit">Cancel</button>
+                                                       </div>
+                                       
+                                                     </div>
+                                                     </div>
+                                                   </form>
+                                                 </div>
+                                               </div>
+                                             </div>
+                                           </div>
+                                         </div>
+                                        </div>
+                                         
+                                                    </div>
+          
+                                                    <div *ngIf="addadmin">
+                                                      <div  class="contentpanel_bg"> 
+                                                        <div class="container">
+                                                         <div class="row">
+                                                           <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+                                                             <div class="panel panel-default">
+                                             
+                                                               <div class="panel-body">
+                                                                 <form role="form" [formGroup]="addAdminModuleForm" (ngSubmit)="onSubmit()">
+                                                                   <div class="row">
+                                                                     <div class="col-xs-6 col-sm-6 col-md-6">
+                                                                       <div class="form-group">
+                                                                           
+                                                                        <label for="mod_name">Module Name:</label>
+                   
+                              <input type="text" formControlName="mod_name" class="form-control" maxlength="51"  [ngClass]="{ 'is-invalid': submitted &amp;&amp; addAdminModuleForm.controls.mod_name.errors }" />
+                                      <div *ngIf="submitted &amp;&amp; addAdminModuleForm.controls.mod_name.errors" class="text-danger">
+                                          <div *ngIf="addAdminModuleForm.controls.mod_name.errors.required">Module Name is required</div>
+                                          <div *ngIf="addAdminModuleForm.controls.mod_name.errors.pattern">Module Name must be String</div>
+                                          <div *ngIf="addAdminModuleForm.controls.mod_name.errors.maxlength">Module Name Limit is Exceeded</div>
+                                      </div>
+                                                                       </div>
+                                                                     </div>
+                                                                   </div>
+                                                     
+                                                                   <div class="row" >
+                                                                     <div class="col-xs-6 col-sm-6 col-md-6">
+                                                                       <div class="form-group">
+                                                                       
+                                                                        <label for="mod_seq">Sequence :</label>
+                                                                       
+                                                                              <input type="text" formControlName="mod_seq" class="form-control"maxlength="6"  [ngClass]="{ 'is-invalid': submitted &amp;&amp; addAdminModuleForm.controls.mod_seq.errors }" />
+                                                                              <div *ngIf="submitted &amp;&amp; addAdminModuleForm.controls.mod_seq.errors" class="text-danger">
+                                                                                  <div *ngIf="addAdminModuleForm.controls.mod_seq.errors.required">Sequence is required</div>
+                                                                                  <div *ngIf="addAdminModuleForm.controls.mod_seq.errors.pattern">Sequence must be Number</div>
+                                                                                  <div *ngIf="addAdminModuleForm.controls.mod_seq.errors.maxlength">Sequence limit Exceeded</div>
+                                                                              </div>
+                                                                         </div>
+                                                                       </div>
+                                                                     </div>
+                                                                  
+                                             
+                                                                   <div class="row">
+                                                                     <div class="col-xs-3 col-sm-3 col-md-3">
+                                                                       <div class="form-group">
+                                                                         
+                                                                       
+                                                                        <label for="mod_admin">Admin:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                        <input class="form-check-input"  type="radio" value="Y"  name="mod_admin"   formControlName="mod_admin"  >
+                                                                        <label for="admin">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                        <input class="form-check-input" type="radio" value="N" name="mod_admin" formControlName="mod_admin" >
+                                                                        <label for="frontend">No</label>
+                                                 
+                                                                       </div>
+                                                                       </div>
+                                                                     </div>
+
+                                                                     <div class="row">
+                                                                      <div class="col-xs-3 col-sm-3 col-md-3">
+                                                                        <div class="form-group">
+                                                                          
+                                                                        
+                                                                          <label for="mod_front">Frontend:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                          <input class="form-check-input"  type="radio" value="Y"  name="mod_front" formControlName="mod_front"  >
+                                                                          <label for="admin">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                          <input class="form-check-input" type="radio" value="N" name="mod_front" formControlName="mod_front">
+                                                                          <label for="frontend">No</label>
+                                                  
+                                                                        </div>
+                                                                        </div>
+                                                                      </div>
+                                                     
+                                                                   <div class="row">
+                                                                     <div class="col-xs-3 col-sm-3 col-md-3">
+                                                                       <div class="form-group">
+                                                                         
+                                                                     
+                                                                        <label for="mod_status" class="form-check-label">Status :</label>             
+                                                                        <input type="checkbox" formControlName="mod_status" value="y" class="larger"  [ngClass]="{ 'is-invalid': submitted &amp;&amp; addAdminModuleForm.controls.mod_status.errors }" />
+                                                                        <div *ngIf="submitted &amp;&amp; addAdminModuleForm.controls.mod_status.errors" class="text-danger">
+                                                                        <div *ngIf="addAdminModuleForm.controls.mod_status.errors">Status required</div>
+                                                                    </div>
+                                                                       </div>
+                                             
+                                                                       </div>
+                                                                     </div>
+                                                      <div class="row">
+                                                                     <div class="col-xs-6 col-sm-6 col-md-6">
+                                                                   
+                                                                     <div class="col-md-8">
+                                                                      <button type="button" (click)="addAdminonSubmit()" class="btnSubmit">Save</button>&nbsp;&nbsp;
+                                                                      <button type="button" (click)="afteradd()" class="btnSubmit">Cancel</button>
+                                                                     </div>
+                                                     
+                                                                   </div>
+                                                                   </div>
+                                                                 </form>
+                                                               </div>
+                                                             </div>
+                                                           </div>
+                                                         </div>
+                                                       </div>
+                                                      </div>
+                                                       
+                                                                  </div>
+       
+      </div>
+    </div>
+  </div>
+  

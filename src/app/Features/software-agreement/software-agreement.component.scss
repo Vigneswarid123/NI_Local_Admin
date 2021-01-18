@@ -1,0 +1,75 @@
+.divforscrollingtop{border-radius: 7px; width: 950px; height: 850px; margin: 0 auto; background: #202020; margin-top: 20px;}
+.header{position: relative;top: 10px; width: 850px; height: 100px;margin-left: 50px; background-color: #252525;}
+.divforScroll{width: 950px; height: auto; margin: 0 auto;}
+.nilogo{width: 180px; height: 70%; background-image: url('../../../assets/Images/NETIMPACT_logo.png'); background-repeat: no-repeat; top: 37px; background-size: contain; float: left; position: relative; left: 50px;}
+.nitext{float: right; width: 420px; text-align: right; color: #577f63; letter-spacing: 1px; padding-top: 42px; font-size: 25px; padding-right: 100px;}
+.divmiddleScroll{width: 950px; height: auto; background: #202020; color: #fff;border-radius:7px;}
+.ContractDlrName{font-size: 18px; color: #fff; font-weight: bold; margin-left: 70px; margin-top: 30px; width: 370px; float: left;font-family: 'HurmeGeometricSans_No1_5_Semibold';}
+.Dlrcss{width: 300px; margin-left: 70px; float: left;font-size: 13px;}
+.DlrPhone{margin-left: 70px; width: 400px; float: left;font-size: 13px;}
+.divinmiddle{width: 500px; height: 100%; float: left;}
+.middletable{margin-top: 30px; width: 470px;}
+.tabletop{color: #577f63;  font-size: 15px; text-align: right;}
+.tablebottom{font-size: 15px; font-weight: 400;}
+.AgreementInvoiceDate{display: none; border: 1px solid #ccc; width: 85px; height: 22px; text-align: left; padding-left: 5px; background-color: white !important;}
+.firststrip{width: 850px; height: 30px; background: url(../../../assets/Images/strip1.png); background-size: contain; margin-left: 50px; font-size: 14px; color: white;}
+.divScrolling{width: 850px; height: 100px; overflow-x: hidden; overflow-y: auto; margin-left: 50px; font-size: 14px;}
+.Contact{font-size: 13px; width: 190px; padding: 20px; background: #252525; float: left; padding-left: 25px;}
+.Title{font-size: 13px; width: 180px; padding: 20px; background: transparent; float: left; color: #577f63; padding-left: 23px;}
+.Cell{font-size: 13px; width: 180px; padding: 20px; background: #252525; float: left; padding-left: 33px;}
+.Email{font-size: 13px; width: 290px; padding: 20px; background: transparent; float: left; padding-left: 23px; word-wrap: break-word;}
+.secondstrip{width: 850px; height: 30px; background: black; margin-left: 50px; font-size: 14px; color: white; margin-top: 50px; background: url(../../../assets/Images/tab2.png); background-size: contain;}
+.dealerid{font-size: 13px; width: 188px; padding: 20px; background: #252525; float: left; padding-left: 34px;}
+.Product{width: 182px; padding: 20px; background: transparent; float: left; color: #577f63; font-weight: 600; letter-spacing: 0.5px; padding-left: 25px;font-size: 13px;}
+.Term{width: 180px; padding: 20px; background: #252525; float: left; padding-left: 33px;font-size: 13px;}
+.Fee{width: 280px; padding: 20px; background: transparent; float: left; text-align: center; color: #577f63; font-weight: 600; letter-spacing: 0.5px; padding-left: 72px; text-align: left; margin-left: 70px; width: 230px;font-size: 13px;}
+.divScrolling1{width: 850px; height: 75px; overflow-x: hidden; overflow-y: auto; margin-left: 50px; font-size: 16px;}
+.divfortotalfee{width: 850px; height: 120px; margin-left: 60px;}
+.feetable{float: right; width: 500px; margin-right: 18px; line-height: 25px; font-size: 16px;font-family: 'HurmeGeometricSans_No1_5_Semibold';}
+.topfee{text-align: right; color: #b3a8a8;width: 350px;font-size: 16px;}
+.bottomfee{text-align: left; padding-left: 15px; color: #b3a8a8; font-size: 16px;}
+.TotalMonthly{font-weight: bold;font-size: 16px; text-align: right;}
+.MonthlyResult{text-align: left; padding-left: 15px; font-weight: bold; font-size: 16px;}
+.DealershipTerms{width: 850px; height: 280px; background: #252525;margin-left: 50px;}
+.DealershipSubTerms{width: 835px; font-size: 12px; font-style: italic; padding-top: 20px;padding-left: 24px;text-align: justify;}
+.custSignature{display: block; cursor: pointer; width: 20px; height: 20px; float: right; background: url('../../../assets/Images/remove-icon.png') no-repeat; background-size: contain; margin-top: -145px; margin-right: 17px;}
+.ceoSignature{display: block; cursor: pointer; width: 20px; height: 20px; float: right; background: url('../../../assets/Images/remove-icon.png') no-repeat; background-size: contain; margin-top: -65px; margin-right: 17px;}
+.AcceptanceDate{font-weight: bold; font-size: 15px;font-family: 'HurmeGeometricSans_No1_5_Semibold';}
+.AcceptanceName{font-weight: bold; letter-spacing: 0.5px; font-size: 15px;font-family: 'HurmeGeometricSans_No1_5_Semibold';}
+.Acceptance{width: 826px; height: 220px; margin-left: 24px;}
+.AcptUse{width: 375px; height: 160px; float: left; line-height: 22px;font-size: 12px;}
+.Presented{margin-top: 20px; color: #577f63; font-weight: 500; font-size: 12px; width: 280px;}
+.custceo{width: 450px; height: 160px; float: left; margin-top: 20px;}
+.CustomerSign{width: 400px; height: 50px; background: white; display: block;}
+.CustomerName{width: 400px; float: left; height: 20px; font-style: italic; font-size: 12px; margin-top: 5px; display: block; text-align: center;}
+.CustomerSubName{ float: left;font-size: 10px;font-style: italic;}
+.CustSignDate{width: 50px; float: right; margin-right: 60px;font-size: 10px;font-style: italic;}
+.CeoSign{width: 400px; height: 50px; background: white; float: left; margin-top: 5px; display: block; text-align: center;}
+.CeoName{width: 400px; float: left; height: 20px; font-style: italic; font-size: 12px; margin-top: 5px; display: block;}
+.CeoSubName{ float: left;font-size: 10px;font-style: italic;}
+.CEOSignDate{width: 50px; float: right; margin-right: 60px;font-size: 10px;font-style: italic;}
+.dwnarrow{width: 40px; height: 30px; margin: auto; text-align: center; margin-left: 140px;}
+.SoftwareImpact{float: left; font-style: italic; font-size: 12px; margin-left: 75px; margin-top: 20px;}
+.SoftwareImpactNet{margin: 0 auto; width: 300px; height: 50px;}
+.AvenirLTStd-Light{width: 850px; margin: 0 auto; padding-top: 20px; float: left; margin-left: 40px;}
+.AvenirLTStd{font-family: 'AvenirLTStd-Light'; color: #706f6f;font-size: 16px; width: 83px; height: 20px; border-right: 1px solid #706f6f; float: left;}
+.erawtfosesu{width: 700px; color: #fff; font-size: 18px; font-weight: bold; float: left; margin-left: 20px; text-transform: uppercase;font-family: 'HurmeGeometricSans_No1_5_Semibold';}
+.snrevog{width: 850px; text-transform: uppercase; color: #fff; text-align: justify; font-size: 12px; float: left; margin-left: 40px; margin-top: 20px;}
+.mottobredrob{width: 850px; border-bottom: 1px solid #ccc; float: left; margin-left: 40px; margin-top: 20px;margin-bottom: 13px;}
+.dnasnoitidnoc{color: #fff; font-size: 12px; width: 850px; margin: 0 auto; max-height: 500px; overflow-x: hidden; overflow-y: auto; float: left; margin-left: 40px;}
+.dnasnoitidnoc::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
+  background-color: #aaa;
+}
+
+.dnasnoitidnoc::-webkit-scrollbar-thumb {
+  width: 10px;
+  height: 8px;
+  background-color: #577f63;
+}
+
+.button{background-color: #577f63;color: white; width: 100px;}
+.smretkhcyal{display:#fff; width: 900px; height: 25px; color: black; font-size: 12px; float: left; margin-left: 40px; margin-top: 20px;}
+.timbusvid{width: 150px; height: 25px; text-align: center; border-radius: 3px; margin: 0 auto; cursor: pointer; margin-left: 385px; float: left; padding-top: 2px;}
+.gnillorcs_smret{text-align: justify;padding: 10px;margin-left: 30px;width: 800px;}

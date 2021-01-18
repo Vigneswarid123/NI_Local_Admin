@@ -1,0 +1,129 @@
+<div>
+   <div class="dashboard_bg">
+      <app-header></app-header>
+      <div class="container-fluid pt64">
+        <div class="row">
+          <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+            <app-left-panel class="w-100"></app-left-panel>
+        </div>
+    
+ <div class="col-9 pt-3">
+
+  <div class="row justify-content-end">
+    <div class="login-container">
+        <form [formGroup]="modelForm" (ngSubmit)="onSubmit()">                                                  
+         <div>
+            <div class="form-group  drop_dwn">
+              <select formControlName="year" class="drop"  (change)="visible($event)">
+                <option value="2020">2020</option>
+                <option *ngFor="let yearlist of Years">{{yearlist.value}}</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <div class="form-group  drop_dwn">
+              <select formControlName="model" class="drop"  (change)="getid($event)">
+                <option value="">All</option>
+                <option *ngFor="let list of Brands.response" value="{{list.brand_chrome_id}}">{{list.brand_name}}</option>
+              </select>    
+            </div>
+          </div>                
+          <div>
+           <input type="submit" class="button" value="Search" >  
+          </div>
+        </form>       
+      </div>
+    </div>
+  <div class="row" style="width:100%">
+    <form [formGroup]="SearchModelForm" style="width:100%"> 
+      <table class="gridheader">
+        <thead>
+            <tr>
+                <th style="width: 462px; font-weight: bold;">
+                  <div style="float: left">
+                      <div class="getuser">
+                          <label class="getuserlabel">Models</label>
+                      </div>
+                  </div>
+                </th>
+                <th style="width: 500px; text-align: center">
+                  <div style="float: left">                                       
+                  </div>
+              </th>  
+              <th style="width:10%; text-align: center" colspan="2">
+                <div style="width:80px; cursor: pointer;" (click)="atoZClick()">
+                        <div class="DivAZ1">A - Z</div>
+                        <div class="DivAZ2">
+                           <a><img src="assets/Images/sorting_img.png"></a>
+                       </div>  
+                 </div> 
+            </th>
+            <th style="padding-left: 0px;">
+                <div class="search">
+                    <input type="text" formControlName="txtSearch" placeholder="Search" autofocus (keyup)="onSearch()">
+                </div>
+                <div style="float: right; margin-top: -22px; margin-right: 6px;"><img src="assets/Images/Search-Icon.png"></div>
+            </th>
+              <!-- <th><div class= "search">
+                <input type="text" placeholder="Search" [(ngModel)]="SearchText" />
+              </div></th>              -->
+            </tr>
+        </thead>
+    </table>
+  </form>
+  </div>
+  <div class="row" *ngIf="atozFltr" style="height: 50px;margin-bottom: 10px;">
+    <div style="width:100%;">
+       <app-atoz-filter (onAlphaClick)="onAlphaCatch($event)"></app-atoz-filter>
+      </div>
+  </div>
+    <div class="row">
+            <div class="contentss">
+              <table class="dashboard">
+                <thead style="display:none;">
+                  <tr>
+                     <th>MODEL CODE</th>
+                     <th>MODEL NAME</th>
+                     <th>MODEL STATUS</th>
+                     <!-- <th>UPDATE</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="hide">{{Result}}</tr>
+                  <ng-container *ngIf="ModelInfo | alphaFilter : alphaSrch: alphaColumns :'inventory' as Modelsdata; else noItems"> 
+                  <tr *ngFor="let list of Modelsdata">
+                    <td style="width: 30%; text-align: center;">{{list.modelCode}}</td>
+                    <td style="width: 50%;">{{list.modelYear}} {{list.div_name}} {{list.modelName}}
+                    </td>
+                    <td *ngIf="list.modelstatus === 'Y'; else elseBlock" style="width: 100px;">
+                      <div class="Active"><span> Active</span>
+                      </div>
+                    </td>
+                  
+                    <ng-template #elseBlock>
+                      <td>
+                        <div class="InActive" ><span>Inactive</span>
+                        </div>
+                        </td>
+                    </ng-template>
+                      <!-- <td>
+                          <a (click)="action(list)"><img
+                            src="assets/Images/edit_icon.png"></a>
+                      </td> -->
+                    </tr>
+                    <ng-container *ngIf="!Modelsdata.length && hide" [ngTemplateOutlet]="noItems"></ng-container>
+                                            </ng-container>
+                      
+                                            <ng-template #noItems>
+                                               <tr><td colspan="9" style="text-align: center;">No Models Available!</td></tr>
+                                            </ng-template>
+                </tbody>
+              </table>
+            </div>  
+          </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,110 @@
+<div class="container">
+    <form [formGroup]="oemgrouppopupForm" (ngSubmit)="OnGroupSubmit()">
+        <div style="text-align: center;color: white;">OEM Group</div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label style="color: white;"> Name</label>
+                        <input type="text" class="form-control" maxlength="50" formControlName="oemgroupname" autofocus>
+                        <small class="errormessage" *ngIf=" submitted && oemgrouppopupForm.controls.oemgroupname.hasError('required')">Group Name is
+                            required
+                            
+                        </small>
+                        <small class="errormessage" *ngIf="oemgrouppopupForm.controls.oemgroupname.hasError('maxlength')">
+                            You have reached your maximum limit of characters allowed for Group Name
+                        </small>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label style="color: white;"> City</label>
+                        <input type="text" class="form-control" maxlength="51" formControlName="oemcity" autofocus>
+                     
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label style="color: white;"> Address1</label>
+                        <input type="text" class="form-control" maxlength="51" formControlName="oemaddress1" autofocus>
+                      
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label style="color: white;"> state</label>
+                        <select formControlName="oemstate" class="form-control">
+                            <option value="">select</option>
+                            <option *ngFor="let st of statesData" [value]="st.sg_id">{{st.sg_name}}</option>
+                        </select>
+                     
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label style="color: white;"> Address2</label>
+                        <input type="text" class="form-control" maxlength="51" formControlName="oemaddress2" autofocus>
+                      
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label style="color: white;"> Country</label>
+                        <select formControlName="oemcountry" class="form-control">
+                            <option value="">select</option>
+                            <option value="185">USA</option>
+                        </select>
+                     
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label style="color: white;"> phone</label>
+                        <input type="text" class="form-control" formControlName="oemphone" pattern="[0-9+( )-]{14}$"  autofocus>
+                      
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                        <label style="color: white;"> Zip</label>
+                        <input type="text" class="form-control"  maxlength="6" (keypress)="onkeyPress($event)" formControlName="oemzip" autofocus >
+                     
+                    </div>
+                </div>
+
+            </div>
+        </div>
+       
+            <div class="col-12">
+                <label style="color: white;">Logo</label>
+             </div>
+     
+             <div class="col-12">
+                     <img src="assets/Images/Upload-Icon.png" (click)="selectFile.click()">
+                     <input style="display: none;"   type="file" accept="image/*" formControlName="file" (change)="processFile($event)" #selectFile>
+             </div>
+             <div class="col-12">
+                <div class="imagePreview" *ngIf="selectedFile && selectedFile != ''">
+                    <img [src]="selectedFile"  style="width: auto;height: 100px;">
+                  
+                  </div>
+            </div>
+             <div class="col-12">
+                <div class="row" style="margin-top: 5%;">
+                <button type="submit" class="button" style="margin-left: 12px;">ok</button>
+                <button  class="button" (click)="closeBrand()"  style="margin-left: 7px;">Close</button>
+            </div>
+           
+            </div>
+        
+    </form> 
+</div>

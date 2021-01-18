@@ -1,0 +1,98 @@
+.AddButton{
+      float: right;  
+       margin-top: 60px;   
+      // position: relative;
+       margin-right: 0.1%;  
+     }
+     
+     .savebtn{
+       background-color: #577f63;
+       border-style: none;
+       color: white;
+       width: 100px;
+       border: none;
+       padding: 8px;
+     }
+     
+     .buttonsDiv{
+       margin-top: 12%;
+       margin-left: 5px;
+     
+     }         
+
+     
+            .closecls{        
+             position: absolute;
+             right: 5px;
+             top: 8px;
+             display: block;
+             font-size: 1px;
+             cursor: pointer;
+             width: auto;
+             height: 13px;
+             float: right;  
+          }
+       
+          .closeicon{
+           position: absolute;      
+           top: 9px;
+           font-size: 12px;
+            float: right;
+            cursor: pointer;
+          }
+       
+       
+          .termsList{ 
+           margin-top: 12%;
+           // margin-left: 7%;
+           // width: 80%;
+           border: 1px solid whitesmoke;
+           // position: absolute;         
+         }
+     
+     
+     .checkmark{
+       margin-top: 3px;
+     }
+     
+     .suggestermsSpan{
+       font-size: 12px;
+       margin-left: 5px;
+     }
+     
+     
+      .selectedTerms{
+       padding: 4px 5px 3px;
+       padding-right: 20px;
+       padding-left: 10px;
+       position: relative;
+       display: inline-block;
+       color: white;
+        margin-right: 3px;
+        margin-bottom: 5px;
+        top: 2px;
+        width: auto;
+        height: 30px;
+        background-color: #00a453;
+        border-radius: 50px
+      }
+     
+      .suggestedTerms {
+       display: inline-block;
+       margin-bottom: 10px;
+     }
+     
+     .suggestedTerms span {
+     padding: 4px 5px 3px;
+     padding-right: 20px;
+     padding-left: 10px;
+     position: relative;
+     color: white;
+     margin-right: 3px;
+     margin-bottom: 5px;
+     top: 2px;
+     width: auto;
+     height: 30px;
+     background-color: #00a453;
+     border-radius: 50px;
+     }

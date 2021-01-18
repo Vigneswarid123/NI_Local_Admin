@@ -1,0 +1,164 @@
+<div class="dashboard_bg">
+  <app-header></app-header>
+  <div class="container-fluid pt64">
+    <div class="row">
+      <div
+        class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav"
+        id="sidebar"
+      >
+        <app-left-panel class="w-100"></app-left-panel>
+      </div>
+
+      <div class="content_body">
+        <table style="width: 1000px; float: left">
+          <tbody>
+            <tr>
+              <td></td>
+              <td style="vertical-align: top">
+                <table class="gridheader">
+                  <thead>
+                    <tr>
+                      <th style="width: 462px; font-weight: bold">
+                        <div style="float: left">
+                          <div class="getuser">
+                            <label class="getuserlabel">Incentive Types</label>
+                          </div>
+                          <div class="AddIcon">
+                            <a
+                              [routerLink]="['/incentiveTypesAdd']"
+                              routerLinkActive="router-link-active"
+                              style="cursor: pointer"
+                              ><img src="assets/Images/brand_plus.png"
+                            /></a>
+                          </div>
+                        </div>
+                      </th>
+                      <th style="width: 500px; text-align: center">
+                        <div style="float: left"></div>
+                      </th>
+
+                      <th>
+                        <div class="search">
+                          <input
+                            type="text"
+                            placeholder="Search"
+                            [(ngModel)]="SearchText"
+                          />
+                        </div>
+                      </th>
+
+                      <th style="width: 10%; text-align: center" colspan="2">
+                        <div class="DivAZ1">A - Z</div>
+                        <div class="DivAZ2">
+                          <a><img src="assets/Images/sorting_img.png" /></a>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <div>
+                  <table class="dashboard">
+                    <thead>
+                      <tr class="colHeader">
+                        <th style="width: 3%"></th>
+                        <!-- <th align="center" scope="col" style="width: 150px;">
+  Id
+  </th> -->
+                        <th
+                          align="center"
+                          scope="col"
+                          style="width: 50px; text-align: center"
+                        >
+                          Type
+                        </th>
+                        <th
+                          align="center"
+                          scope="col"
+                          style="
+                            width: 100px;
+                            text-align: center;
+                            display: none;
+                          "
+                        >
+                          Type
+                        </th>
+                        <!-- <th
+                          align="center"
+                          scope="col"
+                          style="width: 100px; text-align: center"
+                        >
+                          Frontend
+                        </th> -->
+                        <th
+                          scope="col"
+                          style="
+                            width: 100px;
+                            text-align: center;
+                            padding-left: 365px;
+                          "
+                        >
+                          Status
+                        </th>
+
+                        <th scope="col" style="width: 37px">&nbsp;</th>
+                      </tr>
+                    </thead>
+                  </table>
+                  <div class="col-md-8" style="padding-left: 0px">
+                    <div class="contentss">
+                      <table class="dashboard">
+                        <tbody
+                          *ngFor="
+                            let list of incentiveTypesArray | filter: SearchText
+                          "
+                        >
+                          <tr>
+                            <td style="width: 120px">
+                              <div style="margin-left: 50px">
+                                <span>{{ list.incentivetype_name }}</span>
+                              </div>
+                            </td>
+
+                            <td
+                              *ngIf="
+                                list.incentivetype_status === 'Y';
+                                else elseBlock
+                              "
+                              style="width: 100px"
+                            >
+                              <div class="Active" style="text-align: center">
+                                <span>Active</span>
+                              </div>
+                            </td>
+
+                            <ng-template #elseBlock>
+                              <td style="width: 100px">
+                                <div
+                                  class="InActive"
+                                  style="text-align: center"
+                                >
+                                  <span>Inactive</span>
+                                </div>
+                              </td>
+                            </ng-template>
+
+                            <td align="center" style="width: 37px">
+                              <a (click)="Action(list)"
+                                ><img src="assets/Images/edt_icon.png"
+                              /></a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

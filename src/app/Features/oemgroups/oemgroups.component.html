@@ -1,0 +1,359 @@
+<div class="dashboard_bg">
+    <app-header></app-header>
+    <div class="container-fluid pt64">
+        <div class="row">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+                <app-left-panel class="w-100"></app-left-panel>
+            </div>
+
+        <div class="content_body" *ngIf="showgrid">
+            <table style="width: 1000px; float: left;">
+                     <tbody>
+                         <tr>
+                             <td></td>
+                             <td style="vertical-align: top;">
+                                  <table class="gridheader">
+                                      <thead>
+                                          <tr>
+                                              <th style="width: 462px; font-weight: bold;">
+                                                <div style="float: left">
+                                                    <div class="getuser">
+                                                        <label class="getuserlabel">OEM Groups</label>
+                                                    </div>
+                                                    <div class="AddIcon">
+                                                        <a (click)="showAddPanel()"><img src="assets/Images/brand_plus.png"></a>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="getrolediv">
+                                                    <label class="getrolelbl">Brands</label>
+                                                </div> -->
+                                              </th>
+                                              <th style="width: 500px; text-align: center">
+                                                <div style="float: left">                                       
+                                                </div>
+                                            </th>    
+                                                     
+                                            <th style="width: 10%; text-align: center" colspan="2">
+                                                <div class="DivAZ1">A - Z</div>
+                                                <div class="DivAZ2">
+                                                   <a><img src="assets/Images/sorting_img.png"></a>
+                                               </div> 
+                                            </th>
+                                            <th>
+                                                <div>
+                                                    <input type="text" placeholder="search" [(ngModel)]="txtsearch" (keyup.enter)="getSearchData($event)">
+                                                    <img src="../../assets/Images/Search-Icon.png" class="searchimg">
+                                                </div>
+                                            </th>
+                                          </tr>
+                                      </thead>
+                                  </table>
+                                  <div >
+                                    <table class="dashboardHeader">
+                                        <thead>
+                                            <tr class="colHeader">
+                                                <th style="width:4%;"></th>
+                                                <th align="center" scope="col" style="width: 35px;">
+                                                   Group Name
+                                                </th>
+                                                <th align="center" scope="col" style="width: 190px;text-align: center;">
+                                                    Brands 
+                                                 </th>
+                                                <th align="center" scope="col" style="width: 100px;text-align: center;">
+                                                    Logo
+                                                </th>
+                                                                             
+                                                 
+                                                <th scope="col" style="width: 37px;">&nbsp;</th>
+                                               
+                                            </tr>
+                                          </thead>
+                                       </table>
+                                       <div >
+                                        <div  class="contentss">
+                                            <table class="dashboard">
+                                                <tbody *ngIf="oemgroups.length > 0">
+                                                    <tr *ngFor="let item of oemgroups" >
+                                                        <td style="width: 175px;text-align: center;"><div><span class="brandcontentcss">{{item.OEM_Name}}</span></div></td>
+                                                        <td style="width:25%;"><div style="text-align: center;" *ngIf="item.OEM_Logo !=''"><img id="imglogo" style="height: 50px;" src='{{ ImageFolder + item.OEM_Logo  }}'></div></td>
+                                                       <td  ><div style="display: flex;" *ngIf="item.brandnames !=''"><div *ngFor="let br of item.brandnames.split(',')" class="divbox">
+                                                           {{br.split('_')[1]}} 
+                                                        </div></div></td>
+                                                        <td *ngIf="item.OEM_Status == 'Y'"><div class="Active">Active</div></td>
+                                                        <td *ngIf="item.OEM_Status == 'N'"><div class="InActive">In-Active</div></td>
+                                                        <td style="width:10%; text-align: center; cursor: pointer;">
+                                                            <a (click)="editGroup(item.OEM_Id)"><img src="assets/Images/edt_icon.png"></a>
+                                                        </td> 
+                                                        <td style="width:10%; text-align: center; cursor: pointer;">
+                                                            <a (click)="deleteGroup(item.OEM_Id)"><img src="assets/Images/del_gry.png"></a>
+                                                        </td>                                                                                      
+                                                        </tr>
+                                                       
+                                                </tbody>
+                                                <tbody *ngIf="oemgroups.length == 0">
+                                                    <tr *ngIf="noGroup">
+                                                        <td style="text-align: center;">No Groups Found</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>   
+                                    </div>
+                                </div>
+                             </td>
+                         </tr>
+                     </tbody>
+            </table>
+        </div>
+
+
+        <div class="contentpanel_bg col-9 pt-3" *ngIf="addclick">
+            <form [formGroup]="groupForm" (ngSubmit)="OnSubmit()">
+                
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="formgroup grp grp_det">
+                                <label>Group Name</label>
+                                <input type="text" class="form-control" maxlength="51" formControlName="groupname" autofocus>
+                                <small class="errormessage" *ngIf="submitted && groupForm.controls.groupname.hasError('required')">Group Name is
+                                    required
+                                    
+                                </small>
+                                <small class="errormessage" *ngIf="groupForm.controls.groupname.hasError('maxlength')">
+                                    You have reached your maximum limit of characters allowed for Brand Name
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="formgroup grp grp_det">
+                                <label>Group Brands </label>
+                              
+                                <input type="text"  class="form-control" maxlength="100" formControlName="groupbrands"  autofocus (keyup)="OnChangeEvent($event)" #groupbrand>
+                                <div class="AddIcon"  style="float: right;margin-top: -36px;">
+                                    <a (click)="showBrandPopup()"><img src="assets/Images/brand_plus.png"></a>
+                                </div>
+                                <small class="errormessage" *ngIf="submitted && selectedbrandid==false">Group Brands is
+                                    required
+                                    
+                                </small>
+                               
+                                <div *ngIf="showBrandDiv" class="autofillcls" #menu>
+                                    <div *ngFor="let option of selectedBrands ; let i=index" (mouseover)="highlightRow(option)" [ngClass] = "{'highlight' : option.brand_name == selectedItem}" >
+                                        <li style="list-style: none;padding: 8px;cursor: pointer;"   (click)="selectItem($event, option,i)">{{option.brand_name}}</li>
+                                    </div>
+                                    </div>  
+                                
+                                
+                                <div style="display: flex;" *ngIf="selectedBrandsList!=''">
+                               
+                                    <div *ngFor="let item of selectedBrandsList;let i=index"  class="editdivbox">
+                                        <img src="../../assets/Images/cancel-icon.png" class="closecls" (click)="removeBrandTag(item.brand_name,i,item.brand_id)">
+                                              <div>{{item.brand_name}}</div>
+                                    </div>
+                                  
+                                    </div>
+                                   
+
+                                    <!-- <input type="text" class="form-control" maxlength="100" formControlName="groupbrands" matInput [matAutocomplete]="auto">
+                                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getPosts($event.option.value)'>
+                                      <mat-option *ngFor="let option of Brands.response" [value]="option.brand_name">
+                                        <div (click)="optionClicked($event, option.brand_id, option.brand_name);">{{ option.brand_name }}</div>
+                                      </mat-option>
+                                    </mat-autocomplete>
+                                     -->
+                                 
+                               
+                            </div>
+                            
+                        </div>
+                       
+                      
+                    </div>
+        
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="formgroup grp grp_det">
+                                <label>Address1</label>
+                                <input type="text" class="form-control" maxlength="51" formControlName="address1" autofocus>
+
+                            </div>
+
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="formgroup grp grp_det">
+                                <label>Address2</label>
+                                <input type="text" class="form-control" maxlength="51" formControlName="address2" autofocus>
+
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="formgroup grp grp_det">
+                                <img src="assets/Images/Add-Contact.png" (click)="OpenContactPopUp()">
+                            <!-- <input type="button" (click)="OpenContactPopUp()" value="Add Contact">  -->
+                            </div>
+                            <div *ngIf="groupcontact.length != 0">
+                            <table>
+                                <thead>
+                                 
+                                  <th style="width:150px">Name</th>
+                                  <th style="width:150px">Email </th>
+                                 
+                                  <th style="width:150px">CELL#</th>
+                                  
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let item of groupcontact">
+                                   
+                                    <td style="width:150px">{{item.contact_name}}</td>
+                                    <td style="width:150px">{{item.contact_email}}</td>
+                                   
+                                    <td style="width:150px">{{item.contact_phone}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div class="formgroup grp grp_det">
+                                <label>City</label>
+                                <input type="text" class="form-control" maxlength="51" formControlName="city" autofocus>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-7">
+                                    <div class="formgroup grp grp_det">
+                                        <label>State</label>
+                                        <!-- <div class="dash"> -->
+                                        <select formControlName="state" class="form-control">
+                                            <option value="">Select State</option>
+                                            <option *ngFor="let st of statesData" [value]="st.sg_id">{{st.sg_name}}</option>
+                                        </select>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                                <div class="col-5" style="margin-left: -35px;margin-top: 4px;">
+                                    <div class="formgroup grp grp_det">
+                                        <label>Zip</label>
+                                        <input type="text" class="form-control" maxlength="6" (keypress)="onkeyPress($event)" formControlName="zip" autofocus>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-7">
+                                    <div class="formgroup grp grp_det">
+                                        <label>Country</label>
+                                        <select formControlName="country" class="form-control">
+                                            <option value="">select</option>
+                                            <option value="185">USA</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-5" style="margin-left: -35px;margin-top: 4px;">
+                                    <div class="formgroup grp grp_det">
+                                        <label>Phone</label>
+                                        <input type="text" class="form-control"  formControlName="phone" pattern="[0-9+( )-]{14}$" [textMask]="{mask: phoneFormat}"
+                                            autofocus>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+               
+              
+               
+               
+               
+                       
+                <div class="col-12">
+                   <label style="color: white;">Logo</label>
+                </div>
+        
+                <div class="col-12">
+                        <img src="assets/Images/Upload-Icon.png" (click)="selectFile.click()">
+                        <input style="display: none;"   type="file" accept="image/*" formControlName="file" (change)="processFile($event)" #selectFile>
+                </div>
+                <small class="errormessage" *ngIf="submitted && selectedFile==''">Logo is
+                    required
+                    
+                </small>
+                    <div class="col-12">
+                        <div class="imagePreview">
+                            <div *ngIf="selectedFile!=''">
+                            <img [src]="selectedFile"  style="width: auto;height: 100px;" *ngIf="AddView">
+                            <img [src]="ImageFolder+selectedFile"  style="width: auto;height: 100px;" *ngIf="EditView"></div>
+                          </div>
+                    </div>
+                    
+                    <!-- <div class="col-12" *ngIf="EditView" >
+                         <label>Status</label>
+                         <input type="checkbox"  formControlName="status"  [checked]="status"   class="form-check-input"   />
+
+                    </div> -->
+                    <div class="row" *ngIf="EditCheck">
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                          <div class="form-group">
+                            <div class="col-12">
+                                <label for="status" style="color: white;">Status</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox"  formControlName="status"  [checked]="status" (change)="onChange($event)"   class="form-check-input" style="margin-top: 24px;"  />
+                             </div>
+                            
+                          </div>
+                          </div>
+                    </div>
+                    <div class="row" style="padding-bottom: 4%;">
+                        <div class="col-sm-1">
+                        </div>
+                        <div class="col-sm-1" style="padding-top: 2%">
+                            <button type="submit" class="button">Save</button>
+                        </div>
+                        <div class="col-sm-1" style="padding-top: 2%">
+                           
+                            <a  style="padding-left: 47px;" ><button  class="button" (click)="showGridPanel()">cancel</button></a> 
+                            
+                        </div>
+                    </div>
+                   
+            </form>
+            
+            
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+  <div class="row mt-3 atoz">
+    <div class="col-1" style="max-width:7% !important;cursor: pointer;" (click)="onAllClick()">
+        <div class="btn_all" [ngClass]="btnActiveStat ? 'btnActive' : 'btnInactive'">All</div>
+    </div>
+    <div class="col-11 p-0">
+     <ul class="pagination">
+         <li [class.active]="alph.Name==selectedAlpha"  *ngFor="let alph of alphaArray" value="{{alph.Value}}" (click)="onAlphaEmit(alph.Name)"><a><span>{{alph.Name}}</span></a></li>
+     </ul>
+    </div>
+  </div>
+  
