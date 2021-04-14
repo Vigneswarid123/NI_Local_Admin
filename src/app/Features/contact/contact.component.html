@@ -75,7 +75,9 @@
                     <div (click)="selectVal(item)" >+{{item.key}}</div>
                 
                 </div> -->
-                <div *ngFor="let item of contacttype;let i=index"  formControlName="ctype" class="editdivbox">
+                <!-- <div *ngFor="let item of contacttype;let i=index"  formControlName="ctype" class="editdivbox"> -->
+                    <div *ngFor="let item of contacttype;let i=index" class="editdivbox">
+
                     <div (click)="selectVal(item,i)" >+{{item.type}}</div>
                 
                 </div>

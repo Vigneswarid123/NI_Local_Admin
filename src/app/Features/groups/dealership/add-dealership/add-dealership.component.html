@@ -2,7 +2,8 @@
     <app-header></app-header>
     <div class="container-fluid pt64">
         <div class="row">
-            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav"
+                id="sidebar">
                 <app-left-panel class="w-100"></app-left-panel>
             </div>
             <div class=" col-9 pt-3">
@@ -14,7 +15,8 @@
                                     <div class="row justify-content-center">
                                         <div class="col-lg-8 pt-4">
                                             <div>
-                                                <img src="http://niapi.local.com/api/resources/images/{{getdgroups.dg_logo}}" style="width: 150px;height: 100px;">
+                                                <img src='{{bindImage + getdgroups.dg_logo}}'
+                                                    style="width: 150px;height: 100px;">
                                             </div>
                                             <div class="brand_det" *ngIf="getdgroups">
                                                 <h6>{{getdgroups.dg_name}}</h6>
@@ -47,26 +49,36 @@
                                     <form [formGroup]="dshipForm" (ngSubmit)="DealerAddOnSubmit()">
                                         <div class="col-lg-11 form-group grp pr-lg-0">
                                             <label>Dealerships</label>
-                                            <input type="text" class="form-control" maxlength="100" formControlName="dship" autofocus>
-                                            <small class="errormessage" *ngIf="submitted && dshipForm.controls.dship.hasError('required')">Dealership is required
+                                            <input type="text" class="form-control" maxlength="100"
+                                                formControlName="dship" autofocus>
+                                            <small class="errormessage"
+                                                *ngIf="submitted && dshipForm.controls.dship.hasError('required')">Dealership
+                                                is required
                                                 <br>
                                             </small>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-1 pr-0 pr-0 pt-lg-4 pointer text-right">
+                                            <div class="col-lg-1 pr-0 pointer text-right">
                                                 <label>&nbsp;</label>
                                                 <!-- <a routerLink="#"><img src="assets/images/circle_icon.png" class="img-fluid"></a> -->
-                                                <img src="assets/Images/circle_icon.png" (click)="AddInput()">
+                                                <div>
+                                                    <img src="assets/Images/circle_icon.png" (click)="AddInput()">
+                                                </div>
                                             </div>
                                             <div class="col-lg-10 pl-2">
                                                 <div class="form-group grp grp_det pl-lg-0">
                                                     <label>Address1</label>
-                                                    <input type="text" class="form-control" formControlName="address" maxlength="51" autofocus>
-                                                    <small class="errormessage" *ngIf="submitted && dshipForm.controls.address.hasError('required')">Address is required
+                                                    <input type="text" class="form-control" formControlName="address"
+                                                        maxlength="51" autofocus>
+                                                    <small class="errormessage"
+                                                        *ngIf="submitted && dshipForm.controls.address.hasError('required')">Address
+                                                        is required
                                                         <br>
                                                     </small>
-                                                    <small class="errormessage" *ngIf="dshipForm.controls.address.hasError('maxlength')">
-                                                        You have reached your maximum limit of characters allowed for Address
+                                                    <small class="errormessage"
+                                                        *ngIf="dshipForm.controls.address.hasError('maxlength')">
+                                                        You have reached your maximum limit of characters allowed for
+                                                        Address
                                                     </small>
                                                 </div>
                                             </div>
@@ -79,15 +91,19 @@
 
 
                                             </div>
-                                            <div formArrayName="quantities">
-                                                <div class="col-lg-10 pl-0">
-                                                    <div class="row" *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+                                            <div class="col-lg-11">
+                                                <div formArrayName="quantities">
+                                                    <div class="row"
+                                                        *ngFor="let quantity of quantities().controls; let i=index"
+                                                        [formGroupName]="i">
                                                         <div class="col-lg-11 form-group grp grp_det">
                                                             <label style="color: #a6a6a6;">Address {{i+2}}</label>
-                                                            <input type="text" formControlName="address1" class="form-control">
+                                                            <input type="text" formControlName="address1"
+                                                                class="form-control">
                                                         </div>
                                                         <div class="col-lg-1 px-0 align-self-center pointer">
-                                                            <img (click)="remove(i)" style="max-width: 35%" src="assets/Images/remove-icon.png">
+                                                            <img (click)="remove(i)" style="max-width: 35%"
+                                                                src="assets/Images/remove-icon.png">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -102,11 +118,15 @@
                                             </div>
                                             <div class="col-lg-10 form-group grp grp_det">
                                                 <label>City</label>
-                                                <input type="text" class="form-control" maxlength="51" formControlName="dcity" autofocus>
-                                                <small class="errormessage" *ngIf="submitted && dshipForm.controls.dcity.hasError('required')">City is required
+                                                <input type="text" class="form-control" maxlength="51"
+                                                    formControlName="dcity" autofocus>
+                                                <small class="errormessage"
+                                                    *ngIf="submitted && dshipForm.controls.dcity.hasError('required')">City
+                                                    is required
                                                     <br>
                                                 </small>
-                                                <small class="errormessage" *ngIf="dshipForm.controls.dcity.hasError('maxlength')">
+                                                <small class="errormessage"
+                                                    *ngIf="dshipForm.controls.dcity.hasError('maxlength')">
                                                     You have reached your maximum limit of characters allowed for City
                                                 </small>
                                             </div>
@@ -124,9 +144,11 @@
                                                             <div class="dash">
                                                                 <select class="form-control" formControlName="state">
                                                                     <option value="">Select State</option>
-                                                                    <option *ngFor="let i of getstates" [value]="i.sg_id">{{i.sg_name}}</option>
+                                                                    <option *ngFor="let i of getstatesresp"
+                                                                        [value]="i.sg_id">{{i.sg_name}}</option>
                                                                 </select>
-                                                                <small class="errormessage" *ngIf="submitted && dshipForm.controls.state.hasError('required')">
+                                                                <small class="errormessage"
+                                                                    *ngIf="submitted && dshipForm.controls.state.hasError('required')">
                                                                     State is required
                                                                 </small>
                                                             </div>
@@ -135,14 +157,19 @@
                                                     <div class="col-lg-4">
                                                         <div class="form-group grp grp_det">
                                                             <label>Zip</label>
-                                                            <input type="text" class="form-control" (keypress)="_keyPress($event)" maxlength="6" minlength="6" formControlName="zip">
-                                                            <small class="errormessage" *ngIf="submitted && dshipForm.controls.zip.hasError('required')">
+                                                            <input type="text" class="form-control"
+                                                                (keypress)="_keyPress($event)" maxlength="6"
+                                                                minlength="6" formControlName="zip">
+                                                            <small class="errormessage"
+                                                                *ngIf="submitted && dshipForm.controls.zip.hasError('required')">
                                                                 Zip is required
                                                             </small>
-                                                            <small class="errormessage" *ngIf="dshipForm.controls.zip.hasError('maxlength')">
+                                                            <small class="errormessage"
+                                                                *ngIf="dshipForm.controls.zip.hasError('maxlength')">
                                                                 You have reached your maximum limit of zip
                                                             </small>
-                                                            <small class="errormessage" *ngIf="dshipForm.controls.zip.hasError('minlength')">
+                                                            <small class="errormessage"
+                                                                *ngIf="submitted && dshipForm.controls.zip.hasError('minlength')">
                                                                 Pls enter minimum limit of zip
                                                             </small>
                                                         </div>
@@ -165,7 +192,8 @@
                                                                     <option value="">Select Country</option>
                                                                     <option value="185">USA</option>
                                                                 </select>
-                                                                <small class="errormessage" *ngIf="submitted && dshipForm.controls.country.hasError('required')">
+                                                                <small class="errormessage"
+                                                                    *ngIf="submitted && dshipForm.controls.country.hasError('required')">
                                                                     Country is required
                                                                 </small>
                                                             </div>
@@ -174,12 +202,17 @@
                                                     <div class="col-lg-7">
                                                         <div class="form-group grp grp_det">
                                                             <label>Phone</label>
-                                                            <input type="text" class="form-control" formControlName="phone" (keypress)="allowNumbers($event)" pattern="[0-9+( )-]{14}$"
-                                                                maxlength="20" [textMask]="{mask: phoneFormat}">
-                                                            <small class="errormessage" *ngIf="submitted && dshipForm.controls.phone.hasError('required')">
+                                                            <input type="text" class="form-control"
+                                                                formControlName="phone"
+                                                                (keypress)="allowNumbers($event)"
+                                                                pattern="[0-9+( )-]{14}$" maxlength="20"
+                                                                [textMask]="{mask: phoneFormat}">
+                                                            <small class="errormessage"
+                                                                *ngIf="submitted && dshipForm.controls.phone.hasError('required')">
                                                                 Phone number is required
                                                             </small>
-                                                            <small class="errormessage" *ngIf="dshipForm.controls.phone.hasError('pattern')">
+                                                            <small class="errormessage"
+                                                                *ngIf="dshipForm.controls.phone.hasError('pattern')">
                                                                 Pls enter minimum length
                                                             </small>
                                                         </div>
@@ -194,12 +227,17 @@
                                             </div>
                                             <div class="col-lg-10 form-group grp grp_det">
                                                 <label>Website Address</label>
-                                                <input type="text" class="form-control" maxlength="101" formControlName="webaddress" autofocus>
-                                                <small class="errormessage" *ngIf="submitted && dshipForm.controls.webaddress.hasError('required')">Website Address is required
+                                                <input type="text" class="form-control" maxlength="101"
+                                                    formControlName="webaddress" autofocus>
+                                                <small class="errormessage"
+                                                    *ngIf="submitted && dshipForm.controls.webaddress.hasError('required')">Website
+                                                    Address is required
                                                     <br>
                                                 </small>
-                                                <small class="errormessage" *ngIf="dshipForm.controls.webaddress.hasError('maxlength')">
-                                                    You have reached your maximum limit of characters allowed for Website Address
+                                                <small class="errormessage"
+                                                    *ngIf="dshipForm.controls.webaddress.hasError('maxlength')">
+                                                    You have reached your maximum limit of characters allowed for
+                                                    Website Address
                                                 </small>
                                             </div>
                                             <div class="col-lg-1">
@@ -210,15 +248,58 @@
                                             </div>
                                             <div class="col-lg-10 form-group grp grp_det">
                                                 <label>Google Map Link</label>
-                                                <input type="text" class="form-control" maxlength="1001" formControlName="gmaplink" autofocus>
-                                                <small class="errormessage" *ngIf="submitted && dshipForm.controls.gmaplink.hasError('required')">Google Map Link is required
+                                                <input type="text" class="form-control" maxlength="1001"
+                                                    formControlName="gmaplink" autofocus>
+                                                <small class="errormessage"
+                                                    *ngIf="submitted && dshipForm.controls.gmaplink.hasError('required')">Google
+                                                    Map Link is required
                                                     <br>
                                                 </small>
-                                                <small class="errormessage" *ngIf="dshipForm.controls.gmaplink.hasError('maxlength')">
-                                                    You have reached your maximum limit of characters allowed for Google Map Link
+                                                <small class="errormessage"
+                                                    *ngIf="dshipForm.controls.gmaplink.hasError('maxlength')">
+                                                    You have reached your maximum limit of characters allowed for Google
+                                                    Map Link
                                                 </small>
                                             </div>
                                             <div class="col-lg-1">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="form-group grp grp_det">
+                                                    <label>Region</label>
+                                                    <div class="dash">
+                                                        <select class="form-control" formControlName="region">
+                                                            <option value="">Select Region</option>
+                                                            <option *ngFor="let i of Getregions" [value]="i.region_iD">
+                                                                {{i.region_name}}</option>
+                                                        </select>
+                                                        <small class="errormessage"
+                                                            *ngIf="submitted && dshipForm.controls.region.hasError('required')">
+                                                            Region is required
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="form-group grp grp_det">
+                                                    <label>Time Zone</label>
+                                                    <div class="dash">
+                                                        <select class="form-control" formControlName="timeZone">
+                                                            <option value="">Select Time Zone</option>
+                                                            <option value="PT">Pacific Standard Time</option>
+                                                            <option value="CT">Central Standard Time</option>
+                                                            <option value="ET">Eastern Standard Time</option>
+                                                            <option value="MT">Mountain Standard Time</option>
+
+                                                        </select>
+                                                        <small class="errormessage"
+                                                            *ngIf="submitted && dshipForm.controls.timeZone.hasError('required')">
+                                                            Time Zone is required
+                                                        </small>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -230,7 +311,12 @@
                                             <div class="col-lg-3 pointer">
                                                 <img src="assets/Images/Add-User.png" (click)="showDiv = !showDiv;">
                                             </div>
-                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5 pointer" (click)="termsAction()">
+                                                <img src="assets/Images/circle_icon.png"
+                                                    (click)="showtermsDiv = !showtermsDiv;">&nbsp;<label
+                                                    style="color: #a6a6a6;;">Terms & Conditions</label>
+                                            </div>
+                                            <!-- <div class="col-lg-1"></div> -->
                                         </div>
                                         <div class="row pt-lg-3">
                                             <div class="col-lg-1"></div>
@@ -239,12 +325,17 @@
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="form-group grp grp_det">
-                                                    <input type="text" class="form-control" maxlength="100" formControlName="brand" autofocus (keyup)="OnChangeEvent($event)"
-                                                        #txtbrand>
+                                                    <input type="text" class="form-control" maxlength="100"
+                                                        formControlName="brand" autofocus
+                                                        (keyup)="OnChangeEvent($event)" #txtbrand>
                                                     <div class=" row" style="margin-left: 54px;">
                                                         <div *ngIf="showBrandDiv" class="autofillcls" #brandMenu>
-                                                            <div *ngFor="let br of selectedBrands; let i=index" (mouseover)="selectRow(br)" [ngClass]="{'highlight' : br.brand_name == selectedItem}">
-                                                                <li style="list-style: none" (click)="selectItem($event, br,i)">{{br.brand_name}}</li>
+                                                            <div *ngFor="let br of selectedBrands; let i=index"
+                                                                (mouseover)="selectRow(br)"
+                                                                [ngClass]="{'highlight' : br.brand_name == selectedItem}">
+                                                                <li style="list-style: none"
+                                                                    (click)="selectItem($event, br,i)">{{br.brand_name}}
+                                                                </li>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -256,9 +347,11 @@
                                             <div class="col-lg-2"></div>
                                             <div class="logoscroll" *ngIf="selectedBrandList!=''">
                                                 <div *ngFor="let item of selectedBrandList;let i=index" class="divbox">
-                                                    <img src="assets/Images/cancel-icon.png" class="closecls" (click)="removeBrandTag(item,i)">
+                                                    <img src="assets/Images/cancel-icon.png" class="closecls"
+                                                        (click)="removeBrandTag(item,i)">
                                                     <!-- <img class="imglogo" src="{{ImageFolder}}{{item.brand_logo}}"> -->
-                                                    <img class="imglogo" src='{{ "assets/Images/BrandLogo/" + item.brand_logo + "" }}'>
+                                                    <img class="imglogo"
+                                                        src='{{ "assets/Images/BrandLogo/" + item.brand_logo + "" }}'>
                                                 </div>
                                             </div>
                                         </div>
@@ -266,9 +359,12 @@
                                             <div class="col-lg-1"></div>
                                             <div class="col-lg-4 align-self-center pointer">
                                                 <img src="assets/Images/Upload-Icon.png" (click)="selectFile.click()">
-                                                <input style="display: none" type="file" name="image" formControlName="fileUpload" (change)="fileProgress($event)" #selectFile>
+                                                <input style="display: none" type="file" name="image"
+                                                    formControlName="fileUpload" (change)="fileProgress($event)"
+                                                    #selectFile>
                                                 <div>
-                                                    <small class="errormessage" *ngIf="submitted && dshipForm.controls.fileUpload.hasError('required')">
+                                                    <small class="errormessage"
+                                                        *ngIf="submitted && dshipForm.controls.fileUpload.hasError('required')">
                                                         Upload logo
                                                     </small>
                                                 </div>
@@ -290,6 +386,10 @@
                                             <div class="col-lg-4">
                                                 <button type="submit" class="savebutton">Save</button>
                                             </div>
+                                            <div class="col-lg-4">
+                                                <button type="submit" class="savebutton"
+                                                    (click)="cancelBack()">Cancel</button>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -308,52 +408,58 @@
                                 </div>
 
                                 <div class="col-lg-12" formArrayName="dgContacts">
-                                    <div class="row" *ngFor="let quantity of dgContacts().controls; let i=index" [formGroupName]="i">
-                                            <div class="row" *ngIf="popupForm.get('dgContacts').value[i].contaction != 'D'">
-                                        <div class="col-lg-3 pr-lg-0">
-                                            <div class="form-group grp grp_det">
-                                                <label>Contact</label>
-                                                <input type="text" class="form-control" formControlName="contact2">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <div class="form-group grp grp_det">
-                                                <label>Position</label>
-                                                <div class="dash">
-                                                    <select class="form-control" formControlName="contposition2">
-                                                        <option value="">Select Position</option>
-                                                        <option value="1">COO</option>
-                                                        <option value="2">CRO</option>
-                                                        <option value="3">CFO</option>
-                                                        <option value="4">Controller</option>
-                                                    </select>
+                                    <div class="row" *ngFor="let quantity of dgContacts().controls; let i=index"
+                                        [formGroupName]="i">
+                                        <div class="row" *ngIf="popupForm.get('dgContacts').value[i].contaction != 'D'">
+                                            <div class="col-lg-3 pr-lg-0">
+                                                <div class="form-group grp grp_det">
+                                                    <label>Contact</label>
+                                                    <input type="text" class="form-control" formControlName="contact2">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-3 pl-lg-0">
-                                            <div class="form-group grp grp_det">
-                                                <label>Email</label>
-                                                <input type="text" class="form-control" formControlName="contemail2" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$">
-                                                <small class="errormessage" *ngIf="quantity.get('contemail2').hasError('pattern')">
-                                                    Invalid Email Address
-                                                </small>
+                                            <div class="col-lg-2">
+                                                <div class="form-group grp grp_det">
+                                                    <label>Position</label>
+                                                    <div class="dash">
+                                                        <select class="form-control" formControlName="contposition2">
+                                                            <option value="">Select Position</option>
+                                                            <option value="1">COO</option>
+                                                            <option value="2">CRO</option>
+                                                            <option value="3">CFO</option>
+                                                            <option value="4">Controller</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 pl-lg-0">
+                                                <div class="form-group grp grp_det">
+                                                    <label>Email</label>
+                                                    <input type="text" class="form-control" formControlName="contemail2"
+                                                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$">
+                                                    <small class="errormessage"
+                                                        *ngIf="quantity.get('contemail2').hasError('pattern')">
+                                                        Invalid Email Address
+                                                    </small>
+
+                                                </div>
 
                                             </div>
+                                            <div class="col-lg-3 pl-lg-0">
+                                                <div class="form-group grp grp_det">
+                                                    <label>Phone</label>
+                                                    <input type="text" class="form-control" formControlName="contphone2"
+                                                        pattern="[0-9+( )-]{14}$" [textMask]="{mask: phoneFormat}">
+                                                    <small class="errormessage"
+                                                        *ngIf="quantity.get('contphone2').hasError('pattern')">
+                                                        Pls enter minimum length
+                                                    </small>
+                                                </div>
 
-                                        </div>
-                                        <div class="col-lg-3 pl-lg-0">
-                                            <div class="form-group grp grp_det">
-                                                <label>Phone</label>
-                                                <input type="text" class="form-control" formControlName="contphone2" pattern="[0-9+( )-]{14}$" [textMask]="{mask: phoneFormat}">
-                                                <small class="errormessage" *ngIf="quantity.get('contphone2').hasError('pattern')">
-                                                    Pls enter minimum length
-                                                </small>
                                             </div>
-
-                                        </div>
-                                        <div class="col-lg-1 px-0 align-self-center">
-                                            <img src="assets/Images/remove-icon.png" class="pointer" style="max-width: 15%" (click)="contRemove(i)">
-                                        </div>
+                                            <div class="col-lg-1 px-0 align-self-center">
+                                                <img src="assets/Images/remove-icon.png" class="pointer"
+                                                    style="max-width: 15%" (click)="contRemove(i)">
+                                            </div>
                                         </div>
                                     </div>
 
@@ -370,51 +476,57 @@
                                 </div>
 
                                 <div class="col-lg-12" formArrayName="dgUsers">
-                                    <div class="row" *ngFor="let quantity of dgUsers().controls; let i=index" [formGroupName]="i">
-                                            <div class="row" *ngIf="popupForm.get('dgUsers').value[i].action1 != 'D'">
-                                        <div class="col-lg-3 pr-lg-0">
-                                            <div class="form-group grp grp_det">
-                                                <label>User</label>
-                                                <input type="text" class="form-control" formControlName="user1">
-                                            </div>
+                                    <div class="row" *ngFor="let quantity of dgUsers().controls; let i=index"
+                                        [formGroupName]="i">
+                                        <div class="row" *ngIf="popupForm.get('dgUsers').value[i].action1 != 'D'">
+                                            <div class="col-lg-3 pr-lg-0">
+                                                <div class="form-group grp grp_det">
+                                                    <label>User</label>
+                                                    <input type="text" class="form-control" formControlName="user1">
+                                                </div>
 
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <div class="form-group grp grp_det">
-                                                <label>Position</label>
-                                                <div class="dash">
-                                                    <select class="form-control" formControlName="position1">
-                                                        <option value="">Select Position</option>
-                                                        <option value="1">COO</option>
-                                                        <option value="2">CRO</option>
-                                                        <option value="3">CFO</option>
-                                                        <option value="4">Controller</option>
-                                                    </select>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <div class="form-group grp grp_det">
+                                                    <label>Position</label>
+                                                    <div class="dash">
+                                                        <select class="form-control" formControlName="position1">
+                                                            <option value="">Select Position</option>
+                                                            <option value="1">COO</option>
+                                                            <option value="2">CRO</option>
+                                                            <option value="3">CFO</option>
+                                                            <option value="4">Controller</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-3 pl-lg-0">
-                                            <div class="form-group grp grp_det">
-                                                <label>Email</label>
-                                                <input type="text" class="form-control" formControlName="email1" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$">
-                                                <small class="errormessage" *ngIf="quantity.get('email1').hasError('pattern')">
-                                                    Invalid Email Address
-                                                </small>
+                                            <div class="col-lg-3 pl-lg-0">
+                                                <div class="form-group grp grp_det">
+                                                    <label>Email</label>
+                                                    <input type="text" class="form-control" formControlName="email1"
+                                                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$">
+                                                    <small class="errormessage"
+                                                        *ngIf="quantity.get('email1').hasError('pattern')">
+                                                        Invalid Email Address
+                                                    </small>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-3 pl-lg-0">
-                                            <div class="form-group grp grp_det">
-                                                <label>Phone</label>
-                                                <input type="text" class="form-control" formControlName="phone1" pattern="[0-9+( )-]{14}$" [textMask]="{mask: phoneFormat}">
-                                                <small class="errormessage" *ngIf="quantity.get('phone1').hasError('pattern')">
-                                                    Pls enter minimum length
-                                                </small>
+                                            <div class="col-lg-3 pl-lg-0">
+                                                <div class="form-group grp grp_det">
+                                                    <label>Phone</label>
+                                                    <input type="text" class="form-control" formControlName="phone1"
+                                                        pattern="[0-9+( )-]{14}$" [textMask]="{mask: phoneFormat}">
+                                                    <small class="errormessage"
+                                                        *ngIf="quantity.get('phone1').hasError('pattern')">
+                                                        Pls enter minimum length
+                                                    </small>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-1 px-0 align-self-center">
-                                            <img src="assets/Images/remove-icon.png" class="pointer" style="max-width: 15%" (click)="userRemove(i)">
-                                        </div>
+                                            <div class="col-lg-1 px-0 align-self-center">
+                                                <img src="assets/Images/remove-icon.png" class="pointer"
+                                                    style="max-width: 15%" (click)="userRemove(i)">
+                                            </div>
                                         </div>
                                     </div>
 
@@ -437,6 +549,47 @@
 
                     </div>
                 </div>
+
+                <div class="row">
+
+                    <div *ngIf="showtermsDiv || termsObjEdit.length>0" class="col pr-0">
+                        <div class="contentpanel_bg">
+                            <div class="cancelbtn">
+                                <button type="button" class="btn btn-link" (click)="cancelTerms()">Cancel</button>
+                            </div>
+
+                            <form [formGroup]="termsForm">
+                                <div class="col-lg-12">
+                                    <div formArrayName="TermsInfo" class="text-right">
+                                        <div class="row"
+                                            *ngFor="let item of termsForm.get('TermsInfo').controls; let i=index"
+                                            [formGroupName]="i">
+                                            <div class="col-3"></div>
+                                            <div class="col-3 mt-2">
+                                                <!-- Test {{i}} -->
+                                                {{termsForm.get('TermsInfo').value[i].MIT_DISPLAYNAME}}
+                                                <!-- {{item.MIT_DISPLAYNAME}} -->
+                                            </div>
+                                            <div class="col-3">
+                                                <label class="switch">
+                                                    <input class="switch-input" type="checkbox"
+                                                        fomrControlName="item.dtctermvalue"
+                                                        (change)="getValu($event, i)"
+                                                        [checked]="checkAction(termsForm.get('TermsInfo').value[i].dtctermvalue)" />
+                                                    <span class="switch-label" data-on="Yes" data-off="No"></span>
+                                                    <span class="switch-handle"></span>
+                                                </label>
+                                                <!-- {{termsForm.get('TermsInfo').value[i].dtctermvalue}} -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
 

@@ -23,8 +23,8 @@ export class AddIncentiveTypeComponent implements OnInit {
 
   ngOnInit(): void {
     this.addTermForm = this.formBuilder.group({
-      incentivetype_name: ['', [Validators.required]],
-      incentivetype_status: ['N', [Validators.required]]      
+      incentivetype_name: ['', [Validators.required , Validators.pattern('[a-zA-Z# ]*')]],
+      incentivetype_status: ['Y', [Validators.required]]
     }); 
     console.log(this.addTermForm.value);
   }
@@ -46,15 +46,15 @@ export class AddIncentiveTypeComponent implements OnInit {
         this.router.navigate(['incentiveTypes']);
       }
 
-      else{
-        alert('Please check the details');
+      else if (this.globalResponse.status === 401){
+        alert(this.globalResponse.error);
       }
  });
 }
 
-statusValueChange($event: any) {  
-  this.addTermForm.controls['incentivetype_status'].setValue($event.target.checked ? 'Y' : 'N');
-  console.log(this.addTermForm.value);
-}
+// statusValueChange($event: any) {  
+//   this.addTermForm.controls['incentivetype_status'].setValue($event.target.checked ? 'Y' : 'N');
+//   console.log(this.addTermForm.value);
+// }
 
 }

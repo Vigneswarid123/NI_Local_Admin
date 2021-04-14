@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../Core/_providers/api-service/api.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from "ngx-spinner"; 
 
 @Component({
   selector: 'app-grid-incentiveType',
@@ -9,23 +11,39 @@ import { Router } from '@angular/router';
 })
 export class GridIncentiveTypeComponent implements OnInit {
 
-  incentiveTypesArray = [];
+ // incentiveTypesArray = [];
   incentivetype_id: number;
   ID: number;
   term: any = [];
-  SearchText: any;
+ // SearchText: any;
+
+ hide: boolean = false;
+ alphaSrch: string = '';
+ atozFltr: boolean = false;
+ TermsInfo: any=[];
+ alphaColumns:any=["incentivetype_name"];
+ SearchTermsForm: FormGroup;
 
   constructor(
     private termSrvc: ApiService,
     private router: Router,
-    ) { }
+    private fB: FormBuilder,
+    private SpinnerService: NgxSpinnerService
+    ) 
+    {
+      this.SearchTermsForm =this.fB.group({
+       txtSearch:""
+     });
+    }
 
   ngOnInit(): void {
+    this.router.navigateByUrl('incentiveTypes');
     this.incentiveTypesList();
   }
 
 
   incentiveTypesList(){
+    this.SpinnerService.show();
     const obj = {
       incentivetype_id: "0",
       expression: ""
@@ -34,8 +52,9 @@ export class GridIncentiveTypeComponent implements OnInit {
     if (res.status === 200) {
       const terms = res.response;
       if (terms) {
-        this.incentiveTypesArray = res.response;
+        this.TermsInfo = res.response;
         console.log(terms);
+        this.SpinnerService.hide();
       }
 }
   });
@@ -48,6 +67,25 @@ export class GridIncentiveTypeComponent implements OnInit {
     console.log(this.ID);
     this.router.navigate(['incentiveTypesEdit'], { queryParams: { incentivetype_id: this.ID} });
     }
+
+    onAlphaCatch(alphabet){
+      this.hide=true;
+      this.atozFltr=true;
+      this.alphaSrch=alphabet;
+       
+    }
+  
+    onSearch(){
+      this.alphaSrch= this.SearchTermsForm.controls['txtSearch'].value;
+    }
+  
+    atoZClick(){
+      if(!this.atozFltr)
+      this.atozFltr=true;
+      else
+      this.atozFltr=false;
+    }
+  
 
 }
 

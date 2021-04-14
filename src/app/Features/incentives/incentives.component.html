@@ -1,6 +1,6 @@
 <div class="dashboard_bg">
     <app-header></app-header>
-    <div class="container-fluid pt64">
+    <div class="container-fluid pt64" >
         <div class="row">
             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
                 <app-left-panel class="w-100"></app-left-panel>
@@ -29,9 +29,18 @@
                                                         <label class="getrolelbl">Brands</label>
                                                     </div> -->
                                                   </th>
-                                                  <th style="width: 500px; text-align: center">
-                                                    <div style="float: left">                                       
+                                                  <th >
+                                                    <div > 
+                                                        <input type="text" formControlName="brandtxt"  autofocus (keyup)="OnBrandChangeEvent($event)" #brandtxt >                                      
                                                     </div>
+                                                    <div class="row">
+                                                        <div *ngIf="showsearchBrandDiv" class="autofillcls" #srchbrnd>
+                                                            <div *ngFor="let option of selectedSearchBrands ; let i=index" (mouseover)="highlightRow(option)" [ngClass] = "{'highlight' : option.brand_name == selectedItem}" >
+                                                                <li style="list-style: none;padding: 8px;cursor: pointer;"   (click)="selectSearchItem($event, option,i)">{{option.brand_name}}</li>
+                                                            </div>
+                                                            </div>
+                                                            
+                                                        </div>
                                                 </th>    
                                                          
                                                 <th style="width: 10%; text-align: center" colspan="2">
@@ -83,7 +92,9 @@
                                                     <tbody >
                                                         <ng-container *ngIf="incentives | alphaFilter : alphaSrch: alphaColumns :'aa' as incentivesdata; else noItems">
                                                         <tr *ngFor="let item of incentivesdata" >
-                                                            <td style="width: 175px;text-align: left  ;"><div><span class="brandcontentcss">{{item.INM_NAME}}</span></div></td>
+                                                            <td style="width: 175px;text-align: left  ;"><div style="padding: 7px;">
+                                                                <div><img  style="max-width: 50px;" src="assets/Images/BrandLogo/{{item.brandlogo}}"></div>
+                                                                <div><span class="brandcontentcss">{{item.INM_NAME}}</span></div></div></td>
                                                             <!-- <td style="width:25%;"><div style="text-align: center;" *ngIf="item.OEM_Logo !=''"><img id="imglogo" style="height: 50px;" src='{{ ImageFolder + item.OEM_Logo  }}'></div></td>
                                                            <td  ><div style="display: flex;" *ngIf="item.brandnames !=''"><div *ngFor="let br of item.brandnames.split(',')" class="divbox">
                                                                {{br.split('_')[1]}} 
@@ -91,13 +102,13 @@
                                                             <td  style="width: 175px;text-align: center  ;" *ngIf="item.INM_STATUS == 'Y'"><div class="Active">Active</div></td>
                                                             <td  style="width: 175px;text-align: center  ;" *ngIf="item.INM_STATUS == 'N'"><div class="InActive">In-Active</div></td>
                                                             <td style="width:10%; text-align: center; cursor: pointer;">
-                                                                <a (click)="editIncentive(item.INM_ID)"><img src="assets/Images/edt_icon.png"></a>
+                                                                <a  style="color:white;font-size: 14px;cursor: pointer;"  (click)="viewIncentiveData(item.INM_ID)">View</a>
                                                             </td> 
                                                             <!-- <td style="width:10%; text-align: center; cursor: pointer;">
                                                                 <a (click)="deleteGroup(item.INM_ID)"><img src="assets/Images/del_gry.png"></a>
                                                             </td>                                                                                       -->
                                                             </tr>
-                                                            <ng-container *ngIf="!incentivesdata.length && hide" [ngTemplateOutlet]="noItems"></ng-container>
+                                                            <ng-container *ngIf="!incentivesdata.length && hide" [ngTemplateOutlet]="noItems">View</ng-container>
                                             </ng-container>
                                             <ng-template #noItems>
                                                 <tr><td colspan="9" style="text-align: center;">No Incentives Available!</td></tr>
@@ -116,14 +127,49 @@
             </div>
 
             <div class="contentpanel_bg col-9 pt-3" *ngIf="addclick">
+                <div class="container">
                 <form [formGroup]="incentiveForm" (ngSubmit)="OnSubmit()">
+
+                    <div >
+                        <div class="row" style="margin-left: -5px;">
+                            <div>
+                                <div class="form-group row col-sm-4 mt-4" style="margin-left: 0%; display: flex; flex-flow: inherit;">
+                                    <label >Brand(s)</label>
+                                    <div class="col-sm-6" style="display: flex;">
+
+                                        <div *ngIf="selectedBrandsList!='' && brandspopup == false" style="display: flex;">
+                               
+                                            <div *ngFor="let item of selectedBrandLogo;let i=index"  style="margin-top: -12px;margin-left: 50px;">
+                                             
+                                                <img class="imglogo" src='{{ "assets/Images/BrandLogo/" + item + "" }}'>
+                                            </div>
+                                          
+                                            </div>
+                                        
+                                            <span class="float-right" style="padding-left: 40px;"><a href="javascript:void(0);" data-toggle="modal" data-target="#modelId" (click)="addBrand()"><img  src="assets/Images/circle_icon.png">
+                                            </a></span>
+                                       
+                                      
+                                    </div>
+                                    <small class="errormessage"
+                                    *ngIf="submitted && selectedbrandid.length == 0 ">Brand  is
+                                    required
+                
+                                  </small>
+                                </div>
+                                </div>
+                                </div>
+                                
+                    </div>
+
+
                     <div class="col-12">
                         <div class="row">
                             <div class="">
                                 <div class="form-group row" style="margin-left: 3%;">
-                                    <label >Name</label>
+                                    <label style="position: relative;top:-5px;">Name</label>
                                     <div class="col-sm-6" style="margin-left: 18%;margin-top: 6px;">
-                                    <input type="text" class="form-control" maxlength="51" formControlName="incentivename" autofocus>
+                                    <input type="text" class="form-control" maxlength="100" formControlName="incentivename" autofocus>
                                     <small class="errormessage"
                                       *ngIf="submitted && incentiveForm.controls.incentivename.hasError('required')">Incentive Name is
                                       required
@@ -145,7 +191,7 @@
                                 <div class="form-group row" style="margin-left: 3%;">
                                     <label >Type</label>
                                     <div class="col-sm-6" style="margin-left: 20%;margin-top: 7px;">
-                                    <select class="form-control" formControlName="incentivetype">
+                                    <select class="form-control" formControlName="incentivetype" style="height: 35px;">
                                         <option value="">Select</option>
                                         <option *ngFor="let it of incentivetypes" [value]="it.incentivetype_id">{{it.incentivetype_name}}</option>
                                     </select>
@@ -173,7 +219,7 @@
                         </div>
 
                     </div> -->
-                    <div class="col-12">
+                    <!-- <div class="col-12">
                         <div class="row">
                             <div class="">
                                 <div class="form-group row" style="margin-left: 3%;margin-top: 3%;">
@@ -187,17 +233,45 @@
                             </div>
                         </div>
                         
+                    </div> -->
+
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="">
+                                <div class="form-group row" style="margin-left: 4%;margin-top: 3%;">
+                                    <label>Period</label>
+                                    <div class="col-sm-6" style="display: flex;margin-left: 15%;">
+                                        <span class="startDate">
+                                            <label class="wrapper">
+                                          <input type="date" class="formatcenter" formControlName="datefrom" required="required" (change)="changeFirstInput($event)"/><span></span>
+                                            </label>
+                                        	</span>
+                                            <span class="endDate pl-2">
+                                                <label class="wrapper">
+                                          <input type="date" class="formatcenter" formControlName="dateto" required="required" (change)="changeSecondInput($event)"/><span></span>
+                                                </label>
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-12">
                         <div class="row">
                             <div class="">
-                                <div class="form-group row" style="margin-left: 6%; margin-top: 8%;">
-                                    <label>Region</label>
+                                <div class="form-group row" style="margin-left: 6%;">
+                                    <label style="position: relative;top: -8px;">Region</label>
                                     <div class="col-sm-6" style="margin-left: 24%;">
-                                    <select class="form-control1"  formControlName="region">
-                                        <option value="">select</option>
-                                        <option *ngFor="let r of regionsList" [value]="r.region_iD">{{r.region_name}}</option>
+                                    <select class="form-control1"  formControlName="region" (change)="showDealerStores();"> 
+                                        <!-- <option value="">select</option> -->
+                                        <option value="0">All</option>
+                                        <option *ngFor="let r of regionsList" [value]="r.region_iD" >{{r.region_name}}</option>
                                     </select>
+                                    <small class="errormessage"
+                                      *ngIf="submitted && incentiveForm.controls.region.hasError('required')">Region is
+                                      required
+                  
+                                    </small>
                                     </div>
                                 </div>
 
@@ -205,12 +279,13 @@
                         </div>
                         
                     </div>
+                    <!-- (change)="showDealerStores();" -->
                     
                     <div class="col-12">
                         <div class="row">
                             <div class="">
-                                <div class="form-group row" style="margin-left: 5%; margin-top: 5%;">
-                                    <label >Available Bonus</label>
+                                <div class="form-group row" style="margin-left: 5%;">
+                                    <label style="position: relative;top: -10px;">Available Bonus</label>
                                         <div class="col-sm-6">
                                         <input type="text" class="form-control1" formControlName="availbonus" maxlength="6" (keypress)="onkeyPress($event)" >
                                         </div>      
@@ -218,11 +293,35 @@
                             </div>   
                         </div>
                     </div>
+
+                    <div class="col-12" *ngIf="dvStores">
+                        <div class="row">
+                            <div class="">
+                                <div class="form-group row" style="margin-left: 5%; margin-top: 5%;">
+                                    <label></label>
+                                    <div class="col-sm-6">
+                                    <label style="border-bottom: 1px solid #aaa;">Select All Stores</label>
+                                    <input type="checkbox" formControlName="selectall" class="form-check-input" [value]="0" (change)="onAllCheckboxChangeEvent($event)" />{{t}}
+                                    <div class="storescls">
+                                    <div *ngFor="let item of dealershipStores;let i=index">
+                                        <label>
+                                        <input type="checkbox" class="form-check-input" [value]="item.dealer_id" [checked]="item.selected" (change)="onCheckboxChange($event)" />{{item.dealer_name}}
+                                        </label>
+                                    </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                     <div class="col-12">
                         <div class="row">
                             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                <div class="formgroup grp grp_det" style="cursor: pointer;">
-                                  <img src="assets/Images/circle_icon.png" >  <label (click)="OpenLineItemsPopUp()" style="text-decoration: underline;margin-left: 2%; cursor: pointer;">Add Items</label>
+                                <div class="formgroup grp grp_det">
+                                  <img src="assets/Images/circle_icon.png" >  <label (click)="OpenLineItemsPopUp()" style="text-decoration: underline;margin-left: 2%;cursor: pointer;">Add Items</label>
                                      
                                 </div>
 
@@ -272,24 +371,122 @@
                             </div>
                         </div>
                    </div>
-                    <div class="row" style="padding-bottom: 4%;margin-top: 30px;">
-                        <div class="col-sm-1">
-                        </div>
-                        <div class="col-sm-1" style="padding-top: 2%">
-                            <button type="submit" class="button">Save</button>
-                        </div>
-                        <div class="col-sm-1" style="padding-top: 2%">
-                           
-                            <a  style="padding-left: 47px;" ><button  class="button" (click)="showGridPanel()">cancel</button></a> 
-                            
-                        </div>
+                   <div class="col-lg-12 pt-lg-5 pl-lg-4">
+                    <div  class="row">
+                      <div class="col-lg-2">
+                        <button  type="submit" class="savebutton">Save</button>
+                      </div>
+                      <div  class="col-lg-2">
+                        <button  type="submit" class="savebutton" (click)="showGridPanel()">Cancel</button>
+                      </div>
                     </div>
+                  </div>
 
                 </form>
-
+                </div>
             </div>
 
 
+
+
+            <div *ngIf="showIncentive" class="contentpanel_bg col-9 pt-3">
+                
+                                <div class="container">
+                                <div class="row pt-4">
+                                <div class="col-12" >
+                                   
+                                    <div *ngFor="let item of incentivesData">
+                                <div><img src=' {{ "assets/Images/BrandLogo/" + item.brandlogo + "" }}' ></div>
+                                <div class="pb-2 pt-2" style="font-weight: 500 ;">{{item.INM_NAME}}</div>
+                                <div>{{item.typename}}</div>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row pb-2 pt-2">
+                                <div class="col-12">
+                                <div *ngFor = "let vdata of incentiveVaraibles">
+                                    <div *ngIf="vdata.INVD_INV_ID != 1">
+                                        <div style="display: flex;">
+                                   <div *ngIf="vdata.INVD_INV_ID == 4">{{vdata.VariableName}}  {{ vdata.INVD_DATA}}</div>
+                                    <div *ngIf="vdata.INVD_INV_ID == 5" style="float: left;margin: -20px 118px;text-transform: lowercase;">{{vdata.VariableName}}  {{ vdata.INVD_DATA}}</div>
+                                    </div>
+                                        <div *ngIf="vdata.INVD_INV_ID != 4 && vdata.INVD_INV_ID != 5">{{vdata.VariableName}} : {{ vdata.INVD_DATA}}</div>
+                                   </div>
+                                </div>
+                                </div>
+                                </div>
+                            <div class="row">
+                            <div class="col-12" >
+                                <div *ngFor="let item of incentiveLineItems" class="pb-2">
+                                <div>{{item.ModelDetails}}</div>
+                                <div>$ {{item.PerUnit}} PerUnit</div>
+                                    </div>
+                            </div>
+                            </div>
+                                
+    
+                            <div class="col-lg-12 pt-lg-5 pl-lg-4">
+                                <div  class="row">
+                                  <div class="col-lg-2">
+                                    <button  type="submit" class="savebutton" (click) = 'CloseIncetiveView()'>BACK</button>
+                                  </div>
+                                 
+                                </div>
+                              </div>
+                            </div>
+                       
+                </div>
+
+
+
         </div>
-    </div>
+       
+
+    <!-- ShowBrand Div -->
+
+    <div *ngIf="showBrand">
+        <div class="modal fade" id="modelId" tabindex="-1"  aria-labelledby="modelTitleId" aria-hidden="true" style="left: 20px;
+                top: 11%;">
+            <div class="modal-dialog" role="document" style="max-width: 700px!important;" [formGroup]="brandform">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="container">
+                        <div class="col-lg-2 pb-2">Add Brand</div>
+                        <div class="row">
+                              <input type="text" class="form-control" style="height: 32px;" formControlName="txtbrand"  autofocus (keyup)="OnChangeEvent($event)" #brand  >
+                        </div>
+                        <div class="row mt-2">
+                        <div *ngIf="showBrandDiv" class="autofillcls" #menu>
+                            <div *ngFor="let option of selectedBrands ; let i=index" (mouseover)="highlightRow(option)" [ngClass] = "{'highlight' : option.brand_name == selectedItem}" >
+                                <li style="list-style: none;padding: 8px;cursor: pointer;"   (click)="selectItem($event, option,i)">{{option.brand_name}}</li>
+                            </div>
+                            </div>
+                            <div *ngIf="selectedBrandsList!=''">
+                           
+                                <div *ngFor="let item of selectedBrandsList;let i=index"  class="brandtags">
+                                    <div style="float: left;">{{item.brand_name}}</div>
+                                    <img src="../../assets/Images/cancel-icon.png" class="closecls" (click)="removeBrandTag(item.brand_name,i,item.brand_id)">
+                                    
+                                </div>
+                              
+                                </div>
+                        </div>
+                                <div class="row pt-4">
+                                    <div class="col-lg-2">
+                                    <button type="submit" class="savebutton" (click)="closeModel()" >OK</button>
+                                   
+                                </div>
+                              
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+
+
+
+
 </div>

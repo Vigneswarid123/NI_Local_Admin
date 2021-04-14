@@ -1,10 +1,22 @@
-.savebtn{
-  background-color: #577f63;
-  border-style: none;
-  color: whitesmoke;
-  width: 100px;
-border: none;
-}
+// .savebtn{
+//   background-color: #577f63;
+//   border-style: none;
+//   color: whitesmoke;
+//   width: 100px;
+// border: none;
+// }
+.savebutton {
+  background: #577f63;
+  border: 1px solid #577f63;
+  border-radius: 3px;
+  padding: 5px;
+  outline: 0;
+  font-weight: 400;
+  font-size: 14px;
+  color: #fff;
+  text-transform: uppercase;
+  width: 100%;
+ }
 
 .form-control {
   display: block;
@@ -99,4 +111,12 @@ background: rgba(0, 0, 0, 0.8); color: #fff;
 .usertype{
 
   display: none;
+}
+
+.errormessage {
+  color: red;
+}
+
+.form-check-input {
+  color: #00a453;
 }

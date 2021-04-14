@@ -14,11 +14,7 @@
                           <div class="formgroup">
                               <label>First Name</label>
                               <input type="text" [(ngModel)]="fname" class="form-control" maxlength="48" formControlName="FirstName"   autofocus>
-                              <!-- <div *ngIf="!dshipForm.controls.FirstName.valid && (dshipForm.controls.FirstName.dirty||submitted)" class="error">
-                                  <div *ngIf="dshipForm.controls.FirstName.errors.required">First Name is required</div>
-                                  <div *ngIf="dshipForm.controls.FirstName.errors.pattern">First Name is invalid</div>
-      
-                              </div> -->
+                            
                               <div *ngIf="submitted &amp;&amp; dshipForm.controls.FirstName.errors" class="text-danger">
                                 <div *ngIf="dshipForm.controls.FirstName.errors.required">FirstName  is required</div>
                                 <div *ngIf="dshipForm.controls.FirstName.errors.pattern">FirstName  must be String</div>
@@ -32,10 +28,7 @@
                               <label>Last Name</label>
                               <input type="text" class="form-control"  [(ngModel)]="lname" maxlength="48" formControlName="LastName">
                           </div>
-                          <!-- <div *ngIf="!dshipForm.controls.LastName.valid && (dshipForm.controls.LastName.dirty||submitted)" class="error">
-                              <div *ngIf="dshipForm.controls.LastName.errors.required">Last Name is required</div>
-                              <div *ngIf="dshipForm.controls.LastName.errors.pattern">Last Name is invalid</div>
-                          </div> -->
+                        
                           <div *ngIf="submitted &amp;&amp; dshipForm.controls.LastName.errors" class="text-danger">
                             <div *ngIf="dshipForm.controls.LastName.errors.required">LastName  is required</div>
                             <div *ngIf="dshipForm.controls.LastName.errors.pattern">LastName  must be String</div>
@@ -45,64 +38,67 @@
                   </div>
                   
                   <div class="row pt-1">
+                     
                       <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                          <div class="formgroup grp grp_det">
-                              <label>Date of Joining</label>
-                              <input type="date"  id="jdate" name="jdate"     [ngModel]="dateofjoining | date:'yyyy-MM-dd'"    class="form-control" maxlength="48"  formControlName="DateofJoining" >
-                          </div>
-                          <!-- <div *ngIf="!dshipForm.controls.DateofJoining.valid && (dshipForm.controls.DateofJoining.dirty||submitted)" class="error">
-                              <div *ngIf="dshipForm.controls.DateofJoining.errors.required">Date of Joining is required</div>
-                            
-                          </div> -->
-                          <div *ngIf="submitted &amp;&amp; dshipForm.controls.DateofJoining.errors" class="text-danger">
-                            <div *ngIf="dshipForm.controls.DateofJoining.errors.required">DateofJoining  is required</div>
-                         
-                            
+                        <div class="formgroup grp grp_det">
+                            <label>Gender</label>
+                          <select class="form-control" [(ngModel)]="dealergender" formControlName="Gender">
+                              <option value="">Select Gender</option>
+                              <option *ngFor="let g of gender" [value]="g.value">{{g.group}}</option>
+                             
+                             
+                          </select>
+                     
+                        <div *ngIf="submitted &amp;&amp; dshipForm.controls.Gender.errors" class="text-danger">
+                          <div *ngIf="dshipForm.controls.Gender.errors.required">Gender  is required</div>
+                       </div>
                         </div>
-                      </div>
+                    </div>
                       <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                           <div class="formgroup grp grp_det">
                               <label>Job Title</label>
                               <input type="text" class="form-control" maxlength="48" formControlName="JobTitle" [(ngModel)]="job">
                           </div>
-                          <div *ngIf="submitted &amp;&amp; dshipForm.controls.JobTitle.errors" class="text-danger">
-                            <div *ngIf="dshipForm.controls.JobTitle.errors.required">JobTitle  is required</div>
-                         
-                            
-                        </div>
+                       
                       </div>
                   </div>
                   
-                  
                   <div class="row pt-1">
-                      <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                          <div class="formgroup grp grp_det">
-                              <label>Gender</label>
-                            <select class="form-control" [(ngModel)]="dealergender" formControlName="Gender">
-                                <option value="">Select Gender</option>
-                                <option *ngFor="let g of gender" [value]="g.value">{{g.group}}</option>
-                               
-                               
-                            </select>
-                            <!-- <div *ngIf="!dshipForm.controls.Gender.valid && (dshipForm.controls.Gender.dirty||submitted)" class="error">
-                              <div *ngIf="dshipForm.controls.Gender.errors.required">Gender is required</div>
-                          </div> -->
-                          <div *ngIf="submitted &amp;&amp; dshipForm.controls.Gender.errors" class="text-danger">
-                            <div *ngIf="dshipForm.controls.Gender.errors.required">Gender  is required</div>
-                         </div>
-                          </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <div class="formgroup grp grp_det">
+                            <label>Email Id</label>
+                            <input type="text" [(ngModel)]="login" class="form-control" maxlength="48"  formControlName="loginId">
+                        
+                            <div *ngIf="submitted &amp;&amp; dshipForm.controls.loginId.errors" class="text-danger">
+                              <div *ngIf="dshipForm.controls.loginId.errors.required">EmailId  is required</div>
+                              <div *ngIf="dshipForm.controls.loginId.errors.pattern">EmailId  must be a valid email</div>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                      <div class="formgroup grp grp_det">
+                       
+
+                          <input type="button" value="Change Password"  class="changepwd" (click)="openDialog()" style="
+                          margin-top: 44px;
+                      "/>
                       </div>
+                  </div>
+              </div>
+  
+                  <div class="row pt-1">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <div class="formgroup grp grp_det">
+                            <label>Date of Joining</label>
+                            <input type="date"  id="jdate" name="jdate"   [(ngModel)]="jdate"  class="form-control" maxlength="48"  formControlName="DateofJoining" >
+                        </div>
+                      
+                    </div>
                       <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                           <div class="formgroup grp grp_det">
-                              <label>Dateofbirth</label>
-                              <input type="date"  class="form-control" maxlength="48"  [ngModel]="dateofbirth | date:'yyyy-MM-dd'"   formControlName="Dob">
+                              <label>Date of birth</label>
+                              <input type="date"  class="form-control" maxlength="48"   [(ngModel)]="dateofbirth" formControlName="Dob">
                           </div>
-                          <!-- <div *ngIf="!dshipForm.controls.Dob.valid && (dshipForm.controls.Dob.dirty||submitted)" class="error">
-                              <div *ngIf="dshipForm.controls.Dob.errors.required">Dob is required</div>
-                          </div> -->
-                          <div *ngIf="submitted &amp;&amp; dshipForm.controls.Dob.errors" class="text-danger">
-                            <div *ngIf="dshipForm.controls.Dob.errors.required">Dob  is required</div>
-                         </div>
                         </div>
                   </div>
                   
@@ -111,9 +107,7 @@
                           <div class="formgroup grp grp_det">
                               <label>Address1</label>
                               <input type="text" [(ngModel)]="address1" class="form-control" maxlength="48"   formControlName="Address1">
-                              <div *ngIf="submitted &amp;&amp; dshipForm.controls.Address1.errors" class="text-danger">
-                                <div *ngIf="dshipForm.controls.Address1.errors.required">Address1  is required</div>
-                             </div>
+
                           </div>
                       </div>
                       <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
@@ -123,61 +117,26 @@
                           </div>
                       </div>
                   </div>
-                  <div class="row pt-1">
-                      <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                          <div class="formgroup grp grp_det">
-                              <label>Email Id</label>
-                              <input type="text" [(ngModel)]="login" class="form-control" maxlength="48"  formControlName="loginId">
-                              <!-- <div *ngIf="!dshipForm.controls.loginId.valid && (dshipForm.controls.loginId.dirty||submitted)" class="error">
-                                  <div *ngIf="dshipForm.controls.loginId.errors.required">login Id is required</div>
-                                  <div *ngIf="dshipForm.controls.loginId.errors.pattern">Must be a valid email</div>
-                              </div> -->
-                              <div *ngIf="submitted &amp;&amp; dshipForm.controls.loginId.errors" class="text-danger">
-                                <div *ngIf="dshipForm.controls.loginId.errors.required">EmailId  is required</div>
-                                <div *ngIf="dshipForm.controls.loginId.errors.pattern">EmailId  must be a valid email</div>
-                             </div>
-                          </div>
-                      </div>
-                      <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                          <div class="formgroup grp grp_det">
-                              <label>Password</label>
-                              <input type="password" [readonly]="true" [(ngModel)]="dealerUsersArry.Du_password" class="form-control"  formControlName="Password">
-                              <!-- <div *ngIf="!dshipForm.controls.Password.valid && (dshipForm.controls.Password.dirty||submitted)" class="error">
-                                  <div *ngIf="dshipForm.controls.Password.errors.required">Password is required</div>
-                              </div> -->
-                          </div>
-                      </div>
-                  </div>
+               
+                
       
                   <div class="row pt-1">
                       <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                           <div class="formgroup grp grp_det">
                               <label>City</label>
                               <input type="text" class="form-control" [(ngModel)]="city" maxlength="48"  formControlName="City">
-                              <!-- <div *ngIf="!dshipForm.controls.City.valid && (dshipForm.controls.City.dirty||submitted)" class="error">
-                                  <div *ngIf="dshipForm.controls.City.errors.required">City is required</div>
-                              </div> -->
-                              <div *ngIf="submitted &amp;&amp; dshipForm.controls.City.errors" class="text-danger">
-                                <div *ngIf="dshipForm.controls.City.errors.required">City  is required</div>
-                             </div>
+                            
                           </div>
                       </div>
                       <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                           <div class="formgroup grp grp_det">
                               <label>State</label>
-                              <!-- <input type="password" class="form-control" maxlength="50" formControlName="State"> -->
                               <select class="form-control"   formControlName="State" [(ngModel)]="dealerUsersArry.Du_State">
                                   <option value="">Select State</option>
                                   <option *ngFor="let i of getstates" [value]="i.sg_id">{{i.sg_name}}</option>
                   </select>
                           </div>
-                          <!-- <div *ngIf="!dshipForm.controls.State.valid && (dshipForm.controls.State.dirty||submitted)" class="error">
-                              <div *ngIf="dshipForm.controls.State.errors.required">State is required</div>
-                            
-                          </div> -->
-                          <div *ngIf="submitted &amp;&amp; dshipForm.controls.State.errors" class="text-danger">
-                            <div *ngIf="dshipForm.controls.State.errors.required">State  is required</div>
-                         </div>
+                        
                       </div>
                   </div>
                   <div class="row pt-1">
@@ -187,45 +146,27 @@
                               <input type="text" class="form-control" [(ngModel)]="dealerUsersArry.Du_Zip" maxlength="48"  formControlName="Zip">
                              
                           </div>
-                          <!-- <div *ngIf="!dshipForm.controls.Zip.valid && (dshipForm.controls.Zip.dirty||submitted)" class="error">
-                              <div *ngIf="dshipForm.controls.Zip.errors.required">Zip is required</div>
-                            
-                          </div> -->
-                          <div *ngIf="submitted &amp;&amp; dshipForm.controls.Zip.errors" class="text-danger">
-                            <div *ngIf="dshipForm.controls.Zip.errors.required">Zip  is required</div>
-                         </div>
+                     
                       </div>
                       <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                           <div class="formgroup grp grp_det">
                               <label>Phone</label>
                               <input type="text" class="form-control" maxlength="48"  [(ngModel)]="phone" formControlName="Phone">
                           </div>
-                          <!-- <div *ngIf="!dshipForm.controls.Phone.valid && (dshipForm.controls.Phone.dirty||submitted)" class="error">
-                              <div *ngIf="dshipForm.controls.Phone.errors.required">Phone is required</div>
-                            
-                          </div> -->
-                          <div *ngIf="submitted &amp;&amp; dshipForm.controls.Phone.errors" class="text-danger">
-                            <div *ngIf="dshipForm.controls.Phone.errors.required">Phone  is required</div>
-                         </div>
+                        
                       </div>
                   </div>
                   <div class="row pt-1">
                       <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                           <div class="formgroup grp grp_det">
                               <label>Role</label>
-                              <!-- <select class="form-control" formControlName="Role">
-                                  <option value="">Select Role</option>
-                                  <option value="1">Admin</option>
-                                  <option value="2">User</option>
-                              </select> -->
+                          
                               <select class="form-control"  [(ngModel)]="dealerUsersArry.Du_Role" formControlName="Role">
                                   <option value="">Select Role</option>
                                   <option *ngFor="let r of rolesArray" [value]="r.Role_UniqId">{{r.Role_Name}}</option>
                                   </select>
       
-                              <!-- <div *ngIf="!dshipForm.controls.Role.valid && (dshipForm.controls.Role.dirty||submitted)" class="error">
-                                <div *ngIf="dshipForm.controls.Role.errors.required">Role is required</div>
-                            </div> -->
+                           
                             <div *ngIf="submitted &amp;&amp; dshipForm.controls.Role.errors" class="text-danger">
                                 <div *ngIf="dshipForm.controls.Role.errors.required">Role  is required</div>
                              </div>
@@ -233,20 +174,32 @@
                       </div>
                       <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                           <div class="formgroup grp grp_det">
-                              <label>Dealar User</label>
+                              <label>DealarShip</label>
                             
                               <select class="form-control"  formControlName="dealeruser" [(ngModel)]="dealerUsersArry.Du_Dealer_Id">
-                                  <option value="">Select Dealer Name</option>
-                                  <option *ngFor="let d of dealerNames" [value]="d.dg_id">{{d.dg_name}}</option>
+                                  <option value="">Select DealerShip</option>
+                                  <option *ngFor="let d of dealerNames" [value]="d.dealer_id">{{d.dealer_name}}</option>
+
                                   </select>
-                              <!-- <div *ngIf="!dshipForm.controls.dealeruser.valid && (dshipForm.controls.dealeruser.dirty||submitted)" class="error">
-                                <div *ngIf="dshipForm.controls.dealeruser.errors.required">Dealer User is required</div>
-                            </div> -->
+                           
                             <div *ngIf="submitted &amp;&amp; dshipForm.controls.dealeruser.errors" class="text-danger">
                                 <div *ngIf="dshipForm.controls.dealeruser.errors.required">dealeruser  is required</div>
                              </div>
                           </div>
                       </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-6">
+                          <label for="status">Status: &nbsp;
+                              <input type="radio" value="Y" name="status" [(ngModel)]="du_status" formControlName="status">&nbsp;
+                              <label class="statusActive" for="status">Active</label>&nbsp;
+                              <input type="radio" value="N" name="status" [(ngModel)]="du_status" formControlName="status">&nbsp;
+                              <label class="statusInactive" for="status">In-Active</label>
+
+
+                          </label>
+                      </div>
+
                   </div>
       
                   <div class="row">
@@ -254,23 +207,37 @@
                       <div class="form-group" style="margin-left: -57px;margin-top: 35px;">
                               <img  src="assets/Images/Upload-Icon.png" (click)="selectFile.click()">
                               <input style="display: none;height: 70px;width: 148px;margin-top: 18px;" type="file" name="image" formControlName="fileUpload"   (change)="fileChangeEvent($event)" #selectFile />
-                              <div style="width:150px" *ngIf="selecteimage">
-                                <image-cropper
-                                [imageChangedEvent]="imageChangedEvent"
-                                [maintainAspectRatio]="true"
-                                [aspectRatio]="4 / 3"
-                                format="png"
-                                (imageCropped)="imageCropped($event)"
-                                (imageLoaded)="imageLoaded()"
-                                (cropperReady)="cropperReady()"
-                                (loadImageFailed)="loadImageFailed()"
-                                ></image-cropper>
-                                
+                            
+                              <div class="row">
+                                  
+                                <div class="col-md-6">
+                                    <button *ngIf="proimg" class="fa fa-times" aria-hidden="true" style=" float: right;" (click)="removeimg()"><img width="3px" height="5px" src="assets/Images/cancelicon.png"></button>
+                                    <div style="width:150px" *ngIf="selecteimage">
+                                        <image-cropper
+                                        [imageChangedEvent]="imageChangedEvent"
+                                        [maintainAspectRatio]="true"
+                                        [aspectRatio]="4 / 4"
+                                        [resizeToWidth]="128"
+                                        [resizeToHeight]="128"
+                                        format="png"
+                                        (imageCropped)="imageCropped($event)"
+                                        (imageLoaded)="imageLoaded()"
+                                        (cropperReady)="cropperReady()"
+                                        (loadImageFailed)="loadImageFailed()"
+                                        ></image-cropper>
+                                        
+                                        
+                                        </div>
+                                </div>
+                                <div class="col-md-6">
+                                    &nbsp;&nbsp;
+                                    <img [src]="proimg" style="width:150px ;"/>
                                 
                                 </div>
-                                <button *ngIf="proimg" class="fa fa-times" aria-hidden="true" style=" float: right;" (click)="removeimg()"><img width="3px" height="5px" src="assets/Images/cancelicon.png"></button>
+                            </div> 
+                             
     
-                            <img [src]="proimg" style="width:150px ;margin-top: 6%;"/>
+                          
                               <!-- <div class="image-preview" *ngIf="previewUrl">
                                   <img [src]="croppedImage" class="userpro"  (error)="onImgError($event)" />
                               </div> -->
@@ -290,7 +257,7 @@
                       </div>
                   </div> -->
       
-                  <div class="row" style="padding-bottom: 4%;">
+                  <!-- <div class="row" style="padding-bottom: 4%;">
                       <div class="col-sm-1">
                       </div>
                       <div class="col-sm-1" style="padding-top: 2%">
@@ -300,7 +267,18 @@
                           <a  style="padding-left: 47px;" (click)="Cancel();"><button  class="button">Cancel</button></a> 
                           
                       </div>
+                  </div> -->
+                  <div class="col-lg-12 pt-lg-5 pl-lg-4">
+                    <div  class="row">
+                      <div class="col-lg-2">
+                        <button  type="submit" class="savebutton">Save</button>
+                      </div>
+                      <div  class="col-lg-2">
+                        <button  type="button" class="savebutton" (click)="Cancel()">Cancel</button>
+                      </div>
+                    </div>
                   </div>
+       
                 </form>
               
               </div>

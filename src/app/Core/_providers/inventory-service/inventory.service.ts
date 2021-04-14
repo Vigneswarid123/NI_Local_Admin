@@ -26,7 +26,7 @@ export class InventoryService {
 
     //return this.http.post<any>(`${environment.apiUrl}inventory/get`, JSON.stringify(data), addgroupToken);
 
-    return this.http.post(`${environment.apiUrl}inventory/get`, JSON.stringify(data), addgroupToken)
+    return this.http.post(`${environment.apiUrl}inventory/getdata`, JSON.stringify(data), addgroupToken)
     .pipe(map(
       (res: any) => {
       return res;

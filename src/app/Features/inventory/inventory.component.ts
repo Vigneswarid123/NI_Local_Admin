@@ -45,7 +45,12 @@ export class InventoryComponent implements OnInit {
   stockType:string;
   tableResult:string;
   alphaSrch:string='';
-
+  Filters=false;
+  dealergroups:any=[];
+  GetDealershipsList : any = [];
+  selectedDealer: any;
+  GridDiv=false;
+  ShowLabel=true;
   Years: any  = [
     {'value':2020,'Year':2020},
     {'value':2019,'Year':2019},
@@ -58,7 +63,12 @@ export class InventoryComponent implements OnInit {
     {'value':2012,'Year':2012},
     {'value':2011,'Year':2011},
     {'value':2010,'Year':2010},
-    {'value':2009,'Year':2009}
+    {'value':2009,'Year':2009},
+    {'value':2008,'Year':2008},
+    {'value':2007,'Year':2007},
+    {'value':2006,'Year':2006},
+    {'value':2005,'Year':2005},
+    {'value':2004,'Year':2004}
   ]
 
   constructor( public fb:FormBuilder,private apiSrvc:ApiService,private router:Router,private SpinnerService: NgxSpinnerService,private dfltSrvc:CommonService,
@@ -77,24 +87,68 @@ export class InventoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.dfltStat=true;
+    this.dfltStat=false;
     this.router.navigateByUrl('inventory');
   
     this.Show=true;
     this.hide=false;
     this.brand_id=0;
     this.modelId=0;
-    this.year=2020;
+   // this.year=2020;
+    this.year=0;
     this.styleId=0;
     this.alphaSrch="";
-    this.modelForm.controls['ddlYear'].setValue('2020');
+  //  this.modelForm.controls['ddlYear'].setValue('2020');
+  this.modelForm.controls['ddlYear'].setValue('0');
     this.modelForm.controls['ddlStock'].setValue('0');
 
-    this.SpinnerService.show();
-     this.getBrands();
-    
+  //  this.SpinnerService.show();
+    // this.getBrands();
+    this.getGroups();
    
   }
 
+  getGroups(){
+    const obj={  "dealergroupid": 0, "expression": "dg_status = 'Y'"}
+    this.apiSrvc.postmethod('dealershipgroups/get',obj).subscribe((resp:any)=>{
+      if(resp.status = 200){
+        if(resp.response[0]['JSON_F52E2B61-18A1-11d1-B105-00805F49916B'] !=""){
+          this.dealergroups = JSON.parse(resp.response[0]['JSON_F52E2B61-18A1-11d1-B105-00805F49916B']);
+      }
+    }
+    });
+    
+  }
+
+  changeGroup(grpid){
+    this.SpinnerService.show(); 
+  //  this.showdata=false; 
+    this.getDealerships(grpid);
+  }
+  
+  getDealerships(grpid) {​​​​​​​​
+    const bd = {​​​​​​​​
+    "dealerid":0,
+    "expression":"dealer_dg_id =" + grpid
+        }​​​​​​​​;
+     this.apiSrvc.postmethod('dealerships/get',bd).subscribe((data:any)=>{
+    if (data.status == 200) {​​​​​​​​
+    this.GetDealershipsList = JSON.parse(data.response[0]['JSON_F52E2B61-18A1-11d1-B105-00805F49916B']);
+    this.SpinnerService.hide();  
+          }​​​​​​​​else{
+            this.SpinnerService.hide();
+          }
+        }​​​​​​​​);
+      }​​​​​​​​
+    
+      getDealerId(did){
+        this.SpinnerService.show(); 
+        this.Filters = true;
+        this.GridDiv = true;
+        this.ShowLabel = false;
+        this.selectedDealer = did; 
+      this.getBrands();
+    }
 
   getBrands(){
     const obj={
@@ -113,8 +167,11 @@ export class InventoryComponent implements OnInit {
 
 
   getModels(){
-
-    this.brand_id= this.modelForm.controls['ddlBrand'].value;
+    if(this.modelForm.controls['ddlBrand'].value=="")
+    {this.brand_id=0}
+    else{this.brand_id= this.modelForm.controls['ddlBrand'].value;}
+   // this.brand_id= this.modelForm.controls['ddlBrand'].value;
+   // if(this.modelForm.controls['ddlBrand'].value==""){this.brand_id=0}
     this.year=this.modelForm.controls['ddlYear'].value;
 
     let expr="";
@@ -167,7 +224,7 @@ export class InventoryComponent implements OnInit {
       if(this.modelForm.controls['txtVin'].value!="")
       {
          this.vin=this.modelForm.controls['txtVin'].value;
-         let expr="cdk.VIN like '%"+this.vin+"%'";
+         let expr="and cdk.vehicle_vin like '%"+this.vin+"%'";
         
           this.getInventories(expr);
           this.resetDropDown(); 
@@ -183,8 +240,8 @@ export class InventoryComponent implements OnInit {
   }
 
   loadInventory(){
-    let expr="cdk_status='Y'";
-   
+   // let expr="cdk_status='Y'";
+     let expr="";
       //retrieving deropdown values
       this.year=this.modelForm.controls['ddlYear'].value;
       this.brand_id=this.modelForm.controls['ddlBrand'].value;
@@ -193,24 +250,24 @@ export class InventoryComponent implements OnInit {
       this.stockType= this.modelForm.controls['ddlStock'].value;
 
 
-      if(this.dfltStat==true)
-       this.year=2020;
+     // if(this.dfltStat==true)
+     //  this.year=2020;
    
 
 
      if(this.year!=0)
      {
            if(this.dfltStat==true)
-              expr+=" and cdk.year="+this.year+" and cdk.StockType like '%New%'";
+              expr+=" and cdk.Makeyear="+this.year+" and cdk.Stock like '%New%'";
             else
-              expr+=" and cdk.year="+this.year+"";
+              expr+=" and cdk.Makeyear="+this.year+"";
      }
      if(this.brand_id!=0)
               expr+=" and cdk.brandid="+this.brand_id+"";
      if(this.modelId!=0)
               expr+=" and cdk.modelid="+this.modelId+"";
      if(this.stockType!="0")
-              expr+=" and cdk.StockType like '%"+this.stockType+"%'";
+              expr+=" and cdk.Stock like '%"+this.stockType+"%'";
 
 
       this.resetDropDown();    
@@ -238,10 +295,16 @@ export class InventoryComponent implements OnInit {
       this.modelForm.controls['ddlBrand'].setValue('0');
       this.modelForm.controls['ddlModel'].setValue('0');
       //this.modelForm.controls['ddlStyle'].setValue('0');
-      this.modelForm.controls['ddlStock'].setValue('NEW');
+     // this.modelForm.controls['ddlStock'].setValue('NEW');
+     this.modelForm.controls['ddlStock'].setValue('0');
     }
 
     if(this.brand_id==0){
+     // this.modelForm.controls['ddlModel'].setValue('0');
+     this.modelForm.controls['ddlBrand'].setValue('0');
+    }
+
+    if(this.modelId==0){    
       this.modelForm.controls['ddlModel'].setValue('0');
     }
 
@@ -250,7 +313,9 @@ export class InventoryComponent implements OnInit {
       this.modelForm.controls['ddlBrand'].setValue('0');
       this.modelForm.controls['ddlModel'].setValue('0');
       //this.modelForm.controls['ddlStyle'].setValue('0');
-      this.modelForm.controls['ddlStock'].setValue('NEW');
+     // this.modelForm.controls['ddlStock'].setValue('NEW');
+     this.modelForm.controls['ddlStock'].setValue('0');
+    }else{
 
     }
 
@@ -259,7 +324,7 @@ export class InventoryComponent implements OnInit {
   getInventories(expr){
       this.dfltStat=false;
       
-      const data={"dealerId":1,"expression":expr };
+      const data={"dealerId":this.selectedDealer,"expression":expr };
 
       this.inventryInfo=[];
 
@@ -298,8 +363,8 @@ export class InventoryComponent implements OnInit {
           this.modelForm.controls['ddlBrand'].setValue('0');
           this.modelForm.controls['ddlModel'].setValue('0');
           //this.modelForm.controls['ddlStyle'].setValue('0');
-          this.modelForm.controls['ddlStock'].setValue('NEW');
-        
+        //  this.modelForm.controls['ddlStock'].setValue('NEW');
+        this.modelForm.controls['ddlStock'].setValue('0');
           this.loadInventory();
       }
 

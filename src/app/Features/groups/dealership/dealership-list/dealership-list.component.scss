@@ -1,4 +1,4 @@
-        .select{font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif; font-size: 14px; text-decoration: underline !important; 
+        .select{font: 400 14px/20px Roboto-Regular; font-size: 14px; text-decoration: underline !important; 
                 text-decoration-color: gray !important; cursor: pointer;} 
         
         a.select:hover, a.ex1:active {color: #00a453;}
@@ -21,3 +21,23 @@
         .branddet p{
            margin: 0px;
         }
+
+        .contentss {
+                // width: 1010px;
+                height:400px;
+                overflow-x: hidden;
+            }
+            
+            .contentss::-webkit-scrollbar {
+                width: 5px;
+                height: 8px;
+                background-color: #3f3f3f;
+              }
+             
+              
+              .contentss::-webkit-scrollbar-thumb {
+                width: 5px;
+                height: 8px;
+                background-color: #00a453;
+                border-radius: 3px;
+              }

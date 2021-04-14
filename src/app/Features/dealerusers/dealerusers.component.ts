@@ -5,9 +5,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminServiceService } from '../../Core/_providers/admin-service/admin-service.service';
 import { ApiService } from '../../Core/_providers/api-service/api.service';
 import { NgxSpinnerService } from "ngx-spinner"; 
-import { GridRolesComponent } from '../roles/grid-roles/grid-roles.component';
 import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { AlertifyService } from '../../Core/_providers/alert-service/alertify.service';
+import { environment } from '../../../environments/environment';
+
 
 @Component({
   selector: 'app-dealerusers',
@@ -21,6 +23,7 @@ export class DealerusersComponent implements OnInit {
   SearchText: any;
   dshipForm: FormGroup;
   dealerForm:FormGroup;
+  SearchDealerForm:FormGroup;
   fileData: File = null;
   previewUrl: any = null;
   fileUploadProgress: string = null;
@@ -32,27 +35,43 @@ export class DealerusersComponent implements OnInit {
   chkstatus:boolean=false;
   id:number;
   dealers:number;
+  defaultPassword:any;
   defaultdealer=1
  // image: any=[];
-  imagebinding = 'http://niapi.local.com/api/resources/images/';
+ result:string;
+
+ atozFltr:boolean=false;
+ hide:boolean=false;
+ alphaSrch:string='';
+ DealerInfo:any=[];
+alphaColumns:any=["Du_First_Name","Du_Last_Name"];
+// alphaColumns:any=["rolename"];
+ SearchAdminForm: FormGroup;
+
+  imagebinding = `${environment.apiUrl}`+'/resources/images/';
   public Dealeruser:any =[];
+  public dealerNames:any=[];
+
     constructor(private fB: FormBuilder,  private adminService:AdminServiceService, private Api:ApiService, private router: Router,
-    private SpinnerService: NgxSpinnerService) {
+    private SpinnerService: NgxSpinnerService, private alertify: AlertifyService) {
+
+    
+
     this.dshipForm = this.fB.group({
        FirstName: ['', [Validators.required, Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*')]],
        LastName: ['', [Validators.required, Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*')]],
-       DateofJoining:['', Validators.required],
+       DateofJoining:[''],
        JobTitle:[''],
-       Dob:['', Validators.required],
+       Dob:[''],
        Address2:[''],
        Gender: ['', Validators.required],
-       Address1: ['', [Validators.required, Validators.maxLength(50)]],
+       Address1: [''],
        loginId: ['', [Validators.required, Validators.maxLength(50),Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$')]],
-       Password: ['', [Validators.required, Validators.maxLength(50)]],
-       City: ['', [Validators.required, Validators.maxLength(50)]],
-       State:['', Validators.required],
-       Zip:['', Validators.required],
-       Phone:['', Validators.required],
+       Password: [''],
+       City: [''],
+       State:[''],
+       Zip:[''],
+       Phone:[''],
        fileUpload:[''],
        Role: ['', Validators.required],
        dealeruser: ['', Validators.required],
@@ -62,41 +81,22 @@ export class DealerusersComponent implements OnInit {
     this.dealerForm = this.fB.group({
       dealer: ['', ''],
    
-      // year: ['', [Validators.required]],
-      // model: ['', [Validators.required]]
     })
+    this.SearchDealerForm =this.fB.group({
+      txtSearch:""
+    });
    }
    get f() { return this.dshipForm.controls; }
   ngOnInit(){
   //  this.bindGrid();
   this.rolesList();
   this.getstates();
-  this.getDealerNames();
+ // this.getDealerNames();
+ this.getAllDealerShips();
+  this.dshipForm.markAsUntouched();
+  this.dshipForm.markAsPristine();
+ // this.initialGrid();
 
-  let obj={
-    "id": "",
-    "DealerId": 1,
-    "expression": ""
-  }
-  this.Api.postmethod('dealeruser/get',obj).subscribe(res=>{
-   //console.log("d-users",res);
-   if(res.status==200){
-    this.dealerUsersArry=res.response;
-    console.log(this.dealerUsersArry)
-    this.dealerUsersArry.forEach(element => {
-      this.rolesArray.forEach(data => {
-        if (element.Du_Role == data.Role_UniqId) {
-          console.log('ccc', data.Role_Name);
-          element.rolename=data.Role_Name
-      
-        }
-      })
-   //   console.log('rolenames', this.dealerUsersArry)
-    });
-
-   
-   }
-  })
     
   }
  
@@ -154,6 +154,41 @@ fileChangeEvent(event: any): void {
       this.previewUrl = reader.result;
     };
   }
+initialGrid(){
+  let obj={
+    "id": "",
+    "DealerId": 1,
+    "expression": ""
+  }
+  this.Api.postmethod('dealeruser/get',obj).subscribe(res=>{
+   //console.log("d-users",res);
+   if(res.status==200){
+   
+    this.dealerUsersArry=res.response;
+  //  this.DealerInfo=this.dealerUsersArry.response;
+    console.log(this.dealerUsersArry)
+    this.dealerUsersArry.forEach(element => {
+      this.rolesArray.forEach(data => {
+        if (element.Du_Role == data.Role_UniqId) {
+          console.log('ccc', data.Role_Name);
+          element.rolename=data.Role_Name
+      
+        }
+      })
+   //   console.log('rolenames', this.dealerUsersArry)
+    });
+if(this.dealerUsersArry.length==0)
+   {
+     console.log(this.result)
+this.result="No Records Found!!!";
+   }
+   else{
+     this.result='';
+   }
+   }
+  })
+}
+
   removeimg() {
     console.log( this.uploadedFileName);
     this.previewUrl = '';
@@ -163,9 +198,10 @@ fileChangeEvent(event: any): void {
   showAddPanel(){
     this.Addeditpnl=true;
     this.gridpnl=false;
+    this.submitted=false;
     this.rolesList();
     //this.getstates();
-    this.getDealerNames();
+   // this.getDealerNames();
   }
   Cancel(){
     this.Addeditpnl=false;
@@ -177,11 +213,7 @@ fileChangeEvent(event: any): void {
   editBrand(val){
 
     console.log(val.Du_Id, 'ddd');
- 
- 
-    this.router.navigate(['dealerusersedit'], { queryParams: { Du_Id: val.Du_Id } });
-
-
+     this.router.navigate(['dealerusersedit'], { queryParams: { Du_Id: val.Du_Id } });
   }
   getstates() {
     this.adminService.get('states?185').subscribe(
@@ -202,6 +234,7 @@ bindGrid(){
    //console.log("d-users",res);
    if(res.status==200){
     this.dealerUsersArry=res.response;
+  //  this.DealerInfo=this.dealerUsersArry.response;
     console.log(this.dealerUsersArry)
     this.dealerUsersArry.forEach(element => {
       this.rolesArray.forEach(data => {
@@ -213,7 +246,14 @@ bindGrid(){
       })
    //   console.log('rolenames', this.dealerUsersArry)
     });
-
+    if(this.dealerUsersArry.length==0)
+    {
+      console.log(this.result)
+ this.result="No Records Found!!!";
+    }
+    else{
+      this.result='';
+    }
    
   }
 });
@@ -231,6 +271,7 @@ this.Api.showRolesData(obj).subscribe((res: any) => {
     if (roles) {
       this.rolesArray = res.response;
       console.log(roles);
+      this.initialGrid();
     }
 }
   else {
@@ -238,21 +279,36 @@ this.Api.showRolesData(obj).subscribe((res: any) => {
   }
 });
 }
-dealerNames:any=[];
-getDealerNames() {
-  const dealergroupObj = {
-    "dealergroupid": 0,
-    "expression": "dg_status = 'Y'"
-  };
+// getDealerNames() {
+//   const dealergroupObj = {
+//     "dealergroupid": 0,
+//     "expression": "dg_status = 'Y'"
+//   };
 
-  this.Api.GetDealershipGroupsData(dealergroupObj).subscribe((resp: any) => {
-    console.log('Get groups Resp', resp);
-    if (resp.status == 200) {
-      this.dealerNames = JSON.parse(resp.response[0]['JSON_F52E2B61-18A1-11d1-B105-00805F49916B']);
-     // console.log('DealerGroups', this.dealerNames);
-    }
-  });
+//   this.Api.GetDealershipGroupsData(dealergroupObj).subscribe((resp: any) => {
+//     console.log('Get groups Resp', resp);
+//     if (resp.status == 200) {
+//       this.dealerNames = JSON.parse(resp.response[0]['JSON_F52E2B61-18A1-11d1-B105-00805F49916B']);
+//       console.log('DealerGroups', this.dealerNames);
+//     }
+//   });
+// }
+
+getAllDealerShips(){
+  const obj ={
+    "DealerShipId": 0,
+    "expression": ""
+  }
+  this.Api.postmethod('dealerships/alldealerships',obj).subscribe(res=>{
+    console.log(res);
+   if(res.status==200){
+    this.dealerNames=res.response;
+    console.log(this.dealerNames);
+        }
+});
+    this.SpinnerService.hide();
 }
+
 getid(e){
   console.log(e.target.value)
  this.dealers=e.target.value;
@@ -262,19 +318,34 @@ getid(e){
  
  }
 display(){
- // this.submitted=true;
-  if (this.dealerForm.invalid) {
-alert("please select value")
-}
+//  // this.submitted=true;
+//  //this.submitted=false;
+//   if (this.dealerForm.invalid) {
+// alert("please select value")
+// }
 console.log("display")
 this.bindGrid();
+console.log(this.submitted)
+//this.submitted=true;
 // this.gridpnl=true;
 // this.Addeditpnl=false;
 }
 onSubmit(){
+  console.log("hii")
   this.submitted=true;
   if (this.dshipForm.invalid) {
     return;
+  }
+  console.log(this.dshipForm.value.Password)
+  if(this.dshipForm.value.Password == null || this.dshipForm.value.Password == ""){
+    console.log(this.dshipForm.value.Password)
+    this.defaultPassword=1234
+    console.log(this.defaultPassword)
+  }
+  else{
+    this.defaultPassword=this.dshipForm.value.Password;
+    console.log(this.defaultPassword)
+
   }
 const  obj ={
   F_Name: this.dshipForm.value.FirstName,
@@ -287,37 +358,65 @@ const  obj ={
   Address1:this.dshipForm.value.Address1, 
   Address2:this.dshipForm.value.Address2,
   login_id:this.dshipForm.value.loginId, 
-        Password:this.dshipForm.value.Password,
+        Password:this.defaultPassword,
         City:this.dshipForm.value.City,
         State:this.dshipForm.value.State,
          Zip:this.dshipForm.value.Zip,
          Phone: this.dshipForm.value.Phone,
          Role: this.dshipForm.value.Role,
-       Status: 'Y'
+       Status: 'Y',
+       Userenable: 'N'
   }
+  console.log(obj)
   const fd: any = new FormData();
       fd.append('data', JSON.stringify(obj));
     fd.append('file', this.uploadedFileName);
       console.log('Final Obj', obj);
+      console.log(this.uploadedFileName)
       const options = { content: fd };
       this.adminService.postmethod('dealeruser',fd).subscribe((response:any)=>{
         console.log(response);
         if(response.status == 200){
-          alert("Record inserted successfully");
+          this.alertify.success('Dealeruser Inserted in succesfully');
+         // alert("Record inserted successfully");
             console.log(response);
             this.dshipForm.reset();
             this.dshipForm.markAsUntouched();
             this.dshipForm.markAsPristine();
 this.gridpnl=true;
 this.Addeditpnl=false;
-this.bindGrid();
+this.initialGrid();
            // this.router.navigate(['DealershipList']); 
+        }
+        else{
+          alert("Please Check Details")
         }
       },
      (error) => {
-      console.log('error',error);
+      this.alertify.error(error);
     }); 
   
   
 }
+onAlphaCatch(alphabet){
+  console.log("hii")
+  this.hide=true;
+  this.atozFltr=true;
+  this.alphaSrch=alphabet;
+  console.log("Alphabet"+this.alphaSrch);
+}
+
+onSearch(){
+  this.alphaSrch= this.SearchDealerForm.controls['txtSearch'].value;
+}
+
+atoZClick(){
+  if(!this.atozFltr)
+  this.atozFltr=true;
+  else
+  this.atozFltr=false;
+}
+
+
+
 }

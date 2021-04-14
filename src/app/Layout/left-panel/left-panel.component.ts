@@ -1,126 +1,84 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import {AdminServiceService} from '../../Core/_providers/admin-service/admin-service.service';
+import*as $ from'jquery';
+import { environment } from '../../../environments/environment';
+
+
 @Component({
   selector: 'app-left-panel',
   templateUrl: './left-panel.component.html',
   styleUrls: ['./left-panel.component.scss']
 })
 export class LeftPanelComponent implements OnInit {
-  isDealerNavIsActive: boolean = true;
-  isSettingNavIsActive: boolean = false;
-  isBrandSubNavIsActive: boolean = false;
-  isMoedelSubNavIsActive: boolean = false;
-  isRoleSubNavIsActive: boolean = false;
-  isStyleSubNavIsActive: boolean = false;
-  isdealershipIsActive:boolean=false;
-  isDealershipIsOpen:boolean=false;
-  isOEMGroupSubNavIsActive: boolean = false;
-  isInventoryIsActive: boolean = false;
-  isAdminUsersIsActive: boolean = false;
-  isAdminModulesIsActive: boolean = false;
-  isRegionsIsActive: boolean = false;
-  isOEMBrandSubNavIsActive: boolean = false;
-  isdealerUsersIsActive: boolean = false;
-  isincentiveTermsIsActive: boolean = false;
+  fullUrl = `${environment.apiUrl}`; 
+  indexval:number;
+  CurrentPage:string;
+  path:any;
+  afterload:string;
+  public response:any=[]
+  public Paneldata:any =[]
+  private previousUrl : string;
+  private currentUrl: string; 
+  navOpen:boolean;
+  isSettingNavIsActive=true;
 
-  constructor(private router:Router) { 
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
+  constructor(private service:AdminServiceService,private router:Router,) {
 
-        if (event.url.includes('Brands')) {
-          this.resetallActiveNav();
-          this.isSettingNavIsActive = true;
-          this.isBrandSubNavIsActive = true;
+  
+    this.previousUrl=localStorage.getItem('currentUrl');
+    console.log(this.previousUrl);
+    router.events.subscribe(event => {     
+      if (event instanceof NavigationEnd) {         
+        this.currentUrl = event.url;  
+        console.log(this.currentUrl);
+        console.log( this.previousUrl);
+        localStorage.setItem('currentUrl',this.currentUrl);
+        if(this.currentUrl == "/dashboard"){
+          this.CurrentPage="Dealerships",       
+          console.log(this.CurrentPage)
         }
-        else if (event.url.includes('Models')) {
-          this.resetallActiveNav();
-          this.isSettingNavIsActive = true;
-          this.isMoedelSubNavIsActive = true;
+        else if(this.currentUrl !== this.previousUrl ){
+          console.log(localStorage.getItem('currentpage'));
+          this.afterload=localStorage.getItem('currentpage');
+          console.log(this.afterload)
+          this.CurrentPage=this.afterload;
+          this.navOpen=true;
+          console.log(this.CurrentPage)
         }
-        else if (event.url.includes('Roles')) {
-          this.resetallActiveNav();
-          this.isSettingNavIsActive = true;
-          this.isRoleSubNavIsActive = true;
+        else if(this.currentUrl !== "/dashboard"){
+          console.log(localStorage.getItem('currentpage'));
+          this.afterload=localStorage.getItem('currentpage');
+          console.log(this.afterload)
+          this.CurrentPage=this.afterload;
+          this.navOpen=true;
+          console.log(this.CurrentPage)
         }
-        else if (event.url.includes('Styles')) {
-          this.resetallActiveNav();
-          this.isSettingNavIsActive = true;
-          this.isStyleSubNavIsActive = true;
-        }
-        // else if (event.url.includes('Styles')) {
-        //   this.resetallActiveNav();
-        //   this.isSettingNavIsActive = true;
-        //   this.isStyleSubNavIsActive = true;
-        // }
-        else if(event.url.includes('OEMGroups')){
-          this.resetallActiveNav();
-          this.isSettingNavIsActive = true;
-          this.isOEMGroupSubNavIsActive = true;
-        }
-        else if(event.url.includes('inventory')){
-          this.resetallActiveNav();
-          this.isSettingNavIsActive = true;
-          this.isInventoryIsActive = true;
-        }
-        else if(event.url.includes('users')){
-          this.resetallActiveNav();
-          this.isSettingNavIsActive = true;
-          this.isAdminUsersIsActive = true;
-        }
-        else if(event.url.includes('regions')){
-          this.resetallActiveNav();
-          this.isSettingNavIsActive = true;
-          this.isRegionsIsActive = true;
-        }
-        else if(event.url.includes('adminmodules')){
-          this.resetallActiveNav();
-          this.isSettingNavIsActive = true;
-          this.isAdminModulesIsActive = true;
-        }
-        else if (event.url.includes('AddGroupComponent')) {
-          this.resetallActiveNav();
-          this.isdealershipIsActive=true;
-          this.isDealerNavIsActive = true;
-          this. isDealershipIsOpen=true;
-        }
-        else if(event.url.includes('oembrands')){
-          this.resetallActiveNav();
-          this.isSettingNavIsActive = true;
-          this.isOEMBrandSubNavIsActive = true;
-        }
-        else if(event.url.includes('dealerusers')){
-          this.resetallActiveNav();
-          this.isSettingNavIsActive = true;
-          this.isdealerUsersIsActive = true;
-        }
-        else if(event.url.includes('incentiveTerms')){
-          this.resetallActiveNav();
-          this.isSettingNavIsActive = true;
-          this.isincentiveTermsIsActive = true;
-        }
-      }
-    })
+      
+      };
+    });  
   }
-
+  
+  
   ngOnInit() {
+     this.getData(); 
   }
-  resetallActiveNav(): void {
-    this.isDealerNavIsActive = false;
-    this.isSettingNavIsActive = false;
-    this.isBrandSubNavIsActive = false;
-    this.isMoedelSubNavIsActive = false;
-    this.isRoleSubNavIsActive=false;
-    this.isStyleSubNavIsActive=false;
-    this.isdealershipIsActive=false;
-    this. isDealershipIsOpen=false;
-    this.isOEMGroupSubNavIsActive = false;
-    this.isInventoryIsActive = false;
-    this.isAdminUsersIsActive = false;
-    this.isAdminModulesIsActive = false;
-    this.isRegionsIsActive = false;
+ 
+  ival(val,index){
+   this.indexval = index;
+  this.CurrentPage=val.modname;
+    console.log(this.CurrentPage)    
+    localStorage.setItem('currentpage',this.CurrentPage); 
+  
+  }
 
-    this.isOEMBrandSubNavIsActive = false;
-    this.isdealerUsersIsActive = false;
-    this.isincentiveTermsIsActive = false;
+  getData(){
+    this.service.postmethod('adminmodules/getmoduleinfo',{​​​​​​​​"Type": "A"}​​​​​​​​).subscribe(res=>{​​​​​​​​
+    this.response=res
+    if(this.response.status==200){
+    this.Paneldata=this.response.response.ModuleData.Module;
+    console.log(this.Paneldata)
+      }    
+    })
   }
 }

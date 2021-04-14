@@ -8,8 +8,8 @@
 
      
 
-      <div class="col-9 pt-3">
-         <div class="contentpanel_bg"> 
+      <div class="contentpanel_bg col-9 pt-3">
+         <div> 
 
         <!--                    edit Terms start                    -->
                
@@ -23,37 +23,36 @@
                 <div class="panel-body">
                   <form [formGroup]="addTermForm">
                     <div class="container">
-                      <div class="row ">
+                      <div class="row pb-4">
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                           <label for="rule">Incentive Type:</label>
                           <input type="text" class="form-control" placeholder="Enter incentive type"
                           formControlName="incentivetype_name" 
-                          [(ngModel)]="termDetails.incentivetype_name" [ngClass]="{ 'is-invalid': submitted &amp;&amp; addTermForm.controls.incentivetype_name.errors }">   
+                          [(ngModel)]="termDetails.incentivetype_name">   
                 
-                          <div *ngIf="submitted &amp;&amp; addTermForm.controls.incentivetype_name.errors" class="text-danger">
-                          <div *ngIf="addTermForm.controls.incentivetype_name.errors.required">Please enter incentive type</div>
-                          </div>
+                          <small class="errormessage" *ngIf="submitted && addTermForm.controls.incentivetype_name.hasError('required')">
+                            Incentive type is required
+                          </small>
+                          <small class="errormessage" *ngIf="submitted && addTermForm.controls.incentivetype_name.hasError('pattern')">
+                            Enter only characters
+                          </small>
                          </div>
                     </div> 
                 
-                    <br>
-                    <br>
 
-                  <div class="row ">
+                  <div class="row pb-4">
                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">  
-                    <label>Status:</label>
+                    <label>Status:
                     <span style="padding-left: 10px;"></span> 
                     <input type="checkbox" value="termDetails.incentivetype_status"
-                    (change)="handleStatus($event)" style="margin-left: 10px;" [checked]="termDetails.incentivetype_status=='Y'" > 
+                    [checked]="termDetails.incentivetype_status=='Y'"
+                    (change)="handleStatus($event)">
+                  </label>
                    </div>
                   </div>
                    <!-- (change)="statusValueChange($event)" -->
-                      
-                  
-                    <br>
-                
-                  
-                    <div class="row buttons">
+                     
+                    <div class="row">
                       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                           <input type="Submit" (click)="updateTerms()" class="savebtn" Value="Save" Style="width: 100px;"/>&nbsp;
                           <input type="button" class="savebtn" [routerLink]="['/incentiveTypes']" Value="Cancel" Style="width: 100px;"/>

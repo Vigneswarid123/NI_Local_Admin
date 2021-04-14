@@ -1,40 +1,25 @@
 <ul class="nav flex-column flex-nowrap overflow-hidden">
-  <!-- <li class="nav-item"><a class="nav-link" [routerLink]="['/dashboard']" [ngClass]="{'active' : this.isDealerNavIsActive}"><span class="pr-2"><img src="assets/Images/Dealership-Icon.png"></span> <span class="d-none d-sm-inline">Dealerships</span></a></li> -->
-  <li class="nav-item">
-    <a class="nav-link collapsed" [ngClass]="{'active' : this.isDealerNavIsActive}" data-toggle="collapse" data-target="#submenu1"><span class="pr-2"><img src="assets/Images/Dealership-Icon.png"></span> <span class="d-none d-sm-inline">Dealerships</span></a>
-    <div class="collapse submenu" id="submenu1" aria-expanded="false" [ngClass]="{'show in' : this.isDealershipIsOpen}">
-        <ul class="flex-column nav">
-            <li class="nav-item"><a class="nav-link py-1" [routerLink]="['/AddGroupComponent']" [ngClass]="{'active' : this.isdealershipIsActive}"><span>Add Dealer Group</span></a></li>
+    <div *ngFor="let list of Paneldata;let i=index">
+  <li class="nav-item" *ngIf="list.submod !=undefined">
+    <a class="nav-link collapsed" [href]="'#submenu'+i" data-toggle="collapse" [data-target]="'#submenu'+i" [class.selected]="CurrentPage == list.modname"  (click)="ival(list,i)">
+        <span class="pr-2"><img src="{{fullUrl}}resources/images/{{list.image}}" width="25px" height="25px"></span>
+        <span style="color: #ffffff;" class="d-none d-sm-inline">{{list.modname}}</span>
+    </a>
+    <div class="submenu collapse"  [id]="'submenu'+i" aria-expanded="false">
+        <ul class="flex-column nav" *ngFor="let subitems of list.submod[0].data" >
+            <li class="nav-item">            
+                    <a class="nav-link py-1" style="cursor: pointer;" routerLink="/{{subitems.smod_filename}}" routerLinkActive="active" style="display:true">                        
+                    <span>{{subitems.smod_name}}</span> 
+                </a>
+            </li>
         </ul>
     </div>
 </li>
-  <li class="nav-item"><a class="nav-link"><span class="pr-2"><img src="assets/Images/Incentives-Icon.png"></span> <span class="d-none d-sm-inline">Incentives</span></a></li>
-  <li class="nav-item"><a class="nav-link"><span class="pr-2"><img src="assets/Images/Gears-Icon.png"></span> <span class="d-none d-sm-inline">Integrations</span></a></li>
-  <li class="nav-item"><a class="nav-link"><span class="pr-2"><img src="assets/Images/payment-Icon.png"></span> <span class="d-none d-sm-inline">Payments</span></a></li>
-  <li class="nav-item"><a class="nav-link"><span class="pr-2"><img src="assets/Images/Download-Icon.png"></span> <span class="d-none d-sm-inline">Installation</span></a></li>
-  <li class="nav-item"><a class="nav-link"><span class="pr-2"><img src="assets/Images/Phone-Icon.png"></span> <span class="d-none d-sm-inline">Support</span></a></li>
-  <li class="nav-item"><a class="nav-link"><span class="pr-2"><img src="assets/Images/msg_icon.png"></span> <span class="d-none d-sm-inline">Message Center</span></a></li>
-  <li class="nav-item">
-    <a class="nav-link collapsed" [ngClass]="{'active' : this.isSettingNavIsActive}" data-toggle="collapse" data-target="#submenu6"><span class="pr-2"><img src="assets/Images/Gears-Icon.png"></span> <span class="d-none d-sm-inline">Settings</span></a>
-    <div class="collapse submenu" id="submenu6" aria-expanded="false" [ngClass]="{'show in' : this.isSettingNavIsActive}">
-        <ul class="flex-column nav">
-            <li class="nav-item"><a class="nav-link py-1" [routerLink]="['/OEMGroups']" [ngClass]="{'active' : this.isOEMGroupSubNavIsActive}"><span>OEM Groups</span></a></li>
-            <li class="nav-item"><a class="nav-link py-1" [routerLink]="['/oembrands']" [ngClass]="{'active' : this.isOEMBrandSubNavIsActive}"><span>OEM Brands</span></a></li>
-            <li class="nav-item"><a class="nav-link py-1" [routerLink]="['/users']" [ngClass]="{'active' : this.isAdminUsersIsActive}"><span>Admin Users</span></a></li>
-            <li class="nav-item"><a class="nav-link py-1" [routerLink]="['/inventory']" [ngClass]="{'active' : this.isInventoryIsActive}"><span>Inventory</span></a></li>
-            <li class="nav-item"><a class="nav-link py-1" [routerLink]="['/dealerusers']" [ngClass]="{'active' : this.isdealerUsersIsActive}"><span>Dealer Users</span></a></li>
-            <li class="nav-item"><a class="nav-link py-1" [routerLink]="['/Brands']" [ngClass]="{'active' : this.isBrandSubNavIsActive}"><span>Brands</span></a></li>
-            <li class="nav-item"><a class="nav-link py-1" [routerLink]="['/Models']" [ngClass]="{'active' : this.isMoedelSubNavIsActive}" ><span>Models</span></a></li>
-            <li class="nav-item"><a class="nav-link py-1" [routerLink]="['/Styles']" [ngClass]="{'active' : this.isStyleSubNavIsActive}"><span>Styles</span></a></li>
-            <li class="nav-item"><a class="nav-link py-1" [routerLink]="['/incentiveTerms']" [ngClass]="{'active' : this.isincentiveTermsIsActive}"><span>Incentive Terms</span></a></li>
-            <li class="nav-item"><a class="nav-link py-1" [routerLink]="['/regions']" [ngClass]="{'active' : this.isRegionsIsActive}"><span>Regions</span></a></li>
-            <li class="nav-item"><a class="nav-link py-1" [routerLink]="['/Roles']" [ngClass]="{'active' : this.isRoleSubNavIsActive}"><span>Roles</span></a></li>
-            <li class="nav-item"><a class="nav-link py-1" [routerLink]="['/adminmodules']" [ngClass]="{'active' : this.isAdminModulesIsActive}"><span>Admin Modules</span></a></li>
-        </ul>
-    </div>
+<li class="nav-item" *ngIf="list.submod ==undefined">
+    <a style="cursor: pointer;" class="nav-link collapsed">
+        <span class="pr-2"><img src="{{fullUrl}}resources/images/{{list.image}}" width="25px" height="25px"></span>
+        <span class="d-none d-sm-inline">{{list.modname}}</span>
+    </a>
 </li>
-</ul>
-
-
-
-
+</div>
+</ul> 

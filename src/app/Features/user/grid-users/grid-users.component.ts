@@ -4,6 +4,7 @@ import { AlertifyService } from '../../../Core/_providers/alert-service/alertify
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-grid-users',
@@ -18,11 +19,11 @@ export class GridUsersComponent implements OnInit {
   SearchText: any;
   users = [];
 
-  hide:boolean=false;
-  alphaSrch:string='';
-  atozFltr:boolean=false;
-  UserInfo:any=[];
-  alphaColumns:any=["User_Firstname", "User_Lastname"];
+  hide: boolean = false;
+  alphaSrch: string = '';
+  atozFltr: boolean = false;
+  UserInfo: any = [];
+  alphaColumns: any = ["User_Firstname", "User_Lastname"];
   SearchUsersForm: FormGroup;
 
   config: any;
@@ -32,9 +33,9 @@ export class GridUsersComponent implements OnInit {
     private alertify: AlertifyService,
     private router: Router,
     private spinner: NgxSpinnerService
-  ) { 
-    this.SearchUsersForm =this.fB.group({
-      txtSearch:""
+  ) {
+    this.SearchUsersForm = this.fB.group({
+      txtSearch: ""
     });
   }
 
@@ -75,7 +76,7 @@ export class GridUsersComponent implements OnInit {
               User_Roleid: item.User_Roleid,
               User_RoleName: item.User_RoleName,
               User_Profileimage:
-                'http://niapi.local.com/api/resources/images/' +
+              `${environment.apiUrl}`+'/resources/images/' +
                 item.User_Profileimage,
             });
           }
@@ -101,22 +102,22 @@ export class GridUsersComponent implements OnInit {
     this.router.navigate(['editusers'], { queryParams: { User_Id: this.id } });
   }
 
-  onAlphaCatch(alphabet){
-    this.hide=true;
-    this.atozFltr=true;
-    this.alphaSrch=alphabet;
-     
+  onAlphaCatch(alphabet) {
+    this.hide = true;
+    this.atozFltr = true;
+    this.alphaSrch = alphabet;
+
   }
 
-  onSearch(){
-    this.alphaSrch= this.SearchUsersForm.controls['txtSearch'].value;
+  onSearch() {
+    this.alphaSrch = this.SearchUsersForm.controls['txtSearch'].value;
   }
 
-  atoZClick(){
-    if(!this.atozFltr)
-    this.atozFltr=true;
+  atoZClick() {
+    if (!this.atozFltr)
+      this.atozFltr = true;
     else
-    this.atozFltr=false;
+      this.atozFltr = false;
   }
 
 

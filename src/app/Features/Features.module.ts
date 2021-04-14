@@ -7,17 +7,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HeaderComponent } from './../Layout/header/header.component';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
+// import { IncentiveMasterComponent } from './incentive-master/incentive-master.component';
 
 
 
 
 @NgModule({
-  declarations: [ AtozFilterComponent,HeaderComponent,LeftPanelComponent,],
+  declarations: [AtozFilterComponent, HeaderComponent, LeftPanelComponent],
   imports: [
     CommonModule,
     NgxSpinnerModule,
@@ -27,10 +28,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatMenuModule,
     MatDialogModule,
     PipesModule,
-    
-       
+
+
   ],
-  exports:[HeaderComponent,LeftPanelComponent, AtozFilterComponent],
-  
+  exports: [HeaderComponent, LeftPanelComponent, AtozFilterComponent],
+
 })
 export class FeaturesModule { }

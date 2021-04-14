@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>    
+<incentivetype>
+    <type>
+         <id>1</id>
+        <name>Y/N</name>
+    </type>
+    <type>
+        <id>2</id>
+        <name>Text Field</name>
+    </type>
+    <type>
+        <id>3</id>
+        <name>DropDown</name>
+    </type>
+    <type>
+        <id>8</id>
+        <name>MultiDropDown </name>
+    </type>
+    <type>
+        <id>9</id>
+        <name>Dealer Specific</name>
+    </type>
+</incentivetype>
+ <!-- need to chnagre id as 8  -->

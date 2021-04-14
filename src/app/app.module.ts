@@ -5,8 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {AuthInterceptor} from './Core/_interceptor/auth.interceptor';
-import {MatMenuModule} from '@angular/material/menu';
+import { AuthInterceptor } from './Core/_interceptor/auth.interceptor';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 
 
@@ -20,7 +20,7 @@ import { GroupDetailComponent } from './Features/groups/group-detail/group-detai
 import { AddDealershipComponent } from './Features/groups/dealership/add-dealership/add-dealership.component';
 import { DealershipListComponent } from './Features/groups/dealership/dealership-list/dealership-list.component';
 import { DealershipDetailComponent } from './Features/groups/dealership/dealership-detail/dealership-detail.component';
-import { LoginComponent } from './Authentication/login/login.component';
+//import { LoginComponent } from './Authentication/login/login.component';
 import { DashboardComponent } from './Features/dashboard/dashboard.component';
 import { PopupComponent } from './Features/groups/popup/popup.component';
 import { AddBrandComponent } from './Features/brands/add-brand/add-brand.component';
@@ -32,8 +32,8 @@ import { LeftPanelComponent } from './Layout/left-panel/left-panel.component';
 import { ModelListComponent } from './Features/model-list/model-list.component';
 import { StylesListComponent } from './Features/styles-list/styles-list.component';
 import { AddRegionComponent } from './Features/regions/add-region/add-region.component';
-import { EditRegionComponent} from './Features/regions/edit-region/edit-region.component';
-import { GridRegionsComponent } from './Features/regions/grid-regions/grid-regions.component'; 
+import { EditRegionComponent } from './Features/regions/edit-region/edit-region.component';
+import { GridRegionsComponent } from './Features/regions/grid-regions/grid-regions.component';
 
 // import { GridRolesComponent } from './roles/grid-roles/grid-roles.component';
 // import { AddRolesComponent } from './roles/add-roles/add-roles.component';
@@ -50,19 +50,19 @@ import { PipesModule } from './Core/_pipes/pipes.module';
 import { AddUsersComponent } from './Features/user/add-users/add-users.component';
 import { EditUsersComponent } from './Features/user/edit-users/edit-users.component';
 import { GridUsersComponent } from './Features/user/grid-users/grid-users.component';
-import {​​ Ng2SearchPipeModule }​​ from 'ng2-search-filter';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
-import { NgxSpinnerModule } from "ngx-spinner";
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { from } from 'rxjs';
 import { TextMaskModule } from 'angular2-text-mask';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminmodulesComponent } from './Features/adminmodules/adminmodules.component';
-import{DealershipHeaderComponent} from './Features/groups/dealership-header/dealership-header.component';
+import { DealershipHeaderComponent } from './Features/groups/dealership-header/dealership-header.component';
 
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatInputModule} from '@angular/material/input';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
 import { ContactformComponent } from './Features/contactform/contactform.component';
 import { SoftwareAgreementComponent } from './Features/software-agreement/software-agreement.component';
 
@@ -72,9 +72,9 @@ import { EditDealerusersComponent } from './Features/edit-dealerusers/edit-deale
 import { ImageCropperModule } from 'ngx-image-cropper';
 
 
-import { AddSystemDefinedComponent } from './Features/incentive-terms/add-system-defined/add-system-defined.component';
-import { EditSystemDefinedComponent } from './Features/incentive-terms/edit-system-defined/edit-system-defined.component';
-import { GridSystemDefinedComponent } from './Features/incentive-terms/grid-system-defined/grid-system-defined.component';
+//import { AddSystemDefinedComponent } from './Features/incentive-terms/add-system-defined/add-system-defined.component';
+//import { EditSystemDefinedComponent } from './Features/incentive-terms/edit-system-defined/edit-system-defined.component';
+//import { GridSystemDefinedComponent } from './Features/incentive-terms/grid-system-defined/grid-system-defined.component';
 
 import { OembrandsComponent } from './Features/oembrands/oembrands.component';
 
@@ -84,12 +84,12 @@ import { ContactComponent } from './Features/contact/contact.component';
 
 import { DMSNamesComponent } from './Features/DMSNames/DMSNames.component';
 import { OemgrouppopupComponent } from './Features/oemgrouppopup/oemgrouppopup.component';
-import {IncentivesComponent} from './Features/incentives/incentives.component';
+import { IncentivesComponent } from './Features/incentives/incentives.component';
 
-import { GridIncentiveTypeComponent } from './Features/incentive-types/grid-incentiveType/grid-incentiveType.component'
-import { AddIncentiveTypeComponent } from './Features/incentive-types/add-incentiveType/add-incentiveType.component'
-import { EditIncentiveTypeComponent } from './Features/incentive-types/edit-incentiveType/edit-incentiveType.component'
-import { SelectIncentiveTypeComponent  } from './Features/incentive-types/select-incentiveType/select-incentiveType.component';
+import { GridIncentiveTypeComponent } from './Features/incentive-types/grid-incentiveType/grid-incentiveType.component';
+import { AddIncentiveTypeComponent } from './Features/incentive-types/add-incentiveType/add-incentiveType.component';
+import { EditIncentiveTypeComponent } from './Features/incentive-types/edit-incentiveType/edit-incentiveType.component';
+import { SelectIncentiveTypeComponent } from './Features/incentive-types/select-incentiveType/select-incentiveType.component';
 
 // subscription plans
 import { AddSubscriptionPlanComponent } from './Features/subscriptionPlans/add-subscriptionPlan/add-subscriptionPlan.component';
@@ -97,9 +97,24 @@ import { EditSubscriptionPlanComponent } from './Features/subscriptionPlans/edit
 import { GridSubscriptionPlanComponent } from './Features/subscriptionPlans/grid-subscriptionPlan/grid-subscriptionPlan.component';
 
 import { DealerHoursComponent } from './Features/dealer-hours/dealer-hours.component';
-import { NgxSliderModule  } from "@angular-slider/ngx-slider";
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { LineitemsComponent } from './Features/lineitems/lineitems.component';
 import { VariablepopupComponent } from './Features/variablepopup/variablepopup.component';
+import { SubscriptionGroupComponent } from './Features/SubscriptionGroup/subscription-group/subscription-group.component';
+import { EditSubscriptionGroupComponent } from './Features/SubscriptionGroup/edit-subscription-group/edit-subscription-group.component';
+import { IncentivesAcceptComponent } from './Features/incentivesAccept/incentivesAccept/incentivesAccept.component';
+//import { IncentiveVariablesComponent } from './Features/incentive-variables/incentive-variables.component';
+import { ClientlistsComponent } from './Features/clientlists/clientlists.component';
+import { DealeruserchangepwdpopupComponent } from './Features/dealeruserchangepwdpopup/dealeruserchangepwdpopup.component';
+import { PwdpopupComponent } from './Features/user/pwdpopup/pwdpopup.component';
+import { DatePipe } from '@angular/common';
+
+// import { IncentiveMasterComponent } from './Features/incentive-master/incentive-master.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+// import { SelectBoxComponent} from '../app/Partials/incentive-master/select-box/select-box.component';
+// import { DragNDropComponent } from '../app/Partials/incentive-master/drag-n-drop/drag-n-drop.component';
+
 
 // tslint:disable-next-line: typedef
 export function tokenGetter() {
@@ -108,17 +123,17 @@ export function tokenGetter() {
 
 
 @NgModule({
-  declarations: [		
+  declarations: [
     AppComponent,
-    //HeaderComponent,
-    //LeftPanelComponent,
+    // HeaderComponent,
+    // LeftPanelComponent,
     AddGroupComponent,
     AddContactComponent,
     GroupDetailComponent,
     AddDealershipComponent,
     DealershipListComponent,
     DealershipDetailComponent,
-    LoginComponent,
+    //LoginComponent,
     DashboardComponent,
     PopupComponent,
     AddBrandComponent,
@@ -138,7 +153,7 @@ export function tokenGetter() {
     AddRegionComponent,
     EditRegionComponent,
     GridRegionsComponent,
-    //InventoryComponent,
+    // InventoryComponent,
     AddUsersComponent,
     EditUsersComponent,
     GridUsersComponent,
@@ -149,9 +164,9 @@ export function tokenGetter() {
     OembrandsComponent,
     DealerusersComponent,
     EditDealerusersComponent,
-    AddSystemDefinedComponent,
-    EditSystemDefinedComponent,
-    GridSystemDefinedComponent,
+    //AddSystemDefinedComponent,
+    //EditSystemDefinedComponent,
+    //GridSystemDefinedComponent,
     BrandpopupComponent,
     ContactComponent,
     DMSNamesComponent,
@@ -166,19 +181,32 @@ export function tokenGetter() {
     GridSubscriptionPlanComponent,
     DealerHoursComponent,
     LineitemsComponent,
-    VariablepopupComponent
-   ],
+    VariablepopupComponent,
+    SubscriptionGroupComponent,
+    EditSubscriptionGroupComponent,
+    IncentivesAcceptComponent,
+    //IncentiveVariablesComponent,
+    ClientlistsComponent,
+    DealeruserchangepwdpopupComponent,
+    PwdpopupComponent,
+    // IncentiveMasterComponent,
+    // SelectBoxComponent,
+    // DragNDropComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    FormsModule, 
     HttpClientModule,
     TextMaskModule,
     JwtModule.forRoot({
       config: {
         tokenGetter,
-        allowedDomains: ['http://niapi.local.com'],
-        disallowedRoutes: ['http://niapi.local.com/api/auth/signin'],
+        // allowedDomains: ['http://niapi.local.com'],
+        // disallowedRoutes: ['http://niapi.local.com/api/auth/signin'],
+
+        allowedDomains: ['http://demoapi.nilocal.com'],
+        disallowedRoutes: ['http://demoapi.nilocal.com/api/auth/signin'],
 
         //  allowedDomains: ['http://localapi.throttle.com'],
         //  disallowedRoutes: ['http://localapi.throttle.com/api/auth/signin'],
@@ -188,7 +216,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     MatMenuModule,
     MatDialogModule,
-    ReactiveFormsModule ,
+    ReactiveFormsModule,
     NgxSpinnerModule,
     PipesModule,
     NgbModule,
@@ -198,21 +226,23 @@ export function tokenGetter() {
     MatInputModule,
     MatNativeDateModule,
     ImageCropperModule,
-    NgxSliderModule 
+    NgxSliderModule,
+    DragDropModule,
+    AngularMultiSelectModule
   ],
   providers: [
     {
-      provide : HTTP_INTERCEPTORS,
+      provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      // provide: LocationStrategy, 
-     //  useClass: HashLocationStrategy,
-     
-     multi   : true,
+      // provide: LocationStrategy,
+      //  useClass: HashLocationStrategy,
+
+      multi: true,
     },
+    DatePipe
   ],
   bootstrap: [AppComponent],
- 
-   
+
+
 })
 export class AppModule { }
- 

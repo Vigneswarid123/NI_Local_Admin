@@ -1,0 +1,215 @@
+
+<div class="dashboard_bg">
+    <app-header></app-header>
+    <div class="container-fluid pt64">
+      <div class="row">
+        <div
+          class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav"
+          id="sidebar"
+        >
+          <app-left-panel class="w-100"></app-left-panel>
+        </div>
+  
+        <div class="content_body">
+          <form [formGroup]="SearchclientsForm">
+          <table style="width: 1000px; float: left">
+            <tbody>
+              <tr>
+                <td></td>
+                <td style="vertical-align: top">
+                  <table class="gridheader">
+                    <thead>
+                      <tr>
+                        <th style="width: 462px; font-weight: bold">
+                          <div style="float: left">
+                            <div class="getuser">
+                              <label class="getuserlabel">ClientLists</label>
+                            </div>
+                            <!-- <div class="AddIcon">
+                              <a
+                               
+                                style="cursor: pointer"
+                                ><img src="assets/Images/brand_plus.png"
+                              /></a>
+                            </div> -->
+                          </div>
+                        </th>
+                        <th style="width: 500px; text-align: center">
+                          <div style="float: left"></div>
+                        </th>
+                        <th style="width: 10%; text-align: center" colspan="2">
+                          <div
+                            style="width: 80px; cursor: pointer"
+                            (click)="atoZClick()"
+                          >
+                            <div style="float: left; margin-left: 20px;" class="DivAZ1">A - Z</div>
+                            <div class="DivAZ2">
+                              <a><img src="assets/Images/sorting_img.png" /></a>
+                            </div>
+                          </div>
+                        </th>
+                        <th style="padding-left: 0px;">
+                          <div class="search">
+                              <input type="text" formControlName="txtSearch" placeholder="Search" autofocus (keyup)="onSearch()">
+                          </div>
+                          <div style="float: right; margin-top: -22px; margin-right: 6px;"><img src="assets/Images/Search-Icon.png"></div>
+                      </th>
+                      </tr>
+                    </thead>
+                  </table>
+  
+                  <div
+                    class="row"
+                    *ngIf="atozFltr"
+                    style="height: 50px; margin-bottom: 10px"
+                  >
+                    <div style="width: 100%">
+                      <app-atoz-filter
+                        (onAlphaClick)="onAlphaCatch($event)"
+                      ></app-atoz-filter>
+                    </div>
+                  </div>
+  
+                  <div>
+                    <table  class="dashboard">
+                      <thead>
+                        <tr class="colHeader">
+                          <th
+                            align="center"
+                            scope="col"
+                            style="width: 15%; text-align: center"
+                          >
+                          Dealer Name
+                          </th>
+                          <th
+                            align="center"
+                            scope="col"
+                            style="width: 15%; text-align: center"
+                          >
+                            Street Address
+                          </th>
+                          <th
+                            align="center"
+                            scope="col"
+                            style="width: 10%; text-align: center"
+                          >
+                            City
+                          </th>
+                          <th
+                            align="center"
+                            scope="col"
+                            style="width:10%; text-align: center"
+                          >
+                          State
+                           </th>
+                           <th
+                           align="center"
+                           scope="col"
+                           style="width: 10%; text-align: center"
+                         >
+                         Zip
+                          </th>
+                          <th
+                          align="center"
+                          scope="col"
+                          style="width:10%px; text-align: center"
+                        >
+                        CMF Number
+                         </th>
+                         <th
+                         align="center"
+                         scope="col"
+                         style="width: 15%; text-align: center"
+                       >
+                       Data Type(s)
+                        </th>
+                        <th
+                        align="center"
+                        scope="col"
+                        style="width: 15%; text-align: center"
+                      >
+                      Data Access/Transmission Method
+                       </th>
+  
+                          <!-- <th scope="col" style="width: 5%">&nbsp;</th> -->
+                        </tr>
+                      </thead>
+                    </table>
+                    <div >
+                      <div class="contentss">
+                        <table class="dashboard" style="text-align: center;">
+                          <tbody>
+                            <ng-container *ngIf="ClientInfo | alphaFilter : alphaSrch: alphaColumns :'aa' as Clientdata; else noItems">
+                            <tr *ngFor="let list of Clientdata">
+                              <td style="width:15%">
+                                <div >
+                                  <span>{{list.ENDUSER_TITLE}}</span>
+                                </div>
+                              </td>
+                           
+                              <td style="width: 15%">
+                                <div >
+                                    <span>{{list.DCD_ADDRESS}}</span>
+                                </div>
+                              </td>
+                              <td style="width: 10%">
+                                <div >
+                                  <span>{{list.DCD_CITY}}</span>
+                                </div>
+                              </td>
+                              <td style="width: 10%">
+                                <div >
+                                  <span>{{list.DCD_STATE}}</span>
+                                </div>
+                              </td>
+                              <td style="width: 10%">
+                                <div >
+                                  <span>{{list.DCD_ZIP}}</span>
+                                </div>
+                              </td>
+                              <td style="width: 10%">
+                                <div >
+                                  <span>{{list.DCD_DealerCMF}}</span>
+                                </div>
+                              </td>
+                              <td style="width: 15%">
+                                <div>
+                                  <span *ngIf="list.DCD_DATA_TYPE==''">---</span>
+                                  <span *ngIf="list.DCD_DATA_TYPE!=''">{{list.DCD_DATA_TYPE}}</span>
+                                </div>
+                              </td>
+                              <td style="width: 15%">
+                                <div >
+                                  <span *ngIf="list.DCD_DATA_ACCESS==''">---</span>
+                                  <span *ngIf="list.DCD_DATA_ACCESS!=''">{{list.DCD_DATA_ACCESS}}</span>
+
+                                </div>
+                              </td>
+                          
+                          
+                             
+                          
+                            
+
+                            </tr>
+                            <ng-container *ngIf="!Clientdata.length && hide" [ngTemplateOutlet]="noItems"></ng-container>
+                            </ng-container>
+                            <ng-template #noItems>
+                                  <tr><td colspan="9" style="text-align: center;">No ClientList Available!</td></tr>
+                            </ng-template>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+         </form>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  

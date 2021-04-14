@@ -21,6 +21,8 @@ export class AlphaFilterPipe implements PipeTransform {
 
         if(fromPage=="inventory")
         exprData=itm[columnNames[0]]+" "+itm[columnNames[1]];
+        else if(fromPage === "dragndrop")
+        exprData=itm.value[columnNames[0]];
         else
         exprData=itm[columnNames[0]];
 

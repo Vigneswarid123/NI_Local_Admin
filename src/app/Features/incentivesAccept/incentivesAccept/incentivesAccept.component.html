@@ -1,0 +1,224 @@
+<div class="dashboard_bg">
+  <app-header></app-header>
+  <div class="container-fluid pt64">
+    <div class="row">
+      <div
+        class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav"
+        id="sidebar"
+      >
+        <app-left-panel class="w-100"></app-left-panel>
+      </div>
+
+      <div class="content_body">
+        <form [formGroup]="SearchTermsForm">
+        <table style="width: 1000px; float: left">
+          <tbody>
+            <tr>
+              <td></td>
+              <td style="vertical-align: top">
+                <table class="gridheader">
+                  <thead>
+                    <tr>
+                      <th style="width: 462px; font-weight: bold">
+                        <div style="float: left">
+                          <div class="getuser">
+                            <label class="getuserlabel">Incentive Management</label>
+                          </div>
+                        </div>
+                      </th>
+
+                      
+                      <th style="width: 300px; text-align: center">
+                        <form [formGroup]="incForm"> 
+                              <span class="form-group  drop_dwn">
+                                <select formControlName="inc" [(ngModel)]="selected" name="incentives" (change)="incentivesAcceptList($event.target.value)">
+                                  <option value="undefined" selected disabled>Select Incentive</option>
+                                  <option *ngFor="let item of incentives" [ngValue]="item.INM_ID">{{item.INM_NAME}}</option>
+                                </select>
+                              </span> 
+                              <div>
+                                <input type="submit" class="searchBtn" value="Search" (click)="onOptionsSelected()">  
+                               </div>                                                     
+                          </form>
+                      </th> 
+
+
+                      <th style="width:10%; text-align: center" colspan="2">
+                        <div style="width:80px; cursor: pointer;" (click)="atoZClick()">
+                          <div class="DivAZ1">A - Z</div>
+                          <div class="DivAZ2">
+                            <a><img src="assets/Images/sorting_img.png"></a>
+                          </div>
+                        </div>
+                      </th>
+                      <th style="padding-left: 0px;">
+                        <div class="search">
+                            <input type="text" formControlName="txtSearch" placeholder="Search" autofocus (keyup)="onSearch()">
+                        </div>
+                        <div style="float: right; margin-top: -22px; margin-right: 6px;"><img src="assets/Images/Search-Icon.png"></div>
+                    </th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <div
+                  class="row"
+                  *ngIf="atozFltr"
+                  style="height: 50px; margin-bottom: 10px"
+                >
+                  <div style="width: 100%">
+                    <app-atoz-filter
+                      (onAlphaClick)="onAlphaCatch($event)"
+                    ></app-atoz-filter>
+                  </div>
+                </div>
+
+                <div  *ngIf="showdata == false" style="min-height:480px;text-align: center">
+                  <p style="margin-top:150px;font-size:20px">Please select an incentive to get dealer data..!</p>
+                </div>
+
+                <div *ngIf="showdata == true">
+                  <table class="dashboard">
+                    <thead>
+                      <tr class="colHeader">
+                     
+                        <th
+                          align="center"
+                          scope="col"
+                          style="width: 25px; text-align: right;color: #00a453;"
+                        >
+                        ID
+                        </th>
+
+                        <th
+                          align="center"
+                          scope="col"
+                          style="width: 80px; text-align: center; color: #00a453;"
+                        >
+                        NAME
+                        </th>
+
+                        <th
+                        align="center"
+                        scope="col"
+                        style="width: 106px; text-align: center;color: #00a453;"
+                      >
+                      DEALER ID
+                      </th>
+
+                      <th
+                      align="center"
+                      scope="col"
+                      style="width: 12px; text-align: center;color: #00a453;"
+                    >
+                    DEALER NAME
+                    </th>
+
+                    <th
+                    align="center"
+                    scope="col"
+                    style="width: 87px; text-align: center;color: #00a453;"
+                  >
+                  STATUS
+                  </th>
+
+                    </tr>
+                    </thead>
+                  </table>
+
+                  <!-- <form [formGroup]="SearchForm" > -->
+                  <div class="col-md-8" style="padding-left: 0px">
+                    <div class="contentss">
+                      <table class="dashboard">
+                        <tbody>
+                          <ng-container *ngIf="filtered | alphaFilter : alphaSrch: alphaColumns :'aa' as incentiveData; else noItems">
+                          <tr *ngFor="let list of incentiveData ; let i = index">
+
+                            
+                            <!-- <td style="width: 100px">
+                              <div style="margin-left: 50px">
+                                <span>{{ i }}</span>
+                              </div>
+                            </td> -->
+
+                            <td style="width: 100px">
+                              <div style="margin-left: 50px">
+                                <span>{{ list.INM_ID }}</span>
+                              </div>
+                            </td>
+
+                            <td style="width: 100px">
+                              <div style="margin-left: -20%">
+                                <span>{{ list.INM_NAME }}</span>
+                              </div>
+                            </td>
+
+                            <td style="width: 100px">
+                              <div style="margin-left: 36%">
+                                <span>{{ list.DEALER_ID }}</span>
+                              </div>
+                            </td>
+
+                            <td style="width: 100px">
+                              <div style="margin-right:40px; text-align: center;">
+                                <span>{{ list.DEALER_NAME }}</span>
+                              </div>
+                            </td>
+
+                           <!-- <td style="width: 100px">
+                              <div style="margin-right:40px">
+                                <span>{{ list.AcceptType }}</span>
+                              </div>
+                            </td> -->
+
+                            <td
+                            *ngIf="
+                              list.AcceptType === 'Y';
+                              else elseBlock
+                            "
+                            style="width: 100px"
+                          >
+                            <div class="Active" style="text-align: center;margin-right: 30%;">
+                              <span>Accepted</span>
+                            </div>
+                          </td>
+
+                          <ng-template #elseBlock>
+                            <td style="width: 100px">
+                              <div
+                                class="InActive"
+                                style="text-align: center;margin-right: 30%;"
+                              >
+                                <span>
+                                  <input type="button" class="acceptBtn" value="Accept" (click)="onAcceptClick(i, list.INM_ID, list.DEALER_ID)">
+                                </span>
+                              </div>
+                            </td>
+                          </ng-template>
+ 
+                        
+
+                          </tr>
+                          <ng-container *ngIf="!incentiveData.length && hide" [ngTemplateOutlet]="noItems"></ng-container>
+                          </ng-container>
+                          <ng-template #noItems>
+                                <tr><td colspan="9" style="text-align: center;">No Data Available!</td></tr>
+                          </ng-template>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                <!-- </form> -->
+
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+       </form>
+
+      </div>
+    </div>
+  </div>
+</div>

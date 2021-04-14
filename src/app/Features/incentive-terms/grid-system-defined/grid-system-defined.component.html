@@ -1,195 +1,115 @@
+
 <div class="dashboard_bg">
-      <app-header></app-header>
-      <div class="container-fluid pt64">
-        <div class="row">
-          <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
-            <app-left-panel class="w-100"></app-left-panel>
-        </div>
-    
-          <div class="content_body">
-            <table style="width: 1000px; float: left">
-              <tbody>
-                <tr>
-                  <td></td>
-                  <td style="vertical-align: top">
-                    
-                    <table class="gridheader">
-                      <thead>
-                          <tr>
-                              <th style="width: 462px; font-weight: bold;">
-                                <div style="float: left">
-                                    <div class="getuser">
-                                        <label class="getuserlabel">Incentive Terms</label>
-                                    </div>
-                                    <div class="AddIcon">
-                                      <a
-                                      [routerLink]="['/incentiveTermsAdd']"
-                                      routerLinkActive="router-link-active"
-                                      style="cursor: pointer;"
-                                      ><img src="assets/Images/brand_plus.png"></a>
-                                    </div>
-                                </div>
-                              </th>
-                              <th style="width: 500px; text-align: center">
-                                <div style="float: left">                                       
-                                </div>
-                            </th>  
-                            
-                            <th><div class= "search">
-                              <input type="text" placeholder="Search" [(ngModel)]="SearchText" />
-                            </div></th>  
+  <app-header></app-header>
+  <div class="container-fluid pt64">
+    <div class="row">
 
-                            <th style="width:10%; text-align: center" colspan="2">
-                                        <div class="DivAZ1">A - Z</div>
-                                        <div class="DivAZ2">
-                                           <a><img src="assets/Images/sorting_img.png"></a>
-                                       </div>  
-                            </th>
-                           
-                          </tr>
-                      </thead>
-                  </table>
-    
-    
-                    <div>
-                      <table class="dashboard">
-                        <thead>
-                          <tr class="colHeader">
-                            <th style="width: 6%"></th>
-                            <!-- <th align="center" scope="col" style="width: 150px;">
-      Id
-      </th> -->
-                            <th
-                              align="center"
-                              scope="col"
-                              style="width: 50px; text-align: center"
-                            >
-                              Term
-                            </th>
-                            <th
-                              align="center"
-                              scope="col"
-                              style="width: 100px; text-align: center; display: none"
-                            >
-                              Type
-                            </th>
-                            <!-- <th
-                              align="center"
-                              scope="col"
-                              style="width: 100px; text-align: center"
-                            >
-                              Frontend
-                            </th> -->
-                            <th                              
-                              scope="col"
-                              style="width: 100px; text-align: center; padding-left: 310px;"
-                            >
-                              Status
-                            </th>
-    
-                            <th scope="col" style="width: 37px">&nbsp;</th>
-                          </tr>
-                        </thead>
-                      </table>
-                      <div class="col-md-8" style="padding-left: 0px">
-                        <div class="contentss">
-                          <table class="dashboard">
-                            <tbody *ngFor="let list of incentiveTermsArray | filter:SearchText">
-                              <tr *ngIf="list.Type === 'S' || list.Type === 'U'">                               
-                                <td style="width: 120px;">
-                                  <div style="margin-left: 50px;">
-                                    <span>{{
-                                      list.RuleName
-                                    }}</span>
 
-                                    <!-- <br>
-
-                                    <span *ngIf="list.Status === 'Y'; else elseBlock">                                 
-                                     <span style="font-size: small;">Status:</span>  
-                                      <span class="Active" style="text-align: center;font-size: small;">
-                                        Active
-                                      </span>
-                                     </span>                              
-                                
-                                <ng-template #elseBlock>
-                                  <span style="font-size: small;">Status:</span> 
-                                  <span class="InActive" style="text-align: center; font-size: small;">
-                                    Inactive                                    
-                                  </span>
-                                </ng-template>  -->   
-                                  </div> 
-                                </td>
-
-                                <!-- <td style="width: 120px;">
-                                  <div style="margin-left: 50px;">
-                                    <span>{{
-                                      list.Dealer_Id
-                                    }}</span>
-                                  </div>
-                                </td> -->
-
-                                <!-- <td style="width: 120px;">
-                                  <div style="margin-left: 50px;">
-                                    <span>{{
-                                      list.Type
-                                    }}</span>
-                                  </div>
-                                </td> -->
-
-                                <!-- <td *ngIf="list.Type === 'S'; else userBlock" style="width: 100px;">
-                                  <div style="text-align: center;"><span
-                                  >System defined</span>
-                                  </div>
-                                </td>
-                              
-                                <ng-template #userBlock>
-                                  <td style="width: 100px;">
-                                    <div style="text-align: center;"><span
-                                    >User defined</span>
-                                    </div>
-                                    </td>
-                                </ng-template> -->
-                                
-    
-                                 <td
-                                  *ngIf="list.Status === 'Y'; else elseBlock"
-                                  style="width: 100px"
-                                >
-                                  <div class="Active" style="text-align: center">
-                                    <span>Active</span>
-                                  </div>
-                                </td>
-    
-                                <ng-template #elseBlock>
-                                  <td style="width: 100px">
-                                    <div
-                                      class="InActive"
-                                      style="text-align: center"
-                                    >
-                                      <span>Inactive</span>
-                                    </div>
-                                  </td>
-                                </ng-template> 
-    
-                                <td align="center" style="width: 37px">
-                                  <a (click)="Action(list)"
-                                    ><img src="assets/Images/edt_icon.png"
-                                  /></a>
-                                </td>
-                                
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+      <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav">
+          <app-left-panel class="w-100"></app-left-panel>
       </div>
-    </div>
 
+
+<div class="col-10">
+  <form [formGroup]="SearchTermsForm">
+  <div class="row style_head ">
+      <div class="col-12 col-lg-6 d-flex align-items-center pl-lg-5">
+          <h4>Incentive Terms </h4>
+          <a [routerLink]="['/incentiveTermsAdd']" routerLinkActive="router-link-active" class="pointer"><img src="assets/Images/brand_plus.png"></a>
+      </div>
+
+      <div class="col-12 col-lg-6 d-flex align-items-center justify-content-end">
+          <!-- <div class="d-flex align-items-center justify-content-end" class="pointer" (click)="atoZClick()">             
+              <div class="px-3">A - Z</div>
+              <div><img src="assets/Images/sorting_img.png"></div>  
+          </div> -->
+         
+        
+          <div>
+          
+          <div class="d-flex" style="cursor: pointer;" (click)="atoZClick()">
+          <div class="px-3">A - Z</div>
+          <div class="DivAZ2">
+          <a><img src="assets/Images/sorting_img.png"></a>
+          </div>
+          </div>
+          
+          </div>
+          
+          
+          
+          
+
+          
+          <div class="search">
+              <input type="text" placeholder="Search" formControlName="txtSearch" autofocus (keyup)="onSearch()">
+          </div>
+         
+      </div>
+  </div>
+
+  <div class="row justify-content-center py-4 pl-lg-3 pr-lg-4">
+      <div class="col-12 cpl-lg-12">
+          <div class="style_bg">
+
+              <div class="clearfix"></div>
+
+              <div>
+
+                  <div class="row" *ngIf="atozFltr" style="height: 50px;margin-bottom: 10px;">
+                      <div style="width:100%;">
+                          <app-atoz-filter (onAlphaClick)="onAlphaCatch($event)"></app-atoz-filter>
+                      </div>
+                  </div>
+
+                  <div class="contentss">
+                      <table class="dashboard">
+                          <tbody>
+                            <ng-container *ngIf="TermsInfo | alphaFilter : alphaSrch: alphaColumns :'aa' as incentivedata; else noItems"> 
+                              <tr *ngFor= "let list of incentivedata">
+                                  <td style="width: 30%; ">{{ list.MIT_NAME }}</td>
+                                  <td style="width: 20%; ">{{ list.Name }}</td>
+                                  <td style="width: 30%;">{{ list.MIT_DISPLAYNAME }}</td>
+                                  <!-- <td style="width: 25%; text-align: center;">{{ list.MIT_DESCRIPTION }}</td> -->
+
+                                  <td style="width: 10%; text-align: center;" *ngIf="list.MIT_STATUS === 'Y'">
+                                      <div class="Active"><span> Active</span>
+                                      </div>
+                                  </td>
+
+                                  <td style="width: 10%; text-align: center;" *ngIf="list.MIT_STATUS === 'N'">
+                                    <div class="InActive"><span> In-Active</span>
+                                    </div>
+                                </td>
+
+                                    <td style="width: 10%; text-align: center;">
+                                      <a class="pointer" (click)="Action(list)"
+                                        ><img src="assets/Images/edt_icon.png"
+                                      /></a>
+                                    </td>
+
+                              </tr>
+                              <ng-container *ngIf="!incentivedata.length && hide" [ngTemplateOutlet]="noItems"></ng-container>
+                          </ng-container>
     
+                          <ng-template #noItems>
+                             <tr><td colspan="9" style="text-align: center;">No Incentive Terms Available!</td></tr>
+                          </ng-template>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+
+
+          </div>
+      </div>
+  </div>
+
+
+</form>
+</div>
+
+
+</div>
+</div>
+</div>

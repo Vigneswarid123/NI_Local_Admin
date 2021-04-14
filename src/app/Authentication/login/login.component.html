@@ -27,10 +27,25 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <button class="btn btn-primary" [disabled]="loading">
+
+        <div class="form-group" style="display: block;margin-top: 2px;margin-top: 8px;">
+          <div class="keep_signin" >
+            <label class="checkbox-inline" style="cursor: pointer;color: white;">
+              <input type="checkbox" class="largerCheckbox " checked="rememberme" [(ngModel)]="rememberme" name="check">&nbsp;&nbsp;&nbsp;<span class="checkmark"></span>Keep me logged in</label>
+
+              <span class="piped">&nbsp;&nbsp;&nbsp;</span>
+ </div>
+
+          
+
+          <div class="forgot" style="cursor: pointer;" (click)="openDialog()">
+  <a style="color:green;text-decoration:underline;" >Forgot password?</a>
+          </div>
+        </div>
+        <div class="form-group" style="text-align:center;">
+          <button class="btn SignInButton" [disabled]="loading">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Login</button>
+            Sign in</button>
         </div>
         <!-- <button>login</button>
       <p class="newUser"><a>New Registration</a></p> -->
@@ -38,7 +53,7 @@
         <!-- <div class="checkbox">
           <label for="chkRem"><input type="checkbox" id="chkRem" /> &nbsp;<span>Remember me</span></label>
         </div> -->
-
+       
       </form>
     </div>
   </div>

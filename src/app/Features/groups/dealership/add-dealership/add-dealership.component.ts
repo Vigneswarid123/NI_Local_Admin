@@ -2,11 +2,14 @@ import { Router, Routes } from '@angular/router';
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ApiService } from '../../../../Core/_providers/api-service/api.service';
-import { AddDealermodel } from '../../../../Core/_models/Adddealer';
+//import { AddDealermodel } from '../../../../Core/_models/Adddealer';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AdminServiceService } from '../../../../Core/_providers/admin-service/admin-service.service';
+//import { AdminServiceService } from '../../../../Core/_providers/admin-service/admin-service.service';
 import { DealershipDetailComponent } from '../../dealership/dealership-detail/dealership-detail.component';
 import { ActivatedRoute } from '@angular/router';
+import { AlertifyService } from '../../../../Core/_providers/alert-service/alertify.service';
+import { isNgTemplate } from '@angular/compiler';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -15,11 +18,16 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./add-dealership.component.scss']
 })
 export class AddDealershipComponent implements OnInit {
-  ImageFolder = 'http://niapi.local.com/api/resources/images/';
-  BrandImageFolder = 'http://niapi.local.com/api/resources/images/';
+  ImageFolder = 'http://demoapi.nilocal.com/api/resources/images/';
+  BrandImageFolder = 'http://demoapi.nilocal.com/api/resources/images/';
   Getdealership: any;
   Getpositions: any;
+  Getregions: any;
+  checkboxValue: any;
+  status: any;
   dshipForm: FormGroup;
+  popupForm: FormGroup;
+  termsForm: FormGroup;
   submitted = false;
   contactSubmit = false;
   address: any;
@@ -30,6 +38,8 @@ export class AddDealershipComponent implements OnInit {
   uploadedFilePath: string = null;
   uploadedFileName: any;
   fileData: File = null;
+  termsObj: any = [];
+  termsObjEdit: any = [];
   finalObjData: any = {
     dealername: '',
     dealeraddress1: '',
@@ -42,19 +52,23 @@ export class AddDealershipComponent implements OnInit {
     dealerphone: '',
     dealerwebsiteaddress: '',
     dealergooglemaplink: '',
+    dealerregion: '',
+    dealertimezone: '',
     dealerstatus: 'Y',
     dealerbrands: '',
     dealerlogo: '',
     dealergroupid: '',
     dealercreateduser: 1001,
     dealerupdateduser: 1001,
-    dealerdetails: [{}]
+    dealershipdetails: [],
+    dealertermsandconditions: []
   };
+
   // user details
   showDiv: Boolean = false;
+  showtermsDiv: Boolean = false;
   staticDiv: Boolean = true;
-  popupForm: FormGroup;
-  dealerid: any;
+  dealerid: any = "";
   sub: any;
   file: File;
   conts: any;
@@ -72,7 +86,13 @@ export class AddDealershipComponent implements OnInit {
   selectedBrands: string[];
   selectedItem: any;
   selectedBrandList: any = [];
+  selectedItemsList: any = [];
+  // getdealerTermsError: Boolean = true;
   phoneFormat: any[] = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  mypage: any = "";
+  bindImage = `${environment.apiUrl}`+'/resources/images/';
+
+
 
   @ViewChild('txtbrand') toggleButton: ElementRef;
   @ViewChild('brandMenu') menu: ElementRef;
@@ -81,9 +101,11 @@ export class AddDealershipComponent implements OnInit {
     private _Activatedroute: ActivatedRoute,
     private authService: ApiService,
     private router: Router,
+    private termSrvc: ApiService,
     public dialog: MatDialog,
-    private adminService: AdminServiceService,
-    private apiservice: ApiService, private renderer: Renderer2) {
+    //private adminService: AdminServiceService,
+    private apiservice: ApiService, private renderer: Renderer2,
+    private alertify: AlertifyService) {
 
 
     this.renderer.listen('window', 'click', (e: Event) => {
@@ -93,9 +115,10 @@ export class AddDealershipComponent implements OnInit {
     });
 
     this.GetBrandsList();
+    this.incentiveTermsList();
 
     this.dshipForm = this.fB.group({
-      dship: ['', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')]],
+      dship: ['', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*')]],
       address: ['', [Validators.required, Validators.maxLength(50)]],
       quantities: this.fB.array([]),
       dcity: ['', [Validators.required, Validators.maxLength(50)]],
@@ -106,21 +129,35 @@ export class AddDealershipComponent implements OnInit {
       webaddress: ['', [Validators.required, Validators.maxLength(100)]],
       gmaplink: ['', [Validators.required, Validators.maxLength(1000)]],
       // brand: ['', [Validators.required]],
+      region: ['', [Validators.required]],
+      timeZone: ['', [Validators.required]],
       fileUpload: ['', [Validators.required]],
       avatar: [null]
     });
-  }
-  get f() { return this.dshipForm.controls; }
-  get f1() { return this.popupForm.controls; }
-  ngOnInit() {
-    this.getstates();
-    this.getpositions();
-    //  this.id = this._Activatedroute.snapshot.params.id;
+    this.termsForm = this.fB.group({
+      TermsInfo: this.fB.array([])
+    });
+
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       console.log('EditDealerShip', params);
       this.dealerid = params.get('dealerid');
       this.dealergrpid = params.get('id');
+      this.mypage = params.get('pg');
     });
+
+    console.log("Mypage :", this.mypage);
+  }
+  get f() { return this.dshipForm.controls; }
+  get f1() { return this.popupForm.controls; }
+
+
+  ngOnInit() {
+
+    this.getStatesData();
+    this.getpositions();
+    this.getregions();
+    //  this.id = this._Activatedroute.snapshot.params.id;
+
     this.EditDealerShip(this.dealerid, this.dealergrpid);
     this.getDealershipData(this.dealergrpid);
 
@@ -128,21 +165,47 @@ export class AddDealershipComponent implements OnInit {
       dgContacts: this.fB.array([]),
       dgUsers: this.fB.array([])
     });
-    if (this.dealerid > 0 && this.dealerid != '') {
-      this.showDiv = true;
+    if (this.dealerid != '') {
+      this.showDiv = false;
       // this.staticDiv = false;
+      this.termsObjEdit = [];
+      this.termsForm.controls['TermsInfo'].reset();
+      if(this.mypage == 'edit'){
+        this.getDealertermsandConditions(this.dealerid);
+        this.showDiv = true;
+      }
+      
       this.getDealershipData(this.dealergrpid);
     }
-    else {
+    else {      
       (<FormArray>this.popupForm.get('dgUsers')).push(this.addUserFormGroup());
-      (<FormArray>this.popupForm.get('dgContacts')).push(this.addContactFormGroup());
+      (<FormArray>this.popupForm.get('dgContacts')).push(this.addContactFormGroup());      
     }
   }
+
+
+  getValu(eva, ind) {
+    console.log('Evnt :', eva);
+    console.log('Form array ', this.termsForm);
+
+
+    if (eva.target.checked == true) {
+      console.log('read', eva.target.checked);
+      this.termsForm.get('TermsInfo').value[ind].dtctermvalue = 'Y';
+    }
+    else {
+      this.termsForm.get('TermsInfo').value[ind].dtctermvalue = 'N';
+    }
+
+    console.log('maaa', this.termsForm);
+
+  }
+
 
   GetBrandsList() {
     let britem;
     const obj = { "brand_id": 0 };
-    this.apiservice.GetBrands(obj).subscribe((res: any) => {
+    this.apiservice.postmethod('brands/get', obj).subscribe((res: any) => {
       console.log(res.response);
       if (res.status == 200) {
         this.Brands = res.response;
@@ -150,9 +213,11 @@ export class AddDealershipComponent implements OnInit {
           if (this.selectedbrandid.length > 0) {
             for (let i = 0; i < this.selectedbrandid.length; i++) {
               britem = this.getDimensionsByFind(this.selectedbrandid[i]);
-              //console.log(britem)
-              this.selectedBrandList.push({ brand_id: this.selectedbrandid[i], brand_name: britem.brand_name, brand_logo: britem.brand_logo });
-              this.Brands.splice(i, 1);
+              // console.log(britem)
+              this.selectedBrandList.push({ brand_chrome_id: this.selectedbrandid[i], brand_name: britem.brand_name, brand_logo: britem.brand_logo });
+              // this.Brands.splice(i, 1);
+              this.Brands = this.Brands.filter(item => item.brand_chrome_id != this.selectedbrandid[i]);
+
 
             }
           }
@@ -162,7 +227,7 @@ export class AddDealershipComponent implements OnInit {
   }
 
   getDimensionsByFind(id) {
-    return this.Brands.find(x => x.brand_id == id);
+    return this.Brands.find(x => x.brand_chrome_id == id);
   }
 
   selectItem(e, item, index) {
@@ -170,8 +235,8 @@ export class AddDealershipComponent implements OnInit {
     if (this.selectedbrandid == "")
       this.selectedbrandid = [];
     if (item != '') {
-      this.selectedbrandid.push(item.brand_id);
-      this.selectedBrandList.push({ brand_id: item.brand_id, brand_name: item.brand_name, brand_logo: item.brand_logo });
+      this.selectedbrandid.push(item.brand_chrome_id);
+      this.selectedBrandList.push({ brand_chrome_id: item.brand_chrome_id, brand_name: item.brand_name, brand_logo: item.brand_logo });
       this.selectedItem = item;
     }
 
@@ -207,7 +272,7 @@ export class AddDealershipComponent implements OnInit {
   }
 
   removeBrandTag(item, index) {
-    this.Brands.push({ brand_id: item.brand_id, brand_name: item.brand_name, brand_logo: item.brand_logo });
+    this.Brands.push({ brand_chrome_id: item.brand_chrome_id, brand_name: item.brand_name, brand_logo: item.brand_logo });
 
     this.selectedBrandList.splice(index, 1);
     this.selectedbrandid.splice(index, 1);
@@ -219,12 +284,17 @@ export class AddDealershipComponent implements OnInit {
     if (this.dshipForm.invalid) {
       return;
     }
+
+   
     const contacts = this.popupForm.get('dgContacts').value;
     const users = this.popupForm.get('dgUsers').value;
     if (contacts[0] || users[0]) {
       if (contacts[0].contact2 == '' && users[0].user1 == '') {
-        this.finalObjData.dealerdetails = [{}];
+        this.finalObjData.dealershipdetails = [{}];
       }
+    }
+    else if (contacts.length == 0 && users.length == 0) {
+      this.finalObjData.dealershipdetails = [{}];
     }
     const fd: any = new FormData();
     if (this.dshipForm.value.quantities.length > 0) {
@@ -251,8 +321,11 @@ export class AddDealershipComponent implements OnInit {
     this.finalObjData.dealerphone = this.dshipForm.value.phone;
     this.finalObjData.dealerwebsiteaddress = this.dshipForm.value.webaddress;
     this.finalObjData.dealergooglemaplink = this.dshipForm.value.gmaplink;
+    this.finalObjData.dealerregion = this.dshipForm.value.region;
+    this.finalObjData.dealertimezone = this.dshipForm.value.timeZone;
     this.finalObjData.dealerbrands = this.selectedbrandid;
     this.finalObjData.dealergroupid = this.dealergrpid;
+    this.finalObjData.dealertermsandconditions = this.termsForm.get('TermsInfo').value;
     // );
     fd.append('data', JSON.stringify(this.finalObjData));
 
@@ -261,32 +334,149 @@ export class AddDealershipComponent implements OnInit {
     else
       fd.append('file', this.EditedLogoFile);
 
-    //fd.append('file', this.dshipForm.get('avatar').value, this.uploadedFileName);
+    // fd.append('file', this.dshipForm.get('avatar').value, this.uploadedFileName);
     console.log('Final Obj', this.finalObjData);
     const options = { content: fd };
-    if (this.dealerid > 0 && this.dealerid != "") {
-      this.adminService.Putmethod('dealerships', fd).subscribe((resp: any) => {
-        console.log('Post Resp:', resp);
-        console.log('res', resp.status);
-        if (resp.status == 200) {
-          alert('Dealership Updated Succefully');
-          this.router.navigate(['DealershipList', this.dealergrpid]);
-        }
-      });
-    }
-    else {
-      this.adminService.postmethod('dealerships', fd).subscribe((response: any) => {
-        console.log(response);
-        if (response.status == 200) {
-          alert('Dealership created successfully');
-          console.log(response);
-          this.router.navigate(['DealershipList', this.dealergrpid]);
-        }
-      },
-        (error) => {
-          console.log('error', error);
+
+
+
+
+    console.log("Final Object :", this.termsForm);
+    // return;
+
+   
+      // this.apiservice.putmethod('dealerships', fd).subscribe((resp: any) => {
+      //   console.log('Post Resp:', resp);
+      //   console.log('res', resp.status);
+      //   if (resp.status == 200) {
+      //     this.alertify.success('Dealership Updated Successfully');
+      //     this.router.navigate(['DealershipList', this.dealergrpid]);
+      //     this.updateTermsandConditions(this.dealerid);
+      //   }
+      //   else {
+      console.log("My Page :", this.mypage);
+
+      if (this.mypage == 'add') {
+        this.apiservice.postmethod('dealerships', fd).subscribe((resp: any) => {
+          console.log("Dealer Resp :", resp);
+          if (resp.status == 200) {
+            if (this.finalObjData.dealertermsandconditions.length > 0) {
+              this.addTermsandConditions(resp.response.dealerid);
+            } else {
+              this.alertify.success('Dealership Created Successfully');
+              this.router.navigate(['DealershipList', this.dealergrpid]);
+            }
+
+          }
+        })
+      } else if (this.mypage == 'edit') {
+        console.log("I am in edit..!");
+        this.apiservice.putmethod('dealerships', fd).subscribe((resp: any) => {
+          console.log('Post Resp:', resp);
+          console.log('res', resp.status);
+          if (resp.status == 200) {
+            this.alertify.success('Dealership Updated Successfully');
+            this.router.navigate(['DealershipList', this.dealergrpid]);
+            var termObj = {
+              "dealertermsandconditions": []
+            }
+            termObj.dealertermsandconditions = this.termsForm.get('TermsInfo').value;
+            console.log('t obj', termObj);
+
+            this.updateTermsandConditions(termObj);
+
+          }
         });
+      }
+
+      // }
+      //});
+ 
+    // else {
+
+    //   console.log("Final Obj :", this.finalObjData);
+
+    //   if (this.finalObjData.dealertermsandconditions.length > 0) {
+    //     this.apiservice.postmethod('dealertermsandconditions', fd).subscribe((response: any) => {
+    //       console.log(response);
+    //       if (response.status == 200) {
+    //         this.alertify.success('Dealership Terms created successfully');
+    //         console.log(response);
+    //         this.router.navigate(['DealershipList', this.dealergrpid]);
+    //       }
+    //       else {
+    //         (response.status == 401)
+    //         this.alertify.warning('Dealer Name Already Exists');
+    //       }
+    //     });
+    //   }
+    //   else if (this.finalObjData.dealershipdetails.length > 0) {
+
+    //     this.apiservice.postmethod('dealerships', fd).subscribe((response: any) => {
+    //       console.log(response);
+    //       if (response.status == 200) {
+    //         this.alertify.success('Dealership Contacts created successfully');
+    //         console.log(response);
+    //         this.router.navigate(['DealershipList', this.dealergrpid]);
+    //       }
+    //       else {
+    //         (response.status == 401)
+    //         this.alertify.warning('Dealer Name Already Exists');
+    //       }
+    //     });
+    //   }
+    //   else {
+    //     (error) => {
+    //       console.log('error', error);
+    //       return false;
+    //     }
+    //   }
+
+    // }
+  }
+
+  addTermsandConditions(Id) {
+    console.log("Dddd Id :", Id);
+    var termObj = this.termsForm.get('TermsInfo').value;
+    console.log("Term Obj :", termObj);
+
+    for (var t in termObj) {
+      termObj[t].dtcdealerid = Id;
     }
+
+    var term2 = {
+      "dealertermsandconditions": []
+    }
+    term2.dealertermsandconditions = termObj;
+    console.log("Updated Term Obj", term2);
+
+    this.apiservice.postmethod('dealertermsandconditions', term2).subscribe((response: any) => {
+      console.log('terms and conditions adding', response);
+      if (response.status == 200) {
+        this.alertify.success('Dealership Terms Created Successfully');
+        this.router.navigate(['DealershipList', this.dealergrpid]);
+      }
+
+
+    })
+
+  }
+
+  updateTermsandConditions(obj) {
+    console.log("Terms Updated Obj :", obj);
+    this.apiservice.putmethod('dealertermsandconditions', obj).subscribe((response: any) => {
+      console.log('terms and conditions update', response);
+      if (response.status == 200) {
+        // this.alertify.success('Dealership Terms Updated Successfully');
+        this.router.navigate(['DealershipList', this.dealergrpid]);
+      }
+
+    })
+  }
+
+  cancelTerms() {
+    this.showtermsDiv = false;
+    this.finalObjData.dealertermsandconditions.length = [];
   }
 
 
@@ -299,6 +489,10 @@ export class AddDealershipComponent implements OnInit {
 
   dgUsers(): FormArray {
     return this.popupForm.get('dgUsers') as FormArray;
+  }
+
+  TermsInfo(): FormArray {
+    return this.termsForm.get('TermsInfo') as FormArray;
   }
 
   newQuantity(): FormGroup {
@@ -359,6 +553,10 @@ export class AddDealershipComponent implements OnInit {
     if (!pattern.test(inputChar)) {
       event.preventDefault();
     }
+  }
+
+  cancelBack() {
+    this.router.navigate(['DealershipList', this.dealergrpid]);
   }
 
   public fileProgress(fileInput: any): void {
@@ -422,7 +620,7 @@ export class AddDealershipComponent implements OnInit {
 
   postUser() {
     console.log('contacts and users', this.popupForm.controls);
-    this.finalObjData.dealerdetails = [];
+    this.finalObjData.dealershipdetails = [];
     const dguserObj = [];
 
     const dgcontactobj = [];
@@ -533,11 +731,11 @@ export class AddDealershipComponent implements OnInit {
     // const finalreq = JSON.parse(req);
 
     for (let i in mainObj.contacts) {
-      this.finalObjData.dealerdetails.push(mainObj.contacts[i]);
+      this.finalObjData.dealershipdetails.push(mainObj.contacts[i]);
     }
 
     for (let y in mainObj.users) {
-      this.finalObjData.dealerdetails.push(mainObj.users[y]);
+      this.finalObjData.dealershipdetails.push(mainObj.users[y]);
     }
     this.showDiv = false;
 
@@ -567,6 +765,35 @@ export class AddDealershipComponent implements OnInit {
     });
   }
 
+
+  termsGroupObj(dt): FormGroup {
+    console.log('I am in a Terms group', dt);
+    return this.fB.group({
+      action: ['A'],
+      dtcdealerid: [this.dealerid],
+      dtctermid: [dt.MIT_ID, [Validators.required]],
+      MIT_DISPLAYNAME: [dt.MIT_DISPLAYNAME, [Validators.required]],
+      dtctermvalue: ['N', [Validators.required]],
+      dtctermtype: [dt.MIT_TYPE],
+      dtcstatus: 'Y'
+    });
+  }
+
+  EdittermsGroupObj(dt): FormGroup {
+    console.log('I am in a Edit Terms group', dt);
+    return this.fB.group({
+      action: ['U'],
+      dtcid: [dt.DTC_ID],
+      dtcdealerid: [dt.DTC_DEALER_ID],
+      dtctermid: [dt.DTC_TERM_ID, [Validators.required]],
+      MIT_DISPLAYNAME: [dt.MIT_DISPLAYNAME, [Validators.required]],
+      dtctermvalue: [dt.DTC_TERMVALUE, [Validators.required]],
+      dtctermtype: [dt.DTC_TERMTYPE],
+      dtcstatus: 'Y'
+    });
+  }
+
+
   addContactFormGroup(): FormGroup {
     console.log('I am in addContact Form group');
     return this.fB.group({
@@ -590,12 +817,12 @@ export class AddDealershipComponent implements OnInit {
 
     });
   }
-  getstates() {
-    this.adminService.get('states?185').subscribe(
-      response => {
-        // console.log('Getstates', response.response);
-        this.getstates = response.response;
-      });
+  getStatesData() {
+    const obj = { sg_id: 0 }
+    this.apiservice.postmethod('States/get', obj).subscribe((res: any) => {
+      this.getstatesresp = res.response;
+      console.log('Getstates', this.getstatesresp);
+    });
   }
 
   getpositions() {
@@ -603,30 +830,42 @@ export class AddDealershipComponent implements OnInit {
     const obj = {
       "p_id": 0
     };
-    this.adminService.postmethod('positions/GET', obj).subscribe(
+    this.apiservice.postmethod('positions/GET', obj).subscribe(
       response => {
         console.log('Getposition', response.response);
         this.Getpositions = response.response;
       });
   }
 
+  getregions() {
+    const obj = {
+      "region_id": 0
+    };
+    this.apiservice.postmethod('regions/get', obj).subscribe(resp => {
+      console.log('Getregions', resp.response);
+      this.Getregions = resp.response;
+    });
+
+  }
+
   EditDealerShip(dsid, gruoupid) {
 
     const obj =
-      {
-        "dealerid": dsid,
-        "expression": "dealer_dg_id =" + gruoupid,
+    {
+      "dealerid": dsid,
+      "expression": "dealer_dg_id =" + gruoupid,
 
-      }​​​​​​​​;
+    };
 
     this.selectedbrandid = [];
     this.selectedBrandList = [];
-    this.adminService.postmethod('dealerships/get', obj).subscribe((response: any) => {
+    this.apiservice.postmethod('dealerships/get', obj).subscribe((response: any) => {
       console.log('EditDealerShip', response);
 
       if (response.status == 200) {
         this.Getdealership = JSON.parse(response.response[0]['JSON_F52E2B61-18A1-11d1-B105-00805F49916B']);
         this.Getdealership = this.Getdealership[0];
+        console.log('manoj', this.Getdealership);
         if (this.Getdealership != '') {
           this.dshipForm = this.fB.group({
             dship: [this.Getdealership.dealer_name, [Validators.required, Validators.maxLength(1000), Validators.pattern('[a-zA-Z ]*')]],
@@ -640,6 +879,8 @@ export class AddDealershipComponent implements OnInit {
             webaddress: [this.Getdealership.dealer_websiteaddress, [Validators.required]],
             gmaplink: [this.Getdealership.dealer_googlemaplink, [Validators.required]],
             // brand: [this.Getdealership.dealer_brands],
+            region: [this.Getdealership.dealer_region, [Validators.required]],
+            timeZone: [this.Getdealership.DEALER_TIMEZONE, [Validators.required]],
             fileUpload: [this.Getdealership.dealer_logo],
             avatar: [null]
           });
@@ -650,10 +891,10 @@ export class AddDealershipComponent implements OnInit {
           else
             this.selectedbrandid = this.Getdealership.dealer_brands;
 
-          this.EditedLogoFile = this.Getdealership.dealer_logo;
+          this.EditedLogoFile = this.Getdealership.dealer_logo;          
 
           const uctd = this.Getdealership.DealerDetails;
-          this.previewUrl = 'http://niapi.local.com/api/resources/images/' + this.Getdealership.dealer_logo;
+          this.previewUrl = 'http://demoapi.nilocal.com/api/resources/images/' + this.Getdealership.dealer_logo;
 
           for (let y in uctd) {
             if (uctd[y].dd_type == 'U') {
@@ -672,7 +913,7 @@ export class AddDealershipComponent implements OnInit {
 
 
       }
-    }​​​​​​​​);
+    });
   }
 
 
@@ -682,7 +923,7 @@ export class AddDealershipComponent implements OnInit {
       "dealergroupid": DealerID,
       "expression": ""
     };
-    this.authService.GetDealershipGroups(dgroupsObj).subscribe((resp: any) => {
+    this.authService.postmethod('dealershipgroups/get', dgroupsObj).subscribe((resp: any) => {
       console.log('Get groups Resp', resp);
       if (resp.status == 200) {
         this.getdgroups = JSON.parse(resp.response[0]['JSON_F52E2B61-18A1-11d1-B105-00805F49916B']);
@@ -699,5 +940,59 @@ export class AddDealershipComponent implements OnInit {
     });
   }
 
+  incentiveTermsList() {
+    const obj = {
+      "id": 0,
+      "expression": ""
+    };
+    this.termSrvc.postmethod('termsandconditions/get', obj).subscribe((res: any) => {
+      console.log("Resp :", res);
+      if (res.status === 200) {
+        const terms = res.response;
+        this.termsObj = res.response;
+        console.log('terms and conditions', terms);
+        //console.log(...this.TermsInfo);
+        console.log("Form Control : ", this.termsForm);
+      }
+    });
+  }
+
+  termsAction() {
+    const obj = this.termsObj.filter(item => item.Name == 'Y/N');
+    console.log('mmmmm', obj);
+    //this.termsForm.get('TermsInfo').value.reset();
+    this.termsObj = [];
+
+    for (var x in obj) {
+      // console.log("OBj :", obj[x]);
+      (<FormArray>this.termsForm.get('TermsInfo')).push(this.termsGroupObj(obj[x]));
+    }
+
+  }
+
+  getDealertermsandConditions(DealerID) {
+    const obj: any = {
+      Id: DealerID,
+    };
+    this.apiservice.postmethod('dealertermsandconditions/get', obj).subscribe((res: any) => {
+      const getdealerTermsArray = res.response;
+      this.termsObjEdit = res.response;
+      console.log('TTT', getdealerTermsArray);
+
+      for (var T in getdealerTermsArray) {
+        (<FormArray>this.termsForm.get('TermsInfo')).push(this.EdittermsGroupObj(getdealerTermsArray[T]));
+      }
+    });
+
+
+  }
+
+  checkAction(val) {
+    console.log('Check Val :', val)
+    if (val == 'Y')
+      return true;
+    else
+      return false;
+  }
 
 }

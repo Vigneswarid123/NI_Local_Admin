@@ -35,14 +35,15 @@ export class EditRolesComponent implements OnInit {
   ngOnInit(): void {
     this.roleEditForm();
     this.addRoleForm = this.formBuilder.group({
-      Role_Name: ['', [Validators.required,Validators.pattern('[a-zA-Z# ]*'),Validators.maxLength(50)]],
-      Role_UniqId: ['', [Validators.required,Validators.pattern('[0-9]*'),Validators.maxLength(5)]],
+      Role_Name: ['', [Validators.required, Validators.pattern('[a-zA-Z# ]*')]],
+      Role_UniqId: [''],
       Role_Admin:  ['', [Validators.required]],
       Role_Front:  ['', [Validators.required]],
       Role_Portal:  ['N', [Validators.required]],
-      Role_Status: ['', [Validators.required]]
+      Role_Status: ['']
     }); 
   }
+
   roleEditForm(){
     this.roleSrvc.getRole(this.Role_Id).subscribe(
       response => {
@@ -53,6 +54,12 @@ export class EditRolesComponent implements OnInit {
   }
 
   updateRoles(): any {
+    {
+      this.submitted = true;
+      if (this.addRoleForm.invalid) {
+     return;
+    }
+    }
     const roleUpdate = new roleModel(
       this.RoleDetails.Role_Name,
       this.RoleDetails.Role_UniqId,
@@ -65,37 +72,35 @@ export class EditRolesComponent implements OnInit {
     this.roleSrvc.updateRole(roleUpdate).subscribe((res: any) => {
       console.log('res', res);
       if (res.status === 200) {
-        this.alertify.success('Record updated successfully');
+        alert ('Record updated successfully');
         this.router.navigate(['Roles']);
       } 
       else {
-        this.alertify.error('Please check the details');
+        alert('Role Already Exists');
       }
     });
   }
 
-//   onSubmit(){
-//     this.submitted = true;
+  onSubmit(){
+    this.submitted = true;
+      if (this.addRoleForm.invalid) {
+       return;
+      }
+    }
 
-//     if (this.addRoleForm.invalid) {
-//      return;
-//     }
-// this.editRole=this.addRoleForm.value;
+    onCancel(){
+      this.router.navigate(['Roles']);
+    }
 
-//     const obj={
-//       Role_Id:this.Role_Id,
-//       Role_Name:this.editRole.Role_Name ,
-//       Role_UniqId:this.editRole.Role_UniqId    
-//     }
-
-//     this.roleSrvc.updateRole(obj).subscribe( response => {
-//       this.globalResponse = response;
-//       if(this.globalResponse.status==200){
-//         alert("role updated successfully");
-//         console.log(this.globalResponse)
-//       }
-//   });
-//   }
+    
+  handleStatus(evt) {
+    let target = evt.target;
+    if (target.checked) {
+    this.RoleDetails.Role_Status = 'Y';
+    } else {
+    this.RoleDetails.Role_Status = 'N';
+    }
+    }
   
 }
 

@@ -25,33 +25,32 @@ export class EditSubscriptionPlanComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private termSrvc: ApiService,
-  ) 
-  { 
+  ) {
     this.route.queryParams.subscribe(params => {
       this.sp_id = params.sp_id;
       console.log(this.sp_id);
- });
+    });
   }
 
   ngOnInit() {
     this.planEditForm();
     this.subPlanForm = this.formBuilder.group({
-      sp_name: ['', [Validators.required, Validators.pattern('[a-zA-Z# ]*')]],  
-      sp_setupfee: ['', [Validators.required, Validators.pattern('[0-9]*')]],
-      sp_monthlyfee: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      sp_name: ['', [Validators.required, Validators.pattern('[a-zA-Z# ]*'), Validators.maxLength(50)]],
+      sp_setupfee: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
+      sp_monthlyfee: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       sp_status: ['']
     });
     console.log(this.subPlanForm.value);
   }
 
-  OnSubmit(){
-  this.submitted = true;
+  OnSubmit() {
+    this.submitted = true;
     if (this.subPlanForm.invalid) {
-     return;
+      return;
     }
   }
 
-  planEditForm(){
+  planEditForm() {
     this.termSrvc.getSubscriptionPlansById(this.sp_id).subscribe(
       response => {
         this.globalResponse = response;
@@ -63,10 +62,10 @@ export class EditSubscriptionPlanComponent implements OnInit {
   updatePlans(): any {
     {
       this.submitted = true;
-    if (this.subPlanForm.invalid) {
-     return;
+      if (this.subPlanForm.invalid) {
+        return;
 
-    }
+      }
     }
     const termUpdate = new subscriptionPlansModel(
       this.planDetails.sp_id,
@@ -90,11 +89,11 @@ export class EditSubscriptionPlanComponent implements OnInit {
   handleStatus(evt) {
     let target = evt.target;
     if (target.checked) {
-    this.planDetails.sp_status = 'Y';
+      this.planDetails.sp_status = 'Y';
     } else {
-    this.planDetails.sp_status = 'N';
+      this.planDetails.sp_status = 'N';
     }
-    }
+  }
 
   _keyPress(event: any) {
     const pattern = /[0-9+( )-]/;

@@ -172,3 +172,83 @@
       color: #00a453;
       font-weight: bold;
   }
+//   .changepwd {
+//     background-color: #577f63;
+//     color: whitesmoke;
+//     border-radius: 4px;
+//     height: 30px;
+//     border: none;
+//     padding: 3px 8px;
+//   }
+
+.changepwd {
+    background: #00a453;
+      color: #ffffff !important;
+      font-family: "OpenSans-Bold" !important;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 5px;
+    //   margin-top: 27px;
+      border: none;
+      height: 35px;
+      padding: 3px 8px;
+  }
+  .pwdDiv{
+    position: relative;
+      top: -12px;
+  }
+  .popupclose {
+    color: whitesmoke;
+  }
+  
+  .modal-body {
+  
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+    background-color: #252525
+  }
+  
+  .modal-footer{
+    background-color: #252525
+  }
+  .popupsave {
+    background-color: #577f63;
+    color: whitesmoke;
+  }
+  .poptitle{
+    text-align: center;
+  }
+  
+  button.close {
+  
+    background-color: #577f63;
+   
+  }
+  
+  .poptitle {
+    text-align: center;
+    color: black;
+    font-weight: bold;
+  }
+  
+  .popupheader {
+    // background-color: #fff;
+    color: whitesmoke;
+    background-color: #577f63;
+    // background-image: linear-gradient(to right, #b9babe, #f8f8fa, #c1c3c6) !important;
+  }
+
+  .savebutton {
+    background: #577f63;
+    border: 1px solid #577f63;
+    border-radius: 3px;
+    padding: 5px;
+    outline: 0;
+    font-weight: 400;
+    font-size: 14px;
+    color: #fff;
+    text-transform: uppercase;
+    width: 100%;
+}
+  

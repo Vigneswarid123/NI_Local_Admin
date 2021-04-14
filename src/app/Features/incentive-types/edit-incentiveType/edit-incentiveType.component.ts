@@ -36,7 +36,7 @@ export class EditIncentiveTypeComponent implements OnInit {
   ngOnInit(): void {
     this.termEditForm();
     this.addTermForm = this.formBuilder.group({
-      incentivetype_name: ['', [Validators.required]],  
+      incentivetype_name: ['', [Validators.required, Validators.pattern('[a-zA-Z# ]*')]],  
       incentivetype_status: [''],
     });    
    }
@@ -81,7 +81,6 @@ export class EditIncentiveTypeComponent implements OnInit {
     } else {
     this.termDetails.incentivetype_status = "N";
     }
-    console.log (this.addTermForm.value)
     }
 
 }

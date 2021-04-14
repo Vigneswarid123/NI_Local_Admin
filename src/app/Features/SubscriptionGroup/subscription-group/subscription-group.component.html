@@ -1,0 +1,297 @@
+<div class="dashboard_bg">
+  <app-header></app-header>
+  <div class="container-fluid pt64">
+    <div class="row">
+      <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+        <app-left-panel class="w-100"></app-left-panel>
+      </div>
+
+
+      <div *ngIf="grid" class="content_body">
+        <form [formGroup]="SearchSubscriptionForm">
+          <table style="width: 1000px; float: left">
+            <tbody>
+              <tr>
+                <td></td>
+                <td style="vertical-align: top">
+
+                  <table class="gridheader">
+                    <thead>
+                      <tr>
+                        <th style="width: 462px; font-weight: bold;">
+                          <div style="float: left">
+                            <div class="getuser">
+                              <label class="getuserlabel">SubscriptionDetails</label>
+                            </div>
+                            <div class="AddIcon">
+                              <a (click)="AddSubDet()" style="cursor: pointer;">
+                                <img src="assets/Images/brand_plus.png">
+                              </a>
+                            </div>
+                          </div>
+                        </th>
+                        <th style="width: 500px; text-align: center">
+                          <div style="float: left">
+                          </div>
+                        </th>
+                        <th style="width:10%; text-align: center" colspan="2">
+                          <th style="width:10%; text-align: center" colspan="2">
+                            <div style="width: 80px; cursor: pointer" (click)="atoZClick()">
+                              <div class="DivAZ1">A - Z</div>
+                              <div class="DivAZ2">
+                                <a>
+                                  <img src="assets/Images/sorting_img.png">
+                                </a>
+                              </div>
+                            </div>
+                          </th>
+                          <!-- <th><div class= "search">
+                                  <input type="text" placeholder="Search" [(ngModel)]="SearchText" />
+                                </div></th>                -->
+                          <th style="padding-left: 0px;">
+                            <div class="search">
+                              <input type="text" formControlName="txtSearch" placeholder="Search" autofocus (keyup)="onSearch()">
+                            </div>
+                            <div style="float: right; margin-top: -22px; margin-right: 6px;">
+                              <img src="assets/Images/Search-Icon.png">
+                            </div>
+                          </th>
+
+                      </tr>
+                    </thead>
+                  </table>
+
+                  <div class="row" *ngIf="atozFltr" style="height: 50px; margin-bottom: 10px">
+                    <div style="width: 100%">
+                      <app-atoz-filter (onAlphaClick)="onAlphaCatch($event)"></app-atoz-filter>
+                    </div>
+                  </div>
+                  <div>
+                    <table style="display: none;" class="dashboard">
+                      <thead>
+                        <tr class="colHeader">
+                          <th style="width: 6%"></th>
+                          <!-- <th align="center" scope="col" style="width: 150px;">
+          Id
+          </th> -->
+                          <th align="center" scope="col" style="width: 70px; text-align: center">
+                            dealership
+                          </th>
+                          <th align="center" scope="col" style="width: 100px; text-align: center">
+                            DealerGroup
+                          </th>
+                          <th align="center" scope="col" style="width: 100px; text-align: center">
+                            subscriptionPlan
+                          </th>
+                          <th align="center" scope="col" style="width: 100px; text-align: center">
+                            plandetails
+                          </th>
+                          <th align="center" scope="col" style="width: 100px; text-align: center">
+                            status
+                          </th>
+                          <th align="center" scope="col" style="width: 100px; text-align: center">
+                            Edit
+                          </th>
+
+                          <th scope="col" style="width: 37px">&nbsp;</th>
+                        </tr>
+                      </thead>
+                    </table>
+                    <div class="col-md-8" style="padding-left: 0px">
+                      <div class="contentss">
+                        <table class="dashboard">
+                          <tbody>
+                            <ng-container *ngIf="globalresponse | alphaFilter : alphaSrch: alphaColumns :'aa' as SubscriptionData; else noItems">
+                              <tr *ngFor="let item of SubscriptionData">
+                                <div *ngIf="item.length == 0"> no data found!!!</div>
+                                <td style="width: 120px;">
+                                  <div style="margin-left: 50px;">
+                                    <span>
+
+                                      <!-- {{item.sd_dealership_id}} -->
+                                      {{item.dealershipname}}
+                                    </span>
+
+                                  </div>
+                                </td>
+                                <td style="width: 120px;">
+                                  <div style="margin-left: 50px;">
+                                    <span>
+
+                                      {{item.dealer}}
+                                    </span>
+                                  </div>
+                                </td>
+                                <td style="width: 120px;">
+                                  <div style="margin-left: 50px;">
+                                    <span>
+
+                                      {{item.subplan}}
+                                    </span>
+                                  </div>
+                                </td>
+
+
+
+
+
+                                <td *ngIf="item.sd_status === 'Y'; else elseBlock" style="width: 100px">
+                                  <div class="Active" style="text-align: center">
+                                    <span>Active</span>
+                                  </div>
+                                </td>
+
+                                <ng-template #elseBlock>
+                                  <td style="width: 100px">
+                                    <div class="InActive" style="text-align: center">
+                                      <span>InActive</span>
+                                    </div>
+                                  </td>
+                                </ng-template>
+
+                                <td align="center" style="width: 37px; cursor: pointer;">
+                                  <a (click)="edit(item)" style="cursor: pointer;">
+                                    <img src="assets/Images/edt_icon.png" />
+                                  </a>
+                                </td>
+                              </tr>
+                              <ng-container *ngIf="!SubscriptionData.length && hide" [ngTemplateOutlet]="noItems"></ng-container>
+                            </ng-container>
+                            <ng-template #noItems>
+                              <tr>
+                                <td colspan="9" style="text-align: center;">No Dealers Available!</td>
+                              </tr>
+                            </ng-template>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+
+      <div class="contentpanel_bg col-9 pt-3" *ngIf="addSub">
+        <form [formGroup]="subscriptionDetailsForm" (ngSubmit)="OnSubmit()">
+
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="formgroup grp grp_det">
+                  <label>DealerGroup</label>
+                  <input type="text" class="form-control" maxlength="100" formControlName="dealergroup" [(ngModel)]="selectedDealer" autofocus
+                    (keyup)="OnChangeEvent($event)" #dealergroup>
+
+                  <div *ngIf="!subscriptionDetailsForm.controls.dealergroup.valid && (subscriptionDetailsForm.controls.dealergroup.dirty||submitted)"
+                    class="error">
+                    <div class="text-danger" *ngIf="subscriptionDetailsForm.controls.dealergroup.errors.required">DealerGroup is required</div>
+                  </div>
+                  <div *ngIf="showDealerShipDiv" class="autofillcls" #menu>
+                    <div *ngFor="let option of selectedDealerShip ; let i=index" (mouseover)="highlightRow(option)" [ngClass]="{'highlight' : option.dg_name == selectedItem}">
+                      <li style="list-style: none;padding: 8px;cursor: pointer;" (click)="selectItem($event, option,i)">{{option.dg_name}}</li>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="formgroup grp grp_det">
+                  <label>DealerShip</label>
+                  <select class="form-control" formControlName="dealership">
+                    <option value="">Select DealerShip</option>
+
+                    <option *ngFor="let d of dealerShips" [value]="d.dealer_id">{{d.dealer_name}}</option>
+                  </select>
+                  <div *ngIf="!subscriptionDetailsForm.controls.dealership.valid && (subscriptionDetailsForm.controls.dealership.dirty||submitted)"
+                    class="error">
+                    <div class="text-danger" *ngIf="subscriptionDetailsForm.controls.dealership.errors.required">dealership is required</div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+            <div class="row">
+              <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <label>Subscription Plan</label>
+                <select class="form-control" formControlName="subscriptionplan">
+                  <option value="">Select SubscriptionPlan</option>
+                  <option *ngFor="let p of plans" [value]="p.sp_id">{{p.sp_name}}</option>
+                </select>
+                <div *ngIf="!subscriptionDetailsForm.controls.subscriptionplan.valid && (subscriptionDetailsForm.controls.subscriptionplan.dirty||submitted)"
+                  class="error">
+                  <div class="text-danger" *ngIf="subscriptionDetailsForm.controls.subscriptionplan.errors.required">subscriptionplan is required</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+
+              <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="formgroup grp grp_det">
+                  <label>Plan Details</label>
+                  <!-- <input type="text" style="height: 100px;" class="form-control" maxlength="500" formControlName="branddesc" autofocus> -->
+                  <textarea class="form-control" maxlength="500" formControlName="plandetails" autofocus rows="5" cols="10">                             
+                          </textarea>
+                  <div *ngIf="!subscriptionDetailsForm.controls.plandetails.valid && (subscriptionDetailsForm.controls.plandetails.dirty||submitted)"
+                    class="error">
+                    <div class="text-danger" *ngIf="subscriptionDetailsForm.controls.plandetails.errors.required">plandetails is required</div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+            <!-- <div class="row">
+                        <div class="col-xs-3 col-sm-3 col-md-3">
+                          <div class="form-group">
+                            
+                        
+                           <label class="form-check-label">Status :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                
+                           <input type="checkbox" formControlName="" value="Y" />
+                          
+                          </div>
+
+                          </div>
+                        </div> -->
+
+          </div>
+
+
+          <!-- <div class="row" style="padding-bottom: 4%;">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-1" style="padding-top: 2%">
+                      <button type="submit" class="button">Save</button>
+                    </div>
+                    <div class="col-sm-1" style="padding-top: 2%">
+                      <a style="padding-left: 47px;"><button class="button" (click)="showGridPanel()">cancel</button></a>
+        
+                    </div>
+                  </div> -->
+          <div class="col-lg-12 pt-lg-5 pl-lg-4">
+            <div class="row">
+              <div class="col-lg-2">
+                <button type="submit" class="savebutton">Save</button>
+              </div>
+              <div class="col-lg-2">
+                <button type="button" class="savebutton" (click)="showGridPanel();">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

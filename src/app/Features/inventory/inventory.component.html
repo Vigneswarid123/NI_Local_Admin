@@ -43,13 +43,29 @@
                     </thead>
                 </table>
               </div>
-              <div class="row  fltrSelect" style="width:100%;flex-direction: column;">
+              <div class="row pt-3" style="flex-direction: column;">
                 <div class="login-container" style="flex-direction: column;">
-                    <div class="d-flex justify-content-end" style="width:100%;">
+                    <div class="d-flex justify-content-end" style="width:99%;">
                       <div class="text-right"><label style="margin-top:3px;padding-right: 10px;">Filter by:</label></div>
-                      <form [formGroup]="modelForm" (ngSubmit)="onSubmit()">
+                      <div>                  
+                        <div class="form-group drop_dwn w-100" >              
+                       <select class="form-control" (change)="changeGroup($event.target.value)" class="drop">
+                         <option>---Select Dealer Group---</option>
+                         <option  *ngFor="let gn of dealergroups" value="{{gn.dg_id}}"> {{gn.dg_name}} </option>
+                     </select>
+                        </div>
+                    </div>
+                    <div>
+                      <div class="form-group drop_dwn w-100 ml-2">              
+                     <select class="form-control" (change)="getDealerId($event.target.value)" class="drop">
+                       <option>---Select DealerShip Name---</option>
+                       <option  *ngFor="let ds of GetDealershipsList" value="{{ds.dealer_id}}"> {{ds.dealer_name}} </option>
+                   </select>
+                      </div>
+                  </div>                               
+                      <form [formGroup]="modelForm" (ngSubmit)="onSubmit()" *ngIf="Filters">
                         <div>
-                          <div class="form-group  drop_dwn">
+                          <div class="form-group  drop_dwn ml-3">
                               <select formControlName="ddlYear" class="drop" (change)="assignDropDownInfo('year')">
                                 <option value="0">All</option>
                                 <option *ngFor="let yearInfo of Years" value="{{yearInfo.value}}">{{yearInfo.Year}}</option>
@@ -58,7 +74,7 @@
                         </div>
                       
                         <div>
-                            <div class="form-group  drop_dwn">
+                            <div class="form-group  drop_dwn ml-2">
                               <select formControlName="ddlBrand" class="drop"   (change)="assignDropDownInfo('brand')">
                                   <option value="0" >All</option>
                                   <option *ngFor="let brandInfo of Brands" value="{{brandInfo.brand_chrome_id}}">{{brandInfo.brand_name}}</option>
@@ -123,12 +139,15 @@
                  
               </div>
               <div class="row">
-                 <div class="contentss">
+                <div *ngIf="ShowLabel"  style="min-height:480px;text-align: center;width: 100%;">
+                  <p style="margin-top:150px;font-size:20px">Please select Dealer Group and DealerShip Name to get Inventory data..!</p>
+                </div>
+                 <div class="contentss" *ngIf="GridDiv">
                   <table class="dashboard"> 
                     <thead >
                        <tr>
                            <th style="width:5%;padding-left: 4%;"><b>STOCKTYPE</b></th>
-                           <th style="width:10%;"><b>MODEL CODE</b></th>
+                           <th style="width:10%;"><b>MODEL NAME</b></th>
                            <th style="width:6%;padding-left: 5%;"><b>VIN</b></th>
                            <!-- <th>INTERIOR COLOR</th>
                            <th>EXTERIOR COLOR</th> -->

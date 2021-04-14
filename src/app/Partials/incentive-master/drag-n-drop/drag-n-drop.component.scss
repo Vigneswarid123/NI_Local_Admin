@@ -1,0 +1,304 @@
+.drag_n_drop{
+ width:100%;
+
+//  #cdk-drop-list-1 div+div.cdk-drag-placeholder{
+//      display: none;
+//  }
+//  #cdk-drop-list-0 input.cdk-drag-placeholder{
+//     width:73% !important;
+//     color: #ccc; font-size: 12px; float: left; margin: 15px 5px 0 0;
+// }
+
+
+// #cdk-drop-list-0 div.cdk-drag-placeholder{
+//     width:73% !important;
+//     color: #ccc; font-size: 12px; float: left; margin: 15px 5px 0 0;
+//     //display: none;
+//     // float:left !important;
+//     // width:73% !important;
+//     // align-items: left;
+//     // justify-content: left;
+// }
+
+// #cdk-drop-list-1 div+div.cdk-drag-preview{
+//     display: none;
+// }
+// #cdk-drop-list-0 input.cdk-drag-preview{
+//    width:73% !important;
+//    color: #ccc; font-size: 12px; float: left; margin: 15px 5px 0 0
+// }
+
+
+//#cdk-drop-list-0 div.cdk-drag-preview{
+   //display: none;
+   // float:left !important;
+   // width:73% !important;
+   // align-items: left;
+   // justify-content: left;
+//}
+.lineitems-drag{
+  color:red !important;
+  background: #454444 !important;
+  text-align: left;
+  width:75% !important;
+  cursor:move;
+  padding: 5px !important;  border-radius: 5px !important; margin: 0 5px 0 0 !important; float: left !important;  font-size: 12px !important;
+}
+
+  .cdk-drag-placeholder {
+    opacity: 0;
+    cursor:move;
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+.dragged{
+    background-color: #aaa !important;
+    height: 34px;
+}
+.dragged select{
+    background-color: #aaa !important;
+    height: 34px;
+}
+ 
+ .save_btn{width: fit-content; height: 25px; border-radius: 5px; cursor: pointer; text-transform: uppercase; padding:3px 0; background: #00a453 !important; color: #ffffff; text-align: center; border: none;}
+
+ .verContainer{
+    height: 600px;
+    position: relative;
+   
+ }
+ .vertical-center{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+ }
+    .num{padding: 2px 6px; border-radius: 50px; border: 1px solid #7c7c7c; text-align: center; color: #7c7c7c; font-family: 'Roboto-Bold'!important; font-size: 14px;;}
+
+
+    .drag{font-size: 10px; font-style: italic; font-family: 'OpenSans-Italic';margin: -3px 0 15px; ;}
+
+    .select-box-list-container{
+        display:flex; 
+        flex-direction:row;
+    }
+    
+    .vertical{
+        display:flex; 
+        flex-direction:column;
+    }
+    .vertical1{
+        display:flex; 
+        flex-direction:column;
+       // padding-left: 120px;
+    }
+    
+    .select-box-list{
+        /* border: 1px solid rgb(24, 23, 23); */
+        /* width:auto;
+        height: auto; */
+        /* overflow-y: scroll; */
+        width: 100%;
+        /* background-color: rgba(0, 0, 0, 0.425); */
+        margin-bottom: 10px;
+        padding: 20px 5px;
+        // border: 3px solid white;
+        font-size: 14px;
+         justify-content: space-between;
+         border-radius: 5px;
+         
+    }
+    
+    .select-box-list::-webkit-scrollbar {
+        width: 12px;
+    }
+    
+    .select-box-list::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+        border-radius: 5px;
+    }
+    
+    .select-box-list::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+    }
+    
+    .select-box-list-item{
+
+        min-height: 30px;
+        border-radius: 7px;
+        display: block;
+        margin-left: 5px;
+        width:100%;
+        margin-bottom:2px ;
+        color: white;
+        white-space: nowrap;
+    }
+    .selected{
+        background-color: #aaa !important;
+        height: 34px;
+    }
+    
+    .select-box-buttons{
+        vertical-align: center;
+        // padding: 20px;
+        display:flex; 
+        flex-direction:column;
+        width:80px;
+        height: 250px;
+        //padding-left: 50px;
+        padding-top: 100px;
+    }
+    
+    
+    .selectbox-search{
+        height:25px;
+        width:250px;
+        color:#fff;
+    }
+    .button{width: 100%; font-size: 12px; float: left; margin: 15px 5px 0 0;
+        .outlinebtn{width: 75%; height: auto; padding: 5px;  border-radius: 5px; background: #454444; margin: 0 5px 0 0; float: left;  font-size: 12px;;;}
+    
+    }
+    .terms_cond{
+        p{margin: 0;}
+        .drag{font-size: 10px; font-style: italic; font-family: 'OpenSans-Italic';margin: -3px 0 15px; ;}
+        .search{
+            input{width: 71%; height: 28px; padding: 5px 45px 5px 10px;outline: none;border-radius: 3px ;
+                border: none;font-size: 12px;margin: 0 !important; background-color: #454444 ; color: #fff !important; background: url(../../../../assets/images/Search-lt.png) 96% no-repeat ;}
+        }
+        .button{width: 100%; font-size: 12px; float: left; 
+            .outlinebtn{width: 73%; height: auto; border-radius: 5px; background: #454444;  float: left;  font-size: 12px;}
+    
+        }
+        input{width: 80%; height: 28px;text-align: left; padding: 5px ;outline: none;border-radius: 3px ;
+            border: none;font-size: 12px;margin:0 0 10px!important; background-color: #454444 ; color: #fff !important;}
+        select{
+            width: 73%;
+            height: auto;
+            padding: 5px;
+            border:none;
+            border-radius: 5px;
+            color: #ffffff;
+            margin-bottom:10px;
+            // float: left;
+            font-size: 12px;
+            background: url(../../../../assets/images/Arrow_select.png) 98% no-repeat #454444;
+            appearance: none;
+
+            }
+    
+        .term{max-height: 510px; overflow: auto; overflow-x: hidden; direction: rtl; padding: 0 0 0 20px; }
+        .term::-webkit-scrollbar {width: 6px;background-color: #aaa; border-radius: 5px; }
+        .term::-webkit-scrollbar-thumb {width: 6px;background: #00a453; border-radius: 5px;}
+        .save_btn{width: fit-content; height: 25px; border-radius: 5px; cursor: pointer; text-transform: uppercase; padding:3px 0; background: #00a453 !important; color: #ffffff; text-align: center;;;}
+
+
+        
+    }
+    .rightItem{
+        border: 1px solid #ffffff;
+    border-radius: 5px;
+        color: #ffffff;
+        width:80%;
+        height: 28px;text-align: left;
+    }
+    
+    .startDate{
+        input[type=date]:invalid+span:after {
+            content:"Date";
+            position:absolute;
+            left:10px;
+            top:9px;
+            color: #ccc;
+          }
+          .insentive_dates{
+            width: 154px;
+            height: 35px;
+          }
+          
+          // input[type=date]:focus:invalid+span:before {
+          //   display:none;
+          // }
+          
+          input:not(:focus):invalid {
+            color:transparent;
+          }
+          
+          label.wrapper {
+              position:relative;
+          }
+        
+          input[type="date"]{
+            background-color: #505050;
+            border-style: none;
+            border-radius: 4px;
+            color: white;
+            background: #454444;
+        }
+        
+        //   -------icon---------
+          //   input[type="date"]::-webkit-calendar-picker-indicator {
+          //     color: rgba(0, 0, 0, 0);
+          //     opacity: 1;
+          //     display: block;
+          //     background: url(https://mywildalberta.ca/Images/GFX-MWA-Parks-Reservations.png) no-repeat;
+          //     width: 20px;
+          //     height: 20px;
+          //     border-width: thin;
+          // }
+        //   -------icon---------
+        ::-webkit-calendar-picker-indicator {
+          filter: invert(1);
+        }
+      
+        input[type="date"]:in-range::-webkit-datetime-edit-year-field, 
+        input[type="date"]:in-range::-webkit-datetime-edit-month-field, 
+        input[type="date"]:in-range::-webkit-datetime-edit-day-field, 
+        input[type="date"]:in-range::-webkit-datetime-edit-text 
+        { 	color: transparent; }
+      
+        input[type="date"]::-webkit-datetime-edit-day-field:focus,
+        input[type="date"]::-webkit-datetime-edit-month-field:focus,
+        input[type="date"]::-webkit-datetime-edit-year-field:focus {
+          background-color: #505050;
+      }
+        
+        }
+        .arrow{
+            position: relative;
+            bottom: 55px;
+            cursor: pointer;
+            left: 30px;
+        }
+        
+        .disabled{
+            cursor: default;
+            opacity: .4;
+            pointer-events: none;
+           }
+           .disabled div{
+               background-color: transparent !important;
+           }
+           .modelHghlet{
+            background-color: #aaa !important;
+           }
+
+          
+
+}
+
+.btn_save{width: 100px !important; height: 25px !important; border-radius: 5px; cursor: pointer !important; text-transform: uppercase !important; padding:3px 0 !important; background: #00a453 !important; color: #ffffff; text-align: center !important;}
+.btn_back{width: 100px !important; height: 25px !important; border-radius: 5px; cursor: pointer !important; text-transform: uppercase !important; padding:3px 0 !important; background: #252525 !important; color: #ffffff; text-align: center !important;border: 1px solid #949393 !important;}
+.btn_reset{width: 100px !important; height: 25px !important; border-radius: 5px; cursor: pointer !important; text-transform: uppercase !important; padding:3px 0 !important; background: #757171 !important; color: #ffffff; text-align: center !important;}    
+
+.detailscls{margin-bottom: 12px;font-weight: 500;}
+
+::ng-deep .c-list {
+    display: block !important;
+}
+

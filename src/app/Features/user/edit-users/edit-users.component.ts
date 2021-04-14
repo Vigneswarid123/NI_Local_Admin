@@ -9,7 +9,7 @@ import { AlertifyService } from '../../../Core/_providers/alert-service/alertify
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PwdpopupComponent } from '../../user/pwdpopup/pwdpopup.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { environment } from '../../../../environments/environment';
 
 
 @Component({
@@ -33,9 +33,10 @@ export class EditUsersComponent implements OnInit {
   uploadedFileName: any;
   UserDetails: any = [];
   EditableLogo: any;
+  phoneFormat: any[] = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
   constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private modalService: NgbModal,
-              // tslint:disable-next-line: max-line-length
-              private usersrvc: ApiService, private spinner: NgxSpinnerService, private alertify: AlertifyService, public dialog: MatDialog) {
+    // tslint:disable-next-line: max-line-length
+    private usersrvc: ApiService, private spinner: NgxSpinnerService, private alertify: AlertifyService, public dialog: MatDialog) {
     this.route.queryParams.subscribe(params => {
       this.User_Id = params.User_Id;
       console.log(this.User_Id);
@@ -69,7 +70,7 @@ export class EditUsersComponent implements OnInit {
     this.usersrvc.getUserByID(this.User_Id).subscribe(res => {
       this.globalResponse = res;
       this.EditableLogo = this.globalResponse.response[0].User_Profileimage;
-      this.previewUrl = 'http://niapi.local.com/api/resources/images/' + this.globalResponse.response[0].User_Profileimage;
+      this.previewUrl = `${environment.apiUrl}`+'/resources/images/' + this.globalResponse.response[0].User_Profileimage;
       this.UserDetails = this.globalResponse.response[0];
       // this.addUserForm = this.formBuilder.group({User_Roleid: this.UserDetails.User_Roleid});
       // this.addUserForm.setValue({User_Roleid: this.UserDetails.User_Roleid});
@@ -110,9 +111,9 @@ export class EditUsersComponent implements OnInit {
       //  console.log('res', resp.status);
       if (resp.status == 200) {
         this.spinner.hide();
-        this.alertify.success('User Updated Successfully')
+        this.alertify.success('User Updated Successfully');
         //  alert('user updated successfully');
-        this.router.navigate(['users']);
+        this.router.navigate(['adminusers']);
       }
       else {
         this.spinner.hide();

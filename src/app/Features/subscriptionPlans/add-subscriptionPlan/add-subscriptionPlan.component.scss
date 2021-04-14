@@ -1,12 +1,18 @@
-.savebtn{
-  background-color: #577f63;
-  border-style: none;
-  color: whitesmoke;
-  width: 100px;
-border: none;
-padding: 8px;
-}
+.savebutton {
+  background: #577f63;
+  border: 1px solid #577f63;
+  border-radius: 3px;
+  padding: 5px;
+  outline: 0;
+  font-weight: 400;
+  font-size: 14px;
+  color: #fff;
+  text-transform: uppercase;
+  width: 100%;
+ }
 
 .errormessage{
   color: red;
+  font-size: 12px;
 }
+

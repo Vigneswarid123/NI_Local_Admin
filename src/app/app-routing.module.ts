@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './Authentication/login/login.component';
+//import { LoginComponent } from './Authentication/login/login.component';
 import { DashboardComponent } from './Features/dashboard/dashboard.component';
-import {AddGroupComponent} from './Features/groups/add-group/add-group.component';
-import {AddContactComponent} from './Features/groups/contact/add-contact/add-contact.component';
+import { AddGroupComponent } from './Features/groups/add-group/add-group.component';
+import { AddContactComponent } from './Features/groups/contact/add-contact/add-contact.component';
 
 import { AuthGuard } from './Core/_guards/auth.guard';
 import { GroupDetailComponent } from './Features/groups/group-detail/group-detail.component';
@@ -19,10 +19,10 @@ import { StylesListComponent } from './Features/styles-list/styles-list.componen
 import { GridRolesComponent } from './Features/roles/grid-roles/grid-roles.component';
 import { AddRolesComponent } from './Features/roles/add-roles/add-roles.component';
 import { EditRolesComponent } from './Features/roles/edit-roles/edit-roles.component';
- 
+
 import { OemgroupsComponent } from './Features/oemgroups/oemgroups.component';
 import { AddRegionComponent } from './Features/regions/add-region/add-region.component';
-import { EditRegionComponent} from './Features/regions/edit-region/edit-region.component';
+import { EditRegionComponent } from './Features/regions/edit-region/edit-region.component';
 import { GridRegionsComponent } from './Features/regions/grid-regions/grid-regions.component';
 
 import { InventoryComponent } from './Features/inventory/inventory.component';
@@ -34,32 +34,36 @@ import { ContactformComponent } from './Features/contactform/contactform.compone
 import { SoftwareAgreementComponent } from './Features/software-agreement/software-agreement.component';
 
 import { OembrandsComponent } from './Features/oembrands/oembrands.component';
-import { DealerusersComponent } from './Features/dealerusers/dealerusers.component'; 
+import { DealerusersComponent } from './Features/dealerusers/dealerusers.component';
 import { EditDealerusersComponent } from './Features/edit-dealerusers/edit-dealerusers.component';
 
-import { AddSystemDefinedComponent } from './Features/incentive-terms/add-system-defined/add-system-defined.component';
-import { EditSystemDefinedComponent } from './Features/incentive-terms/edit-system-defined/edit-system-defined.component';
-import { GridSystemDefinedComponent } from './Features/incentive-terms/grid-system-defined/grid-system-defined.component';
+//import { AddSystemDefinedComponent } from './Features/incentive-terms/add-system-defined/add-system-defined.component';
+//import { EditSystemDefinedComponent } from './Features/incentive-terms/edit-system-defined/edit-system-defined.component';
+//import { GridSystemDefinedComponent } from './Features/incentive-terms/grid-system-defined/grid-system-defined.component';
 
 import { AdminmodulesComponent } from './Features/adminmodules/adminmodules.component';
-import {DMSNamesComponent} from './Features/DMSNames/DMSNames.component';
-import {IncentivesComponent} from './Features/incentives/incentives.component';
+import { DMSNamesComponent } from './Features/DMSNames/DMSNames.component';
+import { IncentivesComponent } from './Features/incentives/incentives.component';
 
-import { GridIncentiveTypeComponent } from './Features/incentive-types/grid-incentiveType/grid-incentiveType.component'
-import { AddIncentiveTypeComponent } from './Features/incentive-types/add-incentiveType/add-incentiveType.component'
-import { EditIncentiveTypeComponent } from './Features/incentive-types/edit-incentiveType/edit-incentiveType.component'
-import { SelectIncentiveTypeComponent  } from './Features/incentive-types/select-incentiveType/select-incentiveType.component';
+import { GridIncentiveTypeComponent } from './Features/incentive-types/grid-incentiveType/grid-incentiveType.component';
+import { AddIncentiveTypeComponent } from './Features/incentive-types/add-incentiveType/add-incentiveType.component';
+import { EditIncentiveTypeComponent } from './Features/incentive-types/edit-incentiveType/edit-incentiveType.component';
+import { SelectIncentiveTypeComponent } from './Features/incentive-types/select-incentiveType/select-incentiveType.component';
 // subscription plans
 import { AddSubscriptionPlanComponent } from './Features/subscriptionPlans/add-subscriptionPlan/add-subscriptionPlan.component';
 import { EditSubscriptionPlanComponent } from './Features/subscriptionPlans/edit-subscriptionPlan/edit-subscriptionPlan.component';
 import { GridSubscriptionPlanComponent } from './Features/subscriptionPlans/grid-subscriptionPlan/grid-subscriptionPlan.component';
 import { DealerHoursComponent } from './Features/dealer-hours/dealer-hours.component';
- 
+import { SubscriptionGroupComponent } from './Features/SubscriptionGroup/subscription-group/subscription-group.component';
+import { EditSubscriptionGroupComponent } from './Features/SubscriptionGroup/edit-subscription-group/edit-subscription-group.component';
+import { IncentivesAcceptComponent } from './Features/incentivesAccept/incentivesAccept/incentivesAccept.component';
+//import { IncentiveVariablesComponent } from './Features/incentive-variables/incentive-variables.component';
+import { ClientlistsComponent } from './Features/clientlists/clientlists.component';
+
+import { IncentiveMasterComponent } from './Features/incentive-master/incentive-master.component';
+
 const routes: Routes = [
-  {
-    path: '',
-    component: LoginComponent,
-  },
+  {​​​​​​​​path:'',loadChildren:()=>import('../app/Authentication/login/login.module').then(m=>m.LoginModule)}​​​​​​​​,
   {
     // path: 'dashboard',
     // component: DashboardComponent,
@@ -70,7 +74,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
 
   },
+  
   { path: 'inventory', loadChildren: () => import('./Features/inventory/inventory.module').then(m => m.InventoryModule), canActivate: [AuthGuard] },
+  { path: 'incentiveMaster', loadChildren: () => import('./Features/incentive-master/incentive-master.module').then(m => m.IncentiveMasterModule), canActivate: [AuthGuard] },
+  { path: 'brandvariables', loadChildren: () => import('./Features/brandvariables/brandvariables.module').then(m => m.BrandvariablesModule), canActivate: [AuthGuard] },
+  {​​​​​​​​ path:'', loadChildren: () =>import('./Features/incentive-terms/incentive-terms.module').then(m=>m.IncentiveTermsModule), canActivate: [AuthGuard] }​​​​​​​​,
+  {​​​​​​​​ path:'incentiveVariables', loadChildren: () =>import('./Features/incentive-variables/incentive-variables.module').then(m=>m.IncentiveVariablesModule), canActivate: [AuthGuard] }​​​​​​​​,
+  {path: 'Permissions',loadChildren:()=>import('./Features/cmspermissions/cmspermissions.module').then(m=>m.CmspermissionsModule),canActivate:[AuthGuard]},
   {
     path: '',
     canActivate: [AuthGuard],
@@ -80,48 +90,55 @@ const routes: Routes = [
       { path: 'PopupComponent', component: PopupComponent },
       { path: 'Brands', component: BrandListComponent },
       { path: 'AddBrand', component: AddBrandComponent },
-      { path: 'Models', component:ModelListComponent },
-       { path:'Styles', component: StylesListComponent},
-       { path: 'Roles', component: GridRolesComponent },
-       { path: 'rolesAdd', component: AddRolesComponent },
-       { path: 'rolesEdit', component: EditRolesComponent },
-       //     {​​​​​​​​ path: 'AddDealership', component: AddDealershipComponent}​​​​​​​​,
-       { path: 'DealershipDetails', component: DealershipDetailComponent},
-       { path: 'AddDealership/:id', component: AddDealershipComponent },
-       { path: 'AddDealership/:id', component: AddDealershipComponent},
-       {path: 'EditDealership/:dealerid/:id', component: AddDealershipComponent },
-       {​​​​​​​​ path: 'DealershipList', component: DealershipListComponent}​​​​​​​​,
-       {​​​​​​​​ path: 'DealershipList/:dealerid', component: DealershipListComponent}​​​​​​​​,
-       { path: 'AddGroupComponent/:id', component: AddGroupComponent },
-       { path: 'AddDealership/:dealerid/:groupid', component: AddDealershipComponent },
-       { path: 'DealershipDetails/:dealergrpid/:index', component: DealershipDetailComponent},
-       { path: 'OEMGroups', component: OemgroupsComponent},
-       { path: 'regionAdd', component: AddRegionComponent},
-       { path: 'regions', component: GridRegionsComponent},
-       {path: 'editregions', component:EditRegionComponent},
-       //{ path: 'inventory', component: InventoryComponent },
-       { path: 'addusers', component: AddUsersComponent},
-       { path: 'editusers', component: EditUsersComponent},
-       { path: 'users', component: GridUsersComponent},
-       { path: 'adminmodules', component: AdminmodulesComponent },
-       { path : 'ContractForm' ,component:ContactformComponent },
-       { path : 'SoftwareAgreement', component : SoftwareAgreementComponent },
-       { path: 'oembrands', component: OembrandsComponent},
-       { path: 'dealerusers', component: DealerusersComponent},
-       { path: 'dealerusersedit', component: EditDealerusersComponent}, 
-       { path: 'incentiveTerms', component: GridSystemDefinedComponent},
-       { path: 'incentiveTermsAdd', component: AddSystemDefinedComponent},
-       { path: 'incentiveTermsEdit', component: EditSystemDefinedComponent},
-       { path: 'DMSNames', component: DMSNamesComponent},
-       { path : 'Incentives', component : IncentivesComponent},
-       { path: 'incentiveTypes', component: GridIncentiveTypeComponent},
-       { path: 'incentiveTypesAdd', component: AddIncentiveTypeComponent},
-       { path: 'incentiveTypesEdit', component: EditIncentiveTypeComponent},
-       { path: 'incentiveTypeSelect', component: SelectIncentiveTypeComponent}, 
-       { path: 'subscriptionPlans', component: GridSubscriptionPlanComponent},
-       { path: 'subscriptionPlansAdd', component: AddSubscriptionPlanComponent},
-       { path: 'subscriptionPlansEdit', component: EditSubscriptionPlanComponent},
-       { path: 'dealerhours', component: DealerHoursComponent }
+      { path: 'Models', component: ModelListComponent },
+      { path: 'Styles', component: StylesListComponent },
+      { path: 'Roles', component: GridRolesComponent },
+      { path: 'rolesAdd', component: AddRolesComponent },
+      { path: 'rolesEdit', component: EditRolesComponent },
+      //     {​​​​​​​​ path: 'AddDealership', component: AddDealershipComponent}​​​​​​​​,
+      { path: 'DealershipDetails', component: DealershipDetailComponent },
+      { path: 'AddDealership/:id/:pg', component: AddDealershipComponent },
+      { path: 'EditDealership/:dealerid/:id/:pg', component: AddDealershipComponent },
+      { path: 'DealershipList', component: DealershipListComponent }​​​​​​​​,
+      { path: 'DealershipList/:dealerid', component: DealershipListComponent }​​​​​​​​,
+      { path: 'AddGroupComponent/:id', component: AddGroupComponent },
+      { path: 'AddDealership/:dealerid/:groupid', component: AddDealershipComponent },
+      { path: 'DealershipDetails/:dealergrpid/:index', component: DealershipDetailComponent },
+      { path: 'OEMGroups', component: OemgroupsComponent },
+      { path: 'regionAdd', component: AddRegionComponent },
+      { path: 'regions', component: GridRegionsComponent },
+      { path: 'editregions', component: EditRegionComponent },
+      // { path: 'inventory', component: InventoryComponent },
+      { path: 'addusers', component: AddUsersComponent },
+      { path: 'editusers', component: EditUsersComponent },
+      { path: 'adminusers', component: GridUsersComponent },
+      { path: 'adminmodules', component: AdminmodulesComponent },
+      { path: 'ContractForm', component: ContactformComponent },
+      { path: 'SoftwareAgreement', component: SoftwareAgreementComponent },
+      { path: 'oembrands', component: OembrandsComponent },
+      { path: 'dealerusers', component: DealerusersComponent },
+      { path: 'dealerusersedit', component: EditDealerusersComponent },
+   //   { path: 'incentiveTerms', component: GridSystemDefinedComponent },
+   //   { path: 'incentiveTermsAdd', component: AddSystemDefinedComponent },
+   //   { path: 'incentiveTermsEdit', component: EditSystemDefinedComponent },
+      { path: 'DMSNames', component: DMSNamesComponent },
+      { path: 'Incentives', component: IncentivesComponent },
+      { path: 'incentiveTypes', component: GridIncentiveTypeComponent },
+      { path: 'incentiveTypesAdd', component: AddIncentiveTypeComponent },
+      { path: 'incentiveTypesEdit', component: EditIncentiveTypeComponent },
+      { path: 'incentiveTypeSelect', component: SelectIncentiveTypeComponent },
+      { path: 'subscriptionPlans', component: GridSubscriptionPlanComponent },
+      { path: 'subscriptionPlansAdd', component: AddSubscriptionPlanComponent },
+      { path: 'subscriptionPlansEdit', component: EditSubscriptionPlanComponent },
+      { path: 'dealerhours', component: DealerHoursComponent },
+      { path: 'subscriptionDetails', component: SubscriptionGroupComponent },
+      { path: 'editsubscriptionDetails', component: EditSubscriptionGroupComponent },
+      { path: 'incentivesAccept', component: IncentivesAcceptComponent },
+     // { path: 'incentiveVariables', component: IncentiveVariablesComponent },
+      { path: 'clientList', component: ClientlistsComponent },
+      // { path: 'incentiveMaster', component:IncentiveMasterComponent },
+      
+      
     ],
   },
   {
@@ -132,7 +149,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{​​​​​​​​ useHash:false }​​​​​​​​)],
+  imports: [RouterModule.forRoot(routes, { useHash: false , onSameUrlNavigation: 'reload'}​​​​​​​​)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AdminServiceService } from '../../../../Core/_providers/admin-service/admin-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
+import { environment } from '../../../../../environments/environment';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./dealership-list.component.scss']
 })
 export class DealershipListComponent implements OnInit {
+  fullUrl = `${environment.apiUrl}`; 
   public globalResponse: any = [];
   obj: any = [];
   dealersDetails: any = [];
@@ -101,7 +103,8 @@ export class DealershipListComponent implements OnInit {
 
 
   getStatesData() {
-    this.authService.getStates('states?185').subscribe(
+    const obj = { sg_id: 0 }
+    this.authService.postmethod('States/get',obj).subscribe(
       resp => {
         console.log('Getstates', resp.response);
         this.getstatesresp = resp.response;

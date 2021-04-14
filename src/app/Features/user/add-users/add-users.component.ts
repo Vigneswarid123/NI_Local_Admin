@@ -9,28 +9,54 @@ import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-add-users',
   templateUrl: './add-users.component.html',
-  styleUrls: ['./add-users.component.scss']
+  styleUrls: ['./add-users.component.scss'],
 })
 export class AddUsersComponent implements OnInit {
   rolesArray: any[] = [];
+  phoneFormat: any[] = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
   addUserForm: FormGroup;
   submitted = false;
   public globalResponse: any = [];
-  fileData: File = null; 
+  fileData: File = null;
   previewUrl: any = null;
   fileUploadProgress: string = null;
   uploadedFilePath: string = null;
   uploadedFileName: any;
   // Userid:any;
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute,
-              private userSrvc: ApiService, private alertify: AlertifyService, private spinner: NgxSpinnerService) {
-
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private userSrvc: ApiService,
+    private alertify: AlertifyService,
+    private spinner: NgxSpinnerService
+  ) {
     this.addUserForm = this.formBuilder.group({
-      User_Firstname: ['', [Validators.required, Validators.pattern('[a-zA-Z# ]*'), Validators.maxLength(50)]],
-      User_Lastname: ['', [Validators.required, Validators.pattern('[a-zA-Z# ]*'), Validators.maxLength(5)]],
+      User_Firstname: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('[a-zA-Z# ]*'),
+          Validators.maxLength(50),
+        ],
+      ],
+      User_Lastname: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('[a-zA-Z# ]*'),
+          Validators.maxLength(5),
+        ],
+      ],
       User_Phone: ['', [Validators.required]],
-      User_Email: ['', [Validators.required, Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$")]],
+      User_Email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,5}$'),
+        ],
+      ],
       User_Address: ['', Validators.maxLength(1000)],
       User_Mapaddresslink: [''],
       User_Password: ['', [Validators.required]],
@@ -38,11 +64,13 @@ export class AddUsersComponent implements OnInit {
       User_Roleid: ['', [Validators.required]],
       User_IsAdmin: [''],
       User_Type: ['A'],
-      avatar: [null]
+      avatar: [null],
     });
   }
 
-  get f() { return this.addUserForm.controls; }
+  get f() {
+    return this.addUserForm.controls;
+  }
 
   ngOnInit(): void {
     //  this.Userid = sessionStorage.getItem('UserId');
@@ -57,7 +85,7 @@ export class AddUsersComponent implements OnInit {
 
     const file = (fileInput.target as HTMLInputElement).files[0];
     this.addUserForm.patchValue({
-      avatar: file
+      avatar: file,
     });
 
     this.addUserForm.get('avatar').updateValueAndValidity();
@@ -95,12 +123,12 @@ export class AddUsersComponent implements OnInit {
       User_Mapaddresslink: this.addUserForm.value.User_Mapaddresslink,
       Password: this.addUserForm.value.User_Password,
       User_Roleid: this.addUserForm.value.User_Roleid,
-      User_Profileimage: "",
+      User_Profileimage: '',
       User_IsAdmin: this.addUserForm.value.User_IsAdmin,
       User_Type: this.addUserForm.value.User_Type,
       User_Status: 'Y',
       User_Created_Userid: 2,
-      User_Updated_Userid: 1
+      User_Updated_Userid: 1,
     };
 
     fd.append('data', JSON.stringify(obj));
@@ -109,25 +137,25 @@ export class AddUsersComponent implements OnInit {
 
     console.log('Final Obj', fd);
     const options = { content: fd };
-    this.userSrvc.postmethod('users', fd).subscribe((resp: any) => {
-      console.log('Post Resp:', resp);
-      console.log('res', resp.status);
-      if (resp.status == 200) {
-        this.spinner.hide();
-        this.alertify.success('Record Added successfully');
-        this.router.navigate(['users']);
-        // alert('data Added Succefully');
-      }
-      else {
-        this.spinner.hide();
-        this.alertify.error('Please check the details');
-      }
-    },
+    this.userSrvc.postmethod('users', fd).subscribe(
+      (resp: any) => {
+        console.log('Post Resp:', resp);
+        console.log('res', resp.status);
+        if (resp.status == 200) {
+          this.spinner.hide();
+          this.alertify.success('Record Added successfully');
+          this.router.navigate(['adminusers']);
+          // alert('data Added Succefully');
+        } else {
+          this.spinner.hide();
+          this.alertify.error('Please check the details');
+        }
+      },
       (error) => {
         this.spinner.hide();
         console.log(error);
-      });
-
+      }
+    );
   }
 
   allowNumbers(event: any) {
@@ -139,10 +167,8 @@ export class AddUsersComponent implements OnInit {
   }
 
   rolesList() {
-
-
     const obj = {
-      Role_Id: 0
+      Role_Id: 0,
     };
     this.userSrvc.showRolesData(obj).subscribe((res: any) => {
       if (res.status === 200) {
@@ -150,15 +176,11 @@ export class AddUsersComponent implements OnInit {
         if (roles) {
           let array: any[] = res.response;
           console.log(roles);
-          const res1 = array.filter(f => f.Role_Admin === 'Y');
+          const res1 = array.filter((f) => f.Role_Admin === 'Y');
           console.log('pk', res1);
           this.rolesArray = res1;
-
-
         }
       }
     });
   }
-
-
 }

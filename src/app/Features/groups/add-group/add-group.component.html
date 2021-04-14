@@ -8,9 +8,10 @@
                 </div>
 
                 <div class="col-9 pt-3">
+                    <div style="width:100%;float: left;margin-bottom: 3px;cursor: pointer;"><a href="/dashboard" style="text-decoration: underline;color: #00a453;float:right;font-size:14px;">Dashboard</a></div>
                     <div class="row">
                         <div class="col-12 pr-0">
-                            <app-dealership-header></app-dealership-header>
+                            <!-- <app-dealership-header></app-dealership-header> -->
                             <div class="contentpanel_bg">
                                 <form [formGroup]="dshipForm" (ngSubmit)="onSubmit()">
                                     <div *ngIf="id>0">
@@ -34,9 +35,11 @@
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-lg-1 pr-0 pr-0 pt-lg-4 pointer text-right">
+                                                <div class="col-lg-1 pr-0 pointer text-right">
                                                     <label>&nbsp;</label>
-                                                    <img src="assets/Images/circle_icon.png" (click)="AddInput()">
+                                                    <div>
+                                                        <img src="assets/Images/circle_icon.png" (click)="AddInput()">
+                                                    </div>
                                                 </div>
                                                 <div class="col-lg-10 pl-2">
                                                     <div class="col-lg-10 form-group grp grp_det pl-lg-0">
@@ -61,7 +64,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
 
                                                     <div class="col-lg-10 form-group grp grp_det pl-lg-0">
@@ -101,7 +103,7 @@
                                                                     <small class="errormessage" *ngIf="dshipForm.controls.zip.hasError('maxlength')">
                                                                         You have reached your maximum limit of zip
                                                                     </small>
-                                                                    <small class="errormessage" *ngIf="dshipForm.controls.zip.hasError('minlength')">
+                                                                    <small class="errormessage" *ngIf="submitted && dshipForm.controls.zip.hasError('minlength')">
                                                                         Pls enter minimum limit of zip
                                                                     </small>
                                                                 </div>
@@ -123,6 +125,7 @@
                                                                         </small>
                                                                     </div>
                                                                 </div>
+
                                                             </div>
                                                             <div class="col-lg-7">
                                                                 <div class="form-group grp grp_det">

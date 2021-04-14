@@ -131,4 +131,6 @@ export class AdminServiceService {
     addAdmin(data){
       return this.http.post(`${environment.apiUrl}adminmodules`,JSON.stringify(data),httpOptions)
       }
+      clientlist(data){return this.http.post(`${environment.apiurl}cdkdmsdealerdata/GETNIDMSDealerInfo`, httpOptions)  }
+      
 }

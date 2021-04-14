@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { VariablepopupComponent } from '../variablepopup/variablepopup.component';
+//import { VariablepopupComponent } from '../variablepopup/variablepopup.component';
 import {ApiService} from '../../Core/_providers/api-service/api.service'
 
 @Component({
@@ -38,13 +38,14 @@ export class LineitemsComponent implements OnInit {
   styleId: number;
   LineItems:any=[];
 
-  constructor(private fB: FormBuilder, private ApiService: ApiService,public dialogRef: MatDialogRef<VariablepopupComponent>) { 
+  constructor(private fB: FormBuilder, private ApiService: ApiService,public dialogRef: MatDialogRef<LineitemsComponent>) { 
     this.LineItemspopupForm = this.fB.group({
       ddlyear: [''],
       ddlbrand:[''],
       ddlmodel : [''],
       ddlstyle : [''],
-      unitprice : ['']
+      unitprice : [''],
+      msrp:['']
     });
   }
 
@@ -127,7 +128,8 @@ export class LineitemsComponent implements OnInit {
       brand : this.LineItemspopupForm.value.ddlbrand,
       model : this.LineItemspopupForm.value.ddlmodel,
       style : this.LineItemspopupForm.value.ddlstyle,
-      unitprice : this.LineItemspopupForm.value.unitprice
+      unitprice : this.LineItemspopupForm.value.unitprice,
+      msrp : this.LineItemspopupForm.value.msrp
     }
     this.LineItems = lineItemsInfo;
  // }
@@ -136,7 +138,7 @@ export class LineitemsComponent implements OnInit {
 
   }
   onkeyPress(event:any){
-    const pattern = /[0-9+( )-]/; 
+    const pattern = /[0-9+( )-]/;
     const inputChar = String.fromCharCode(event.charCode);
     if (!pattern.test(inputChar)) {
       event.preventDefault();
@@ -163,6 +165,7 @@ export class LineitemsComponent implements OnInit {
     if(searchType=="brand")
     { 
       let brdid:number=this.LineItemspopupForm.controls['ddlbrand'].value;
+      let brname = this.LineItemspopupForm.controls['ddlbrand']
       console.log("Model very"+brdid);
         if(brdid==0)
         {

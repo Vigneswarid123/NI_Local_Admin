@@ -7,7 +7,8 @@ import { PopupComponent } from '../popup/popup.component';
 // import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AdminServiceService } from '../../../Core/_providers/admin-service/admin-service.service';
 import { ActivatedRoute } from '@angular/router';
-
+import { AlertifyService } from '../../../Core/_providers/alert-service/alertify.service';
+import { environment } from '../../../../environments/environment';
 
 
 @Component({
@@ -61,10 +62,10 @@ export class AddGroupComponent implements OnInit {
   public imageChangedEvent: any = '';
 
   constructor(private fB: FormBuilder, private dataServ: ApiService, private router: Router,
-    private adminServ: AdminServiceService, private activatedRoute: ActivatedRoute) {
+    private adminServ: AdminServiceService, private alertify: AlertifyService, private activatedRoute: ActivatedRoute) {
     console.log('Var Sample', this.getdgroups);
     this.dshipForm = this.fB.group({
-      dship: ['', [Validators.required, Validators.maxLength(1000), Validators.pattern('[a-zA-Z ]*')]],
+      dship: ['', [Validators.required, Validators.maxLength(1000), Validators.pattern('[a-zA-Z0-9 ]*')]],
       address: ['', [Validators.required, Validators.maxLength(1000)]],
       quantities: this.fB.array([]),
       dcity: ['', [Validators.required, Validators.maxLength(50)]],
@@ -193,7 +194,7 @@ export class AddGroupComponent implements OnInit {
         console.log('res', resp.status);
         if (resp.status == 200) {
 
-          alert('Dealer Group Updated Successfully');
+          this.alertify.success('Dealer Group Updated Successfully');
           this.router.navigate(['/DealershipList/' + this.id]);
         }
         // else
@@ -205,7 +206,7 @@ export class AddGroupComponent implements OnInit {
         console.log('res', resp.status);
         if (resp.status == 200) {
 
-          alert('Dealer Group Added Successfully');
+          this.alertify.success('Dealer Group Added Successfully');
           this.router.navigate(['/dashboard']);
         }
         // else
@@ -275,7 +276,7 @@ export class AddGroupComponent implements OnInit {
   userRemove(i: number) {
     this.popupForm.get('dgUsers').value[i].action1 = 'D';
     console.log(this.popupForm.get('dgUsers').value);
-   // this.dgUsers().removeAt(i);
+    // this.dgUsers().removeAt(i);
   }
 
   _keyPress(event: any) {
@@ -510,7 +511,8 @@ export class AddGroupComponent implements OnInit {
   }
 
   getStatesData() {
-    this.dataServ.getStates('states?185').subscribe(
+    const obj={sg_id :0}
+    this.dataServ.postmethod('States/get',obj).subscribe(
       resp => {
         console.log('Getstates', resp.response);
         this.getstatesresp = resp.response;
@@ -572,7 +574,7 @@ export class AddGroupComponent implements OnInit {
         console.log('Edit AddGroup Original', this.getdgroups);
         if (this.getdgroups != '') {
           this.dshipForm = this.fB.group({
-            dship: [this.getdgroups.dg_name, [Validators.required, Validators.maxLength(1000), Validators.pattern('[a-zA-Z ]*')]],
+            dship: [this.getdgroups.dg_name, [Validators.required, Validators.maxLength(1000), Validators.pattern('[a-zA-Z0-9 ]*')]],
             address: [this.getdgroups.dg_address1, [Validators.required, Validators.maxLength(1000)]],
             quantities: this.fB.array([]),
             dcity: [this.getdgroups.dg_city, [Validators.required, Validators.maxLength(50)]],
@@ -586,7 +588,7 @@ export class AddGroupComponent implements OnInit {
           });
           this.EditableLogo = this.getdgroups.dg_logo;
           const uctd = this.getdgroups.DealershipGroupDetails;
-          this.previewUrl = 'http://niapi.local.com/api/resources/images/' + this.getdgroups.dg_logo;
+          this.previewUrl = `${environment.apiUrl}`+'/resources/images/' + this.getdgroups.dg_logo;
 
           console.log('uctd', uctd);
           for (let y in uctd) {

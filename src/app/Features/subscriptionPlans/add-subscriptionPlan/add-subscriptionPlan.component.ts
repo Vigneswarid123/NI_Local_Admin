@@ -24,10 +24,10 @@ export class AddSubscriptionPlanComponent implements OnInit {
 
   ngOnInit() {
     this.subPlanForm = this.formBuilder.group({
-      sp_name: ['', [Validators.required, Validators.pattern('[a-zA-Z# ]*')]],  
-      sp_setupfee: ['', [Validators.required, Validators.pattern('[0-9]*')]],
-      sp_monthlyfee: ['', [Validators.required, Validators.pattern('[0-9]*')]],
-      sp_status: ['N', [Validators.required]] 
+      sp_name: ['', [Validators.required, Validators.pattern('[a-zA-Z# ]*'), Validators.maxLength(50)]],  
+      sp_setupfee: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
+      sp_monthlyfee: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
+      sp_status: ['Y', [Validators.required]] 
     }); 
     console.log(this.subPlanForm.value);
   }
@@ -52,7 +52,7 @@ export class AddSubscriptionPlanComponent implements OnInit {
 
       else if
       (this.globalResponse.status === 401){
-        alert('Record already exists');
+        alert(this.globalResponse.error);
       }
 
       else {
@@ -69,9 +69,9 @@ export class AddSubscriptionPlanComponent implements OnInit {
     }
   }
 
-  statusValueChange($event: any) {  
-    this.subPlanForm.controls['sp_status'].setValue($event.target.checked ? 'Y' : 'N');
-    console.log(this.subPlanForm.value);
-  }
+  // statusValueChange($event: any) {  
+  //   this.subPlanForm.controls['sp_status'].setValue($event.target.checked ? 'Y' : 'N');
+  //   console.log(this.subPlanForm.value);
+  // }
 
   }

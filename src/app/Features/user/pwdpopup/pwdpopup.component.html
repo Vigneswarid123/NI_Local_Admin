@@ -2,37 +2,54 @@
   <div class="header">
     <h4 class="poptitle">Change Password</h4>
 
-     
-  </div>
-<form>
-
-  <div class="form-group">
-    
-
-    <label>Current Password</label>
-    <div class="form-group">
-      <input type="text" placeholder="Current Password" class="form-control">
-    </div>
-    <label>New Password</label>
-    <div class="form-group">
-      <input type="text" placeholder="New Password"class="form-control">
-    </div>
-    <label>Confirm Password</label>
-    <div class="form-group">
-      <input type="text" placeholder="Confirm Password" class="form-control">
-    </div>
 
   </div>
-  <div>
-    <td>
-      <button type="button" class="btn btn-outline-dark popupsave" >Save</button>
-    </td>
-    
-    <td>
-      <button type="button" class="btn btn-outline-dark popupsave" (click)="closeDialog()" >Cancle</button>
-    </td>
-    
-  </div>
-  
-</form>
+  <form [formGroup]="updatePasswordForm">
+
+    <div class="form-group">
+
+
+
+      <div class="form-group">
+        <label for="Old_pswrd">Current Password</label>
+        <input class="form-control" id="Old_pswrd" placeholder="*********" value="" type="password" formControlName="Old_pswrd" />
+        <div *ngIf="Old_pswrd.touched && Old_pswrd.errors" class="text-danger">
+          <span *ngIf="Old_pswrd.hasError('required')">old Password is required.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="New_pswrd">New Password</label>
+        <input class="form-control" id="New_pswrd" placeholder="*********" value="" type="password" formControlName="New_pswrd" />
+        <div *ngIf="New_pswrd.touched && New_pswrd.errors" class="text-danger">
+          <span *ngIf="New_pswrd.hasError('required')">New Password is required.</span>
+          <span *ngIf="New_pswrd.hasError('maxlength')">Only 15 characters allowed for password.</span>
+          <span *ngIf="New_pswrd.hasError('minlength')">Atleast 4 characters needed for password.</span>
+          <!-- <span *ngIf="New_pswrd.hasError('mustMatch')">New Password Must Match with Cnfirm Password.</span> -->
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="cnewPassword">Confirm New Password</label>
+        <input class="form-control" value="" id="cnewPassword" placeholder="*********" type="password" formControlName="cnewPassword"
+        />
+        <div *ngIf="cnewPassword.touched && cnewPassword.errors" class="text-danger">
+          <span *ngIf="cnewPassword.hasError('required')">Confirm Password is required.</span>
+          <span *ngIf="cnewPassword.hasError('mustMatch')">Confirm Password Must Match.</span>
+        </div>
+      </div>
+
+    </div>
+    <div>
+      <td>
+        <button type="submit" [disabled]="updatePasswordForm.invalid" class="btn btn-outline-dark popupsave" (click)="onSubmit()">Update</button>
+      </td>
+
+      <td>
+        <button type="button" class="btn btn-outline-dark popupsave" (click)="closeDialog()">Cancel</button>
+      </td>
+
+    </div>
+
+  </form>
 </div>

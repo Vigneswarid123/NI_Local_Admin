@@ -3,13 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ApiService } from '../../../Core/_providers/api-service/api.service';
 import { Router } from '@angular/router';
-import { NgxSpinnerService } from "ngx-spinner"; 
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-brand-list',
   templateUrl: './brand-list.component.html',
   styleUrls: ['./brand-list.component.scss'],
-  
+
 })
 export class BrandListComponent implements OnInit {
 
@@ -22,30 +22,30 @@ export class BrandListComponent implements OnInit {
   SearchBrandForm: FormGroup;
 
 
-  hide:boolean=false;
-  alphaSrch:string='';
-  atozFltr:boolean=false;
-  BrandInfo:any=[];
-  alphaColumns:any=["brand_name"];
+  hide: boolean = false;
+  alphaSrch: string = '';
+  atozFltr: boolean = false;
+  BrandInfo: any = [];
+  alphaColumns: any = ["brand_name"];
   // selectedFile: string | ArrayBuffer =
   //   "https://bulma.io/images/placeholders/480x480.png";
 
-    selectedFile:any=null;
+  selectedFile: any = null;
   file: File;
 
   fileName: string = "";
-  ImageFolder="http://devadmin.netimpact.com/assets/Images/BrandLogo/";
-  
+  ImageFolder = "http://devadmin.netimpact.com/assets/Images/BrandLogo/";
+
 
   EditView = false;
   AddView = false;
-  BrandId=0;
+  BrandId = 0;
 
-  
+
 
   fileData: File = null;
 
-  constructor(private fB: FormBuilder, private ApiService: ApiService,private sanitizer: DomSanitizer, private router: Router,
+  constructor(private fB: FormBuilder, private ApiService: ApiService, private sanitizer: DomSanitizer, private router: Router,
     private SpinnerService: NgxSpinnerService) {
     this.showgrid = true;
     this.brandForm = this.fB.group({
@@ -59,23 +59,23 @@ export class BrandListComponent implements OnInit {
       //forecolor:[''],
       logohighlights: [''],
       file: [''],
-      Brand_category : ['']
+      Brand_category: ['']
     });
 
-    this.SearchBrandForm =this.fB.group({
-      txtSearch:""
+    this.SearchBrandForm = this.fB.group({
+      txtSearch: ""
     });
-  
+
   }
 
   ngOnInit(): void {
     this.router.navigateByUrl('Brands');
     this.GetBrandsList();
-    this.alphaSrch="";
-     
+    this.alphaSrch = "";
+
   }
 
- 
+
   // processFile(file:File){
   //   if (file) {
   //       this.AddView = true;
@@ -84,16 +84,16 @@ export class BrandListComponent implements OnInit {
   //     this.file = file;
 
   //     const reader = new FileReader();
-     
+
   //     reader.readAsDataURL(file);
   //     reader.onload = event => {
   //       this.selectedFile = reader.result as string;
   //     };
-     
+
   //   }
   // }
-  processFile(element:any){
-    this.fileData= <File>element.target.files[0];
+  processFile(element: any) {
+    this.fileData = <File>element.target.files[0];
     this.preview();
   }
   preview() {
@@ -102,18 +102,18 @@ export class BrandListComponent implements OnInit {
     if (mimeType.match(/image\/*/) == null) {
       return;
     }
- 
-    var reader = new FileReader();      
-    reader.readAsDataURL(this.fileData); 
-    reader.onload = (_event) => { 
-      this.selectedFile = reader.result; 
-    }
-}
 
-  brndTempData:any=[];
+    var reader = new FileReader();
+    reader.readAsDataURL(this.fileData);
+    reader.onload = (_event) => {
+      this.selectedFile = reader.result;
+    }
+  }
+
+  brndTempData: any = [];
   GetBrandsList() {
-    this.BrandInfo=[];
-    this.alphaSrch="";
+    this.BrandInfo = [];
+    this.alphaSrch = "";
     this.SpinnerService.show();
     const obj = { "brand_id": 0 };
     this.ApiService.GetBrands(obj).subscribe(
@@ -121,12 +121,12 @@ export class BrandListComponent implements OnInit {
         if (resp.message == "success") {
           this.Brands = resp;
           this.SpinnerService.hide();
-          
+
           this.BrandInfo = resp.response;
-          this.brndTempData=this.BrandInfo;
-          console.log("data"+ this.BrandInfo)
+          this.brndTempData = this.BrandInfo;
+          console.log("data" + this.BrandInfo)
         }
-        //this.BrandContant=this.Brands.response[0].brand_id.toString();
+        // this.BrandContant=this.Brands.response[0].brand_id.toString();
       });
   }
   OnSubmit() {
@@ -134,12 +134,12 @@ export class BrandListComponent implements OnInit {
     if (this.brandForm.invalid) {
       return
     }
-    const formdata:any = new FormData();
-    let brid=0;
-   
-    if(this.BrandId!=0)
-       brid=this.BrandId;
-       
+    const formdata: any = new FormData();
+    let brid = 0;
+
+    if (this.BrandId != 0)
+      brid = this.BrandId;
+
     const obj = {
       Brand_Id: brid,
       ChromeId: this.brandForm.value.chromeid,
@@ -151,71 +151,71 @@ export class BrandListComponent implements OnInit {
       BackGroundColor: this.brandForm.value.backgroundcolor,
       RecallUrl: this.brandForm.value.recallurl,
       status: "Y",
-      category : this.brandForm.value.Brand_category
+      Brand_category: this.brandForm.value.Brand_category
     };
-    if (this.selectedFile && brid == 0){
-    formdata.append('data', JSON.stringify(obj));
-   
-      formdata.append('file', this.file,this.fileName);
+    if (this.selectedFile && brid == 0) {
+      formdata.append('data', JSON.stringify(obj));
+
+      formdata.append('file', this.file, this.fileName);
     }
-      console.log(obj)
-     if(brid == 0){
-      this.ApiService.postmethod('brands',formdata).subscribe((response:any)=>{
+    console.log(obj)
+    if (brid == 0) {
+      this.ApiService.postmethod('brands', formdata).subscribe((response: any) => {
         console.log(response);
-        if(response.status == 200){
-          this.addclick=false;
-          this.showgrid=true;
+        if (response.status == 200) {
+          this.addclick = false;
+          this.showgrid = true;
           this.GetBrandsList();
         }
       },
-      
-    //},
-     (error) => {
-      console.log(error);
-    });
-  }
-  else{
-    const obj1 = {
-      Brand_Id: brid,
-      ChromeId: this.brandForm.value.chromeid,
-      BrandName: this.brandForm.value.brandname,
-      BrandLogo:this.brandForm.value.file,
-      BrandUrl: this.brandForm.value.brandurl,
-      Description: this.brandForm.value.branddesc,
-      Logohoghlights: this.brandForm.value.logohighlights,
-      Acronym: this.brandForm.value.brandacronym,
-      BackGroundColor: this.brandForm.value.backgroundcolor,
-      RecallUrl: this.brandForm.value.recallurl,
-      status: "Y",
-      category : this.brandForm.value.Brand_category
-    };
-    
-    formdata.append('data', JSON.stringify(obj1));
-      if(this.fileName !='')
-      formdata.append('file', this.fileName);
-    else   
+
+        //},
+        (error) => {
+          console.log(error);
+        });
+    }
+    else {
+      const obj1 = {
+        Brand_Id: brid,
+        ChromeId: this.brandForm.value.chromeid,
+        BrandName: this.brandForm.value.brandname,
+        BrandLogo: this.brandForm.value.file,
+        BrandUrl: this.brandForm.value.brandurl,
+        Description: this.brandForm.value.branddesc,
+        Logohoghlights: this.brandForm.value.logohighlights,
+        Acronym: this.brandForm.value.brandacronym,
+        BackGroundColor: this.brandForm.value.backgroundcolor,
+        RecallUrl: this.brandForm.value.recallurl,
+        status: "Y",
+        category: this.brandForm.value.Brand_category
+      };
+
+      formdata.append('data', JSON.stringify(obj1));
+      if (this.fileName != '')
+        formdata.append('file', this.fileName);
+      else
         formdata.append('file', this.selectedFile);
-    this.ApiService.putmethod('brands',formdata).subscribe((response:any)=>{
-      console.log(response);
-      if(response.status == 200){
-        this.addclick=false;
-        this.showgrid=true;
-        this.GetBrandsList();
-      }
-    },
-    
-  //},
-   (error) => {
-    console.log(error);
-  });
-  }
+      this.ApiService.putmethod('brands', formdata).subscribe((response: any) => {
+        console.log(response);
+        if (response.status == 200) {
+          this.addclick = false;
+          this.showgrid = true;
+          this.GetBrandsList();
+        }
+      },
+
+        //},
+        (error) => {
+          console.log(error);
+        });
+    }
   }
   showAddPanel() {
     this.addclick = true;
     this.showgrid = false;
     this.AddView = true;
-    this.selectedFile ='';
-    
+    this.selectedFile = '';
+
     this.brandForm = this.fB.group({
       brandname: ['', [Validators.required, Validators.maxLength(51)]],
       branddesc: [''],
@@ -227,7 +227,7 @@ export class BrandListComponent implements OnInit {
       //forecolor:[''],
       logohighlights: [''],
       file: [''],
-      Brand_category : ['']
+      Brand_category: ['']
     });
 
   }
@@ -237,33 +237,33 @@ export class BrandListComponent implements OnInit {
     this.GetBrandsList();
   }
 
-  onAlphaCatch(alphabet){
-    this.hide=true;
-    this.atozFltr=true;
-    this.alphaSrch=alphabet;
-    this.BrandInfo=this.brndTempData;
+  onAlphaCatch(alphabet) {
+    this.hide = true;
+    this.atozFltr = true;
+    this.alphaSrch = alphabet;
+    this.BrandInfo = this.brndTempData;
     console.log(this.alphaSrch);
   }
 
-  onSearch(){
-    
-    this.alphaSrch= this.SearchBrandForm.controls['txtSearch'].value;
+  onSearch() {
+
+    this.alphaSrch = this.SearchBrandForm.controls['txtSearch'].value;
     console.log(this.alphaSrch);
-    this.BrandInfo=this.brndTempData;
-    
+    this.BrandInfo = this.brndTempData;
+
   }
 
-  atoZClick(){
-    if(!this.atozFltr)
-    this.atozFltr=true;
+  atoZClick() {
+    if (!this.atozFltr)
+      this.atozFltr = true;
     else
-    this.atozFltr=false;
+      this.atozFltr = false;
   }
 
   editBrand(brid) {
     //const file1="";
     this.EditView = true;
-    this.BrandId=brid;
+    this.BrandId = brid;
     this.Brands = [];
     const obj = { 'brand_id': brid };
     this.ApiService.GetBrands(obj).subscribe((response: any) => {
@@ -282,7 +282,7 @@ export class BrandListComponent implements OnInit {
 
           logohighlights: response.response[0].brand_logohighlights,
           file: response.response[0].brand_logo,
-          category : response.response[0].brand_category
+          Brand_category: response.response[0].brand_category
         });
         // const reader = new FileReader();
         // const file1=response.response[0].brand_logo;
@@ -292,7 +292,7 @@ export class BrandListComponent implements OnInit {
         // }
         let objectURL = 'data:image/png;base64,' + response.response[0].brand_logo;
         this.selectedFile = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-        
+
       }
     });
   }

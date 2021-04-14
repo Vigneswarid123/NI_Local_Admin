@@ -1,0 +1,304 @@
+<div class="dashboard_bg">
+    <app-header></app-header>
+    <div class="container-fluid pt64">
+      <div class="row">
+        <div
+          class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav"
+          id="sidebar"
+        >
+          <app-left-panel class="w-100"></app-left-panel>
+        </div>
+        <div class="col-9 pt-3" *ngIf="showgrid">
+          <div class="row" >
+            <table class="gridheader">
+              <thead>
+                  <tr>
+                      <th style="width: 462px; font-weight: bold;">
+                        <div style="float: left">
+                            <div class="getuser">
+                                <label class="getuserlabel">Brand Variables</label>
+                            </div>
+                            <div class="AddIcon">
+                              <a (click)="showAddPanel()"
+                                ><img style="cursor: pointer;" src="assets/Images/brand_plus.png"
+                              /></a>
+                            </div>
+                        </div>
+                      </th>
+                     
+                  <th class="thAtoz" colspan="2">
+                    <div  class="DivAZ3" (click)="atoZClick()">
+                            <div class="DivAZ1">A - Z</div>
+                            <div class="DivAZ2">
+                               <a><img src="assets/Images/sorting_img.png"></a>
+                           </div>  
+                     </div> 
+                </th>
+              
+                <th class="thsearch">
+                  <div class="search" >
+                    <input type="text" formControlName="txtSearch" placeholder="Search" autofocus (keyup)="onSearch()">
+                  </div>
+                  <div class="searchIcon">
+                    <img src="assets/Images/Search-Icon.png"> 
+                   </div>
+                </th>
+                  </tr>
+                  
+              </thead>
+          </table>
+        </div>  
+           <div class="row  fltrSelect" style="width:100%;flex-direction: column;">
+          <div class="login-container" style="flex-direction: column;">
+              <div class="d-flex justify-content-end" style="width:100%;">
+               
+                <form [formGroup]="brandform" (ngSubmit)="onSubmit()">
+                  <div>
+                    <div class="form-group  drop_dwn">
+                      <select formControlName="id"  id="drop" (change)="getid($event)">
+                        <option value="">Select Brands</option>
+                        <option *ngFor="let d of BrandNames" [value]="d.brand_chrome_id">{{d.brand_name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <input type="button" value="Search" class="btnsearch" (click)="display()">  
+                   </div>           
+                </form>
+              </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="atozFltr" style="height: 50px;margin-bottom: 10px;">
+          <div style="width:100%;">
+             <app-atoz-filter (onAlphaClick)="onAlphaCatch($event)"></app-atoz-filter>
+            </div>
+           
+        </div>
+        <div class="row">
+          <div class="contentss">
+           <table class="dashboard text-center"> 
+             <!-- <thead >
+                <tr>
+                    <th style="width:9%;padding-left: 4%;"><b> INCENTIVE VARIABLES</b></th>
+                   
+                    <th style="width:8%;padding-left: 5%;"><b>BRAND VALUES</b></th>
+                    
+                    <th style="width:5%;"><b>STATUS</b></th>
+                    <th style="width:5%;"><b>EDIT</b></th>
+
+                </tr>
+             </thead> -->
+             <tbody>
+                <!-- <th style="width:10%;"><b>MODEL CODE</b></th> -->
+                    <!-- <th>TRIM</th> -->
+                    <!-- <th>INTERIOR COLOR</th>
+                    <th>EXTERIOR COLOR</th> -->
+                    
+                    <!-- <th style="width:5%;"><b>PRICE</b></th> -->
+             <span  style="color: aliceblue;">{{Result}} </span> 
+              <ng-container *ngIf="brandvariablesdata | alphaFilter : alphaSrch: alphaColumns :'aa' as Brandsdata; else noItems">
+                <tr *ngFor="let list of Brandsdata">
+                
+
+                 
+                  <td style="width:10%;">{{ list.INV_NAME }}</td>
+                  <td style="width:5%;padding-left:4%;">
+                    <div style="display: flex;text-align: center">
+                      <div *ngFor="let value of list.BV_Value.split(',')" class="divbox">
+                        <span>{{value.split('_')[0]}}</span>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td style="width:6%;">{{list.Brand_name}}</td>
+                  <td *ngIf="list.BV_STATUS === 'Y'; else adminBlock" style="width:5%;">
+                    <div class="Active" style="text-align: center">
+                      <span>Active</span>
+                    </div></td>
+
+                  
+                  <ng-template #adminBlock>
+                    <td style="width:6%">
+                      <div class="InActive" style="text-align: center">
+                        <span>InActive</span>
+                      </div>
+                    </td>
+                  </ng-template>
+               
+                  
+                  <td style="width: 1%; cursor: pointer;">
+                    <a (click)="editcall(list)"
+                      ><img src="assets/Images/edt_icon.png"
+                    /></a>
+                  </td>
+                </tr>
+                <ng-container *ngIf="!Brandsdata.length && hide" [ngTemplateOutlet]="noItems"></ng-container>
+                </ng-container>
+                <ng-template #noItems>
+                      <tr><td colspan="9" style="text-align: center;">No Roles Available!</td></tr>
+                </ng-template>
+            </tbody>
+           </table>
+          </div>
+       </div>
+       
+      </div>
+        <div class="contentpanel_bg col-9 pt-3" *ngIf="addclick">
+            <form [formGroup]="brandvariables"  (ngSubmit)="onSubmit()">
+              <input type="text" style="display: none;"  class="form-control" maxlength="100" formControlName="inc_id" [(ngModel)]="selectedIncentiveid">
+
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <div class="formgroup">
+
+                            <label>Incentive Variable</label>
+                            <input type="text"  class="form-control" maxlength="100" placeholder="Select Variable" formControlName="inc_variables" [(ngModel)]="this.selectedIncentiveVariable"  autofocus (keyup)="OnChangeEvent($event)" #incentive>
+                                                     <div *ngIf="!brandvariables.controls.inc_variables.valid && (brandvariables.controls.inc_variables.dirty||submitted)" class="error">
+                              <div class="text-danger" *ngIf="brandvariables.controls.inc_variables.errors.required">inc_variables is required</div>
+                          </div>
+                            <div *ngIf="showIncentiveDiv" class="autofillcls" #menu>
+                                <div *ngFor="let option of selectedincentive ; let i=index" (mouseover)="highlightRow(option)" [ngClass] = "{'highlight' : option.Varbl_Name == selectedItem}" >
+                                    <li style="list-style: none;padding: 8px;cursor: pointer;"   (click)="selectItem($event, option,i)">{{option.Varbl_Name}}</li>
+                                </div>
+                                </div>  
+                        </div>
+                        
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <div class="formgroup">
+                            <label>Brands</label>
+                            <select class="form-control"  formControlName="dealeruser" placeholder="select Brand" (change)="getdealerid($event)">
+                                <option value="">Select Brands</option>
+                                <option *ngFor="let d of BrandNames" [value]="d.brand_chrome_id">{{d.brand_name}}</option>
+                        </select>
+                    <div *ngIf="!brandvariables.controls.dealeruser.valid && (brandvariables.controls.dealeruser.dirty||submitted)" class="error">
+                      <div class="errormessage" *ngIf="brandvariables.controls.dealeruser.errors.required">Brand is required</div>
+                  </div>
+                        </div>
+                      
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <div *ngIf="option">
+                    <div class="col-lg-11 pl-0">
+                        <div class="col-lg-11 form-group grp grp_det">       
+                        </div>                    
+                    </div>
+                
+                    <div formArrayName="quantities">
+                        <div class="col-9 pl-0">
+                            <div class="row" *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+                                <div class="col-lg-11 form-group grp grp_det">
+                                    <label style="color: #a6a6a6;">Option {{i+1}}</label>
+                                    <input type="text" formControlName="values" class="form-control">
+                                </div>
+                                <div class="col-lg-1 px-0 align-self-center"  style="position: relative;right: 7px;top: 5px;">
+                                    <img (click)="remove(i)" style="width: 60%" src="assets/Images/remove-icon.png">
+                                </div>
+                            </div>
+                            <div class="col-lg-0 pr-0 pointer text-right" style="float: left;cursor: pointer;">
+                              <label>&nbsp;</label>
+                              <img src="assets/Images/circle_icon.png" (click)="AddInput()">
+                          </div>
+                        </div>
+
+                    </div>
+                <!-- </div> -->
+                </div>
+                </div>
+                </div>
+
+                <div class="col-lg-12 pt-lg-5 pl-lg-4">
+                    <div  class="row">
+                      <div class="col-lg-2">
+                        <button  type="submit" class="savebutton">Save</button>
+                      </div>
+                      <div  class="col-lg-2">
+                        <button  type="button" class="savebutton" (click)="showGridPanel();">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+             
+                </div>
+               
+
+                <div class="contentpanel_bg col-9 pt-3" *ngIf="editclick">
+                  <form [formGroup]="editbrandvariables"  (ngSubmit)="onSubmit()">
+                    <input type="text" style="display: none;"  class="form-control" maxlength="100" formControlName="e_inc_id" >
+      
+                      <div class="row">
+                          <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                              <div class="formgroup">
+      
+                                  <label>Incentive Variable</label>
+                                  <input type="text"  class="form-control" maxlength="100" placeholder="select Incentive" [(ngModel)]="editvariable.INV_NAME" formControlName="e_inc_variables" [readonly]="true">
+                                                           
+                              </div>
+                              
+                          </div>
+                          <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                              <div class="formgroup">
+                                  <label>Brands</label>
+                                  <input type="text"  class="form-control" maxlength="100" placeholder="select Brand" [(ngModel)]="editvariable.Brand_name" formControlName="e_dealeruser" [readonly]="true">
+                                
+                              </div>
+                            
+                          </div>
+                      </div>
+                      
+                      <div class="row">
+                          <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                         
+                          <div class="col-lg-11 pl-0">
+                              <div class="col-lg-11 form-group grp grp_det">
+                                    
+                              </div>                           
+                          </div>
+                      
+                          <div formArrayName="e_quantities">
+                              <div class="col-9 pl-0">
+                                  <div class="row" *ngFor="let quantity of e_quantities().controls; let i=index" [formGroupName]="i">
+                                    <div *ngIf="editbrandvariables.get('e_quantities').value[i].action!=null" class="d-flex">
+                                      <div class="col-lg-11 form-group grp grp_det"  >
+                                          <label style="color: #a6a6a6;">Option</label>
+                                          <input type="text" formControlName="evalues" class="form-control" >
+                                      </div>
+                                      <div class="col-lg-1 px-0 align-self-center" style="position: relative;right: 7px;top: 5px;">
+                                          <img (click)="eremove(i)" style="width: 60%" src="assets/Images/remove-icon.png">
+                                      </div>
+                                    </div>
+                                                      
+                                  </div>
+                                  <div class="col-lg-0 pointer text-right" style="float: left;cursor: pointer;">
+                                    <label>&nbsp;</label>
+                                    <img src="assets/Images/circle_icon.png" (click)="eAddInput()">
+                                </div>
+                              </div>
+      
+                          </div>
+                      <!-- </div> -->
+                      <!-- </div> -->
+                      </div>
+                      </div>
+      
+                      <div class="col-lg-12 pt-lg-5 pl-lg-4">
+                          <div  class="row">
+                            <div class="col-lg-2">
+                              <button  type="submit" class="savebutton" (click)='updatebrandvariable()'>Save</button>
+                            </div>
+                            <div  class="col-lg-2">
+                              <button  type="button" class="savebutton" (click)="showGridPanel();">Cancel</button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                   
+                      </div>  
+
+                      <!-- <pre style="color: white;">{{editbrandvariables?.value|json}}</pre>  -->
+    </div>
+  </div>
+  </div>

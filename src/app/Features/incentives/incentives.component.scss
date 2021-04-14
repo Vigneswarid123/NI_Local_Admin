@@ -112,9 +112,7 @@
      margin-top: 5% !important;
  }
 
- .form-control{
-     width: 90%;
- }
+ 
 
  .button{
     background-color: #577f63;
@@ -130,7 +128,7 @@
  }
 
  .DivAZ2{
-    float: left; margin-left: 10%;
+    float: left; margin-left: 7%;
 }
 .Active{
     color: green;
@@ -163,13 +161,268 @@
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
+    background-color:#505050;
+     color: #fff;
     background-image: none;
-    border: 1px solid #ccc;
+    border: none;
     border-radius: 4px;
    }
    .form-control{
-       width:310px;
+       width:316px;
+       background-color:#505050;
+       color: #fff;
+       border: none;
+       height: 35px;
    }
+   .modal-content{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events:auto;
+    background-color: #313030;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+    height: auto;
+}
+.modal-header{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    border-bottom: none;
+    border-top-left-radius:calc(.3rem - 1px);
+    border-top-right-radius: calc(.3rem - 1px);
+}
+.modal {
+    position: fixed;
+    left: 113px;
+    top: 30%
+}
+
+.modal-body {
+    margin-bottom: 3rem;
+}
+.autofillcls{
+  overflow: auto;
+  height: 200px;
+  border: 1px solid #fff;
+  background: #212529;
+  width: 160px;
+  z-index: 999;
+  position: absolute;
+  margin-top: 6px;
+  margin-left: 3px;
+}
+.autofillcls::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: #3f3f3f;
+}
+
+
+.autofillcls::-webkit-scrollbar-thumb {
+  width: 5px;
+  height: 8px;
+  background-color: #00a453;
+  border-radius: 3px;
+}
+.closecls{
+  // width: auto;
+  // height: 13px;
+  // float: right;
+  // margin-right: -4px;
+  // margin-top: -2px;
+  // cursor: pointer;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-top: -3px;
+}
+.editdivbox{
+
+  padding: 6px 5px 3px;
+      padding-right: 25px;
+      padding-left: 10px;
+      position: relative;
+      display: inline-block;
+      color: white;
+      top: 2px;
+      width: max-content;
+      height: 30px;
+      background-color: #00a453;
+      border-radius: 2px;
+   }
+   .brandtags{
+    float: left;
+    width: auto;
+    background-color:#00a453;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-left: 5px;
+    margin-bottom: 4px;
+   }
+.imglogo{
+   height: 50px;
+   width: auto;
+}
+.startDate{
+  input[type=date]:invalid+span:after {
+      content:"Start";
+      position:absolute;
+      left:10px;
+      top:9px;
+    }
+    .insentive_dates{
+      width: 154px;
+      height: 35px;
+    }
+    
+    // input[type=date]:focus:invalid+span:before {
+    //   display:none;
+    // }
+    
+    input:not(:focus):invalid {
+      color:transparent;
+    }
+    
+    label.wrapper {
+        position:relative;
+    }
+  
+    input[type="date"]{
+      background-color: #505050;
+      border-style: none;
+      border-radius: 4px;
+      color: white;
+  }
+  
+  //   -------icon---------
+    //   input[type="date"]::-webkit-calendar-picker-indicator {
+    //     color: rgba(0, 0, 0, 0);
+    //     opacity: 1;
+    //     display: block;
+    //     background: url(https://mywildalberta.ca/images/GFX-MWA-Parks-Reservations.png) no-repeat;
+    //     width: 20px;
+    //     height: 20px;
+    //     border-width: thin;
+    // }
+  //   -------icon---------
+  ::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+
+  input[type="date"]:in-range::-webkit-datetime-edit-year-field, 
+  input[type="date"]:in-range::-webkit-datetime-edit-month-field, 
+  input[type="date"]:in-range::-webkit-datetime-edit-day-field, 
+  input[type="date"]:in-range::-webkit-datetime-edit-text 
+  { 	color: transparent; }
+
+  input[type="date"]::-webkit-datetime-edit-day-field:focus,
+  input[type="date"]::-webkit-datetime-edit-month-field:focus,
+  input[type="date"]::-webkit-datetime-edit-year-field:focus {
+    background-color: #505050;
+}
+  
+  }
+
+  
+  
+  
+  .endDate{
+      input[type=date]:invalid+span:after {
+          content:"End";
+          position:absolute;
+          left:10px;
+          top:9px;
+        }
+        
+        // input[type=date]:focus:invalid+span:after {
+        //   display:none;
+        // }
+        
+        input:not(:focus):invalid {
+          color:transparent;
+        }
+        
+        label.wrapper {
+            position:relative;
+        }
+      
+        input[type="date"]{
+          background-color: #505050;
+          border-style: none;
+          border-radius: 4px;
+          color:  white;
+      }
+  
+  //   -------icon---------
+    //   input[type="date"]::-webkit-calendar-picker-indicator {
+    //     color: rgba(0, 0, 0, 0);
+    //     opacity: 1;
+    //     display: block;
+    //     background: url(https://mywildalberta.ca/images/GFX-MWA-Parks-Reservations.png) no-repeat;
+    //     width: 20px;
+    //     height: 20px;
+    //     border-width: thin;
+    // }
+  //   -------icon---------
+  ::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+
+  input[type="date"]:in-range::-webkit-datetime-edit-year-field, 
+  input[type="date"]:in-range::-webkit-datetime-edit-month-field, 
+  input[type="date"]:in-range::-webkit-datetime-edit-day-field, 
+  input[type="date"]:in-range::-webkit-datetime-edit-text 
+  { 	color: transparent; 
+  }
+
+   input[type="date"]::-webkit-datetime-edit-day-field:focus,
+   input[type="date"]::-webkit-datetime-edit-month-field:focus,
+   input[type="date"]::-webkit-datetime-edit-year-field:focus 
+   {
+     background-color: transparent;
+ }
+
+      }
+  
+      .formatcenter{
+          display: block;
+          text-align: right;
+          height: calc(1.5em + .75rem + 2px);
+          padding: .375rem .75rem;
+          font-size: 1rem;
+          font-weight: 400;
+          line-height: 1.5;
+          color: #495057;
+          background-color: #fff;
+          background-clip: padding-box;
+          border: 1px solid #ced4da;
+          border-radius: .25rem;
+          width: 158px;
+          height: 35px;;
+      }
+       
+      .storescls{
+        height: 300px;
+        overflow:auto ;
+        width: 250px;
+      }
+      .storescls::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: #3f3f3f;
+      }
+      
+      
+      .storescls::-webkit-scrollbar-thumb {
+        width: 5px;
+        height: 8px;
+        background-color: #00a453;
+        border-radius: 3px;
+      }
+  
+  
  

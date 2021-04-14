@@ -19,6 +19,9 @@ export class AlertifyService {
   success(message: string) {
     alertify.success(message);
   }
+  set(){
+    alertify.set('notifier','position', 'top-center');
+  }
 
   error(message: string) {
     alertify.error(message);

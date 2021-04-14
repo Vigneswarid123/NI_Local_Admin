@@ -6,6 +6,7 @@
             <app-left-panel class="w-100"></app-left-panel>
         </div>
       <div  class=" col-9 pt-3">
+        <div style="width:100%;float: left;margin-bottom: 3px;cursor: pointer;"><a href="/dashboard" style="text-decoration: underline;color: #00a453;float:right;font-size:14px;">Dashboard</a></div>
 <div class="row">
   <div class="col pr-0">
       <div class="contentpanel_bg">
@@ -16,7 +17,7 @@
               <!-- <div class="col-lg-8 pt-4"> -->
                       <div >
                           <tr>
-                                  <img style="width: 150px;height: 100px;" src="http://niapi.local.com/api/resources/images/{{getdgroups.dg_logo}}">
+                                  <img style="width: 150px;height: 100px;" src="{{fullUrl}}resources/images/{{getdgroups.dg_logo}}">
                           </tr>
                       
                   </div>
@@ -55,7 +56,7 @@
                <div class="grp_det pl-lg-4" style="font-size: 14px;color: #bcbcbc;">
                    <label>Dealerships:</label>
                </div>
-               <div id="scroll" class="col-lg- 12 scrolldash" style="overflow-y: auto;">
+               <div id="scroll" class="col-lg- 12 contentss">
                 <div class="brand_style">
                     <div  *ngFor="let drl of GetDealershipsList; let i = index" (click)="DealersDetails()">
                         <a [routerLink]="['/DealershipDetails', getdgroups.dg_id,i]" class="select">{{drl.dealer_name}}</a>
@@ -66,11 +67,13 @@
                      </div> -->
                </div>
           <br>
-          <div class="mt-8" style="margin-left: 20px;">
-                   <a [routerLink]="['/AddDealership', getdgroups.dg_id]"><img src="assets/Images/Add-Dealership.png" class="img-fluid"></a>
-               </div>
+          
         </div>
+        <div class="pt-3">
+                <a [routerLink]="['/AddDealership', getdgroups.dg_id, 'add']"><img src="assets/Images/Add-Dealership.png" class="img-fluid"></a>
+            </div>
       </div>
+      
     </div>
   </div>
  </div>

@@ -9,13 +9,15 @@
 //     //apiUrl: 'http://localapi.throttle.com/api/'
 // };
 
- 
-export const environment = {​​​​​​​​
-production:false,
-//  apiUrl: 'http://aaatapi.azaz.com/api/'
-  // apiUrl:'http://throttleapi.azaz.com/api/'
-  apiUrl: 'http://niapi.local.com/api/'
-  //apiUrl: 'http://localapi.throttle.com/api/'
+
+export const environment = {
+  production: false,
+  //  apiUrl: 'http://aaatapi.azaz.com/api/'
+    apiUrl:'http://demoapi.nilocal.com/api/',
+  //apiUrl:'http://devapi.netimpact.com/api/',
+  //apiUrl: 'http://niapi.local.com/api/',
+  apiurl: 'http://apimw.azaz.com/api/'
+  // apiUrl: 'http://localapi.throttle.com/api/'
 }​​​​​​​​;
 
 

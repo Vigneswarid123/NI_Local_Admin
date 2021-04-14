@@ -111,7 +111,7 @@
         
         <div class="col-12">
             <div class="row">
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <div class="formgroup grp grp_det">
                         <label>Brand Name</label>
                         <input type="text" class="form-control" maxlength="51" formControlName="brandname" autofocus>
@@ -124,7 +124,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <div class="formgroup grp grp_det">
                         <label>Brand Description</label>
                         <input type="text" class="form-control" maxlength="100" formControlName="branddesc" autofocus>
@@ -133,22 +133,13 @@
             </div>
 
             <div class="row">
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <div class="formgroup grp grp_det">
                         <label>Brand URL</label>
                         <input type="text" class="form-control" maxlength="100" formControlName="brandurl" autofocus>
                     </div>
                 </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                    <div class="formgroup grp grp_det">
-                        <label>Recall URL</label>
-                        <input type="text" class="form-control" maxlength="100" formControlName="recallurl" autofocus>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <div class="formgroup grp grp_det">
                         <label>Brand Chrome Id</label>
                         <input type="text" class="form-control" maxlength="100" formControlName="chromeid" autofocus>
@@ -158,7 +149,17 @@
                         </small>
                     </div>
                 </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              
+            </div>
+
+            <div class="row d-none">
+                 <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                    <div class="formgroup grp grp_det">
+                        <label>Recall URL</label>
+                        <input type="text" class="form-control" maxlength="100" formControlName="recallurl" autofocus>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <div class="formgroup grp grp_det">
                         <label>Brand Acronym</label>
                         <input type="text" class="form-control" maxlength="100" formControlName="brandacronym" autofocus>
@@ -167,18 +168,53 @@
             </div>
 
             <div class="row">
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <div class="formgroup grp grp_det">
                         <label>Background Color</label>
                         <input type="text" class="form-control" maxlength="100" formControlName="backgroundcolor" autofocus>
                     </div>
                 </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                    <div class="formgroup grp grp_det">
-                        <label>Logo Highlights</label>
-                        <input type="text" class="form-control" maxlength="100" formControlName="logohighlights" autofocus>
+               
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                    <div>
+                        <label>Category</label>
                     </div>
-                </div>
+                    <div class="form-group grp grp_det">
+                      <div class="row" style="margin-left: 7px;">
+                      
+                        <div class="col-xs-2 col-sm-2 col-md-3">
+                           
+                          <div class="form-group">
+                            <span>
+                              <input class="form-check-input" id="rbdomestic" type="radio" value="D" name="Brand_category"
+                                formControlName="Brand_category" checked="true" />
+                              <label for="rbdomestic" class="btn_radio">Domestic</label>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2">
+                          <div class="form-group">
+                            <span>
+                              <input class="form-check-input " id="rbimport" type="radio" value="I" name="Brand_category"
+                                formControlName="Brand_category" />
+                              <label for="rbimport" class="lblradio">Import</label>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2">
+                            <div class="form-group">
+                              <span>
+                                <input class="form-check-input" id="rbluxury" type="radio" value="L" name="Brand_category"
+                                  formControlName="Brand_category" />
+                                <label for="rbluxury" class="lblradio">Luxury/Exotic</label>
+                              </span>
+                            </div>
+                          </div>
+                      </div>
+    
+    
+                    </div>
+                  </div>
             </div>
             <!-- <div class="row">
                 <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -211,62 +247,33 @@
        
         <div class="col-12">
             <div class="row">
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-           <label style="color: white;">Logo</label>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+           <label style="color: white;">Brand Logo</label>
 
-                </div><div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                </div>
+                <!-- <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                     <label style="color: white;">Category</label>
                     
-                         </div>
-
+                         </div> -->
+                         <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 d-none">
+                            <div class="formgroup grp grp_det">
+                                <label>Logo Highlights</label>
+                                <input type="text" class="form-control" maxlength="100" formControlName="logohighlights" autofocus>
+                            </div>
+                        </div>
             </div>
         </div>
 
         <div class="col-12">
             <div class="row">
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <div class="formgroup grp grp_det">
                 <img src="assets/Images/Upload-Icon.png" (click)="selectFile.click()">
-                <input style="display: none;" *ngIf="AddView"  type="file" accept="image/*" formControlName="file" (change)="processFile($event)" #selectFile>
+                <input style="display: none;"  type="file" accept="image/*" formControlName="file" (change)="processFile($event)" #selectFile>
                 </div> 
                 </div>
                
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                    <div class="form-group">
-                      <div class="row" style="margin-left: 7px;">
-                      
-                        <div class="col-xs-2 col-sm-2 col-md-3">
-                          <div class="form-group">
-                            <span>
-                              <input class="form-check-input" id="rbdomestic" type="radio" value="D" name="Brand_category"
-                                formControlName="Brand_category" checked="true" />
-                              <label for="rbdomestic">Domestic</label>
-                            </span>
-                          </div>
-                        </div>
-                        <div class="col-xs-2 col-sm-2 col-md-2">
-                          <div class="form-group">
-                            <span>
-                              <input class="form-check-input" id="rbimport" type="radio" value="I" name="Brand_category"
-                                formControlName="Brand_category" />
-                              <label for="rbimport">Import</label>
-                            </span>
-                          </div>
-                        </div>
-                        <div class="col-xs-2 col-sm-2 col-md-2">
-                            <div class="form-group">
-                              <span>
-                                <input class="form-check-input" id="rbluxury" type="radio" value="L" name="Brand_category"
-                                  formControlName="Brand_category" />
-                                <label for="rbluxury">Luxury/Exotic</label>
-                              </span>
-                            </div>
-                          </div>
-                      </div>
-    
-    
-                    </div>
-                  </div>
+               
 
             </div>
         </div>
@@ -279,19 +286,29 @@
                    
                   </div>
             </div>
-            <div class="row" style="padding-bottom: 4%;">
+            <!-- <div class="row" style="padding-bottom: 4%;">
                 <div class="col-sm-1">
                 </div>
                 <div class="col-sm-1" style="padding-top: 2%">
                     <button type="submit" class="button">Save</button>
                 </div>
                 <div class="col-sm-1" style="padding-top: 2%">
-                    <!-- <button type="submit" [routerLink]="['/BrandList']" class="button">cancel</button> -->
-                    <!-- <a routerLink="/BrandList" style="padding-left: 47px;"><button  class="button">cancel</button></a> -->
+                   
                     <a  style="padding-left: 47px;" ><button  class="button" (click)="showGridPanel()">cancel</button></a> 
                     
                 </div>
-            </div>
+            </div> -->
+
+            <div class="col-lg-9 pt-lg-5 pl-lg-4">
+                <div  class="row">
+                  <div class="col-lg-2">
+                    <button  type="submit" class="savebutton">Save</button>
+                  </div>
+                  <div  class="col-lg-2">
+                    <button  type="submit" class="savebutton" (click)="showGridPanel()">Cancel</button>
+                  </div>
+                </div>
+              </div>
     </form>
     
     </div>

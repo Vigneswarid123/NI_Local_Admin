@@ -105,4 +105,23 @@ body {
 
   .nav-item{
     cursor: pointer;
+    width: 100%;
   }
+
+  .selected{
+    background:#00a453;
+     color: #fff;
+  }
+  .submenu{display:visibility; position: relative; background:#363636 !important; font-size: 15px; }
+
+  .submenu ul li a {
+    background: #363636 !important;
+    font-size: 15px;
+    padding-left: 62px;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}

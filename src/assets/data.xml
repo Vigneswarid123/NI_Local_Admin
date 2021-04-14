@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>    
+<!-- <Employee>    
+   <emp>    
+      <id>1</id>    
+      <name>Faisal</name>    
+      <gender>Male</gender>    
+      <mobile>514545</mobile>    
+   </emp>    
+   <emp>    
+      <id>2</id>    
+      <name>Bhavdip</name>    
+      <gender>Male</gender>    
+      <mobile>5431643</mobile>    
+   </emp>    
+   <emp>    
+      <id>3</id>    
+      <name>Irshad</name>    
+      <gender>Male</gender>    
+      <mobile>43265436</mobile>    
+   </emp>    
+   <emp>    
+      <id>4</id>    
+      <name>Keyur</name>    
+      <gender>Male</gender>    
+      <mobile>5435431</mobile>    
+   </emp>    
+   <emp>    
+      <id>5</id>    
+      <name>Tabish</name>    
+      <gender>Male</gender>    
+      <mobile>432656</mobile>    
+   </emp>    
+</Employee>     -->
+<incentivetype>
+    <type>
+         <id>1</id>
+        <name>Y/N</name>
+    </type>
+    <type>
+        <id>2</id>
+        <name>Text Field</name>
+    </type>
+    <type>
+        <id>3</id>
+        <name>DropDown</name>
+    </type>
+    <type>
+        <id>8</id>
+        <name>MultiDropDown </name>
+    </type>
+      <type>
+        <id>9</id>
+        <name>Dealer Specific</name>
+    </type>
+</incentivetype>

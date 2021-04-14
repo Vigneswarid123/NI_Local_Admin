@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../Core/_providers/api-service/api.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from "ngx-spinner"; 
 
 @Component({
   selector: 'app-grid-subscriptionPlan',
@@ -9,23 +11,39 @@ import { Router } from '@angular/router';
 })
 export class GridSubscriptionPlanComponent implements OnInit {
 
-  subscriptionPlansArray = [];
+  // subscriptionPlansArray = [];
   sp_id: number;
   ID: number;
   term: any = [];
-  SearchText: any;
+ // SearchText: any;
+
+ hide: boolean = false;
+ alphaSrch: string = '';
+ atozFltr: boolean = false;
+ PlansInfo: any=[];
+ alphaColumns:any=["sp_name"];
+ SearchPlansForm: FormGroup;
 
   constructor(
     private termSrvc: ApiService,
     private router: Router,
-    ) { }
+    private fB: FormBuilder,
+    private SpinnerService: NgxSpinnerService
+    ) 
+    {
+      this.SearchPlansForm =this.fB.group({
+       txtSearch:""
+     });
+    }
 
   ngOnInit(): void {
+    this.router.navigateByUrl('subscriptionPlans');
     this.subscriptionPlansList();
   }
 
 
   subscriptionPlansList(){
+    this.SpinnerService.show();
     const obj = {
       sp_id: "0",
       expression: ""
@@ -34,8 +52,9 @@ export class GridSubscriptionPlanComponent implements OnInit {
     if (res.status === 200) {
       const terms = res.response;
       if (terms) {
-        this.subscriptionPlansArray = res.response;
+        this.PlansInfo = res.response;
         console.log(terms);
+        this.SpinnerService.hide();
       }
 }
   });
@@ -75,10 +94,28 @@ Action(value) {
    };
     this.termSrvc.deleteSubscriptionPlan(obj).subscribe( response => {
        console.log(response);
-       alert('Record deleted successfully'); 
+       alert('Record deleted successfully');
        window.location.reload();
      });
    }
+  }
+
+  onAlphaCatch(alphabet){
+    this.hide=true;
+    this.atozFltr=true;
+    this.alphaSrch=alphabet;
+     
+  }
+
+  onSearch(){
+    this.alphaSrch= this.SearchPlansForm.controls['txtSearch'].value;
+  }
+
+  atoZClick(){
+    if(!this.atozFltr)
+    this.atozFltr=true;
+    else
+    this.atozFltr=false;
   }
 
 }

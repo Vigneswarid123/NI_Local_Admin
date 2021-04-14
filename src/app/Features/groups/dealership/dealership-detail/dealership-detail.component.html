@@ -7,6 +7,7 @@
                 <app-left-panel class="w-100"></app-left-panel>
             </div>
         <div  class=" col-9 pt-3">
+            <div style="width:100%;float: left;margin-bottom: 3px;cursor: pointer;"><a href="/dashboard" style="text-decoration: underline;color: #00a453;float:right;font-size:14px;">Dashboard</a></div>
 <div  class="row">
     <div class="col pr-0">
         <div class="contentpanel_bg">
@@ -45,8 +46,8 @@
                                    
                                 </div>
                                 <div  class="pt-4">
-                                    <a  [routerLink]="['/EditDealership', dealersDetails.dealer_id,  dealersDetails.dealer_dg_id] ">
-                                        <img src="assets/Images/Edit-Icon.png" (click)="EditDealerShip(dealersDetails.dealer_id, dealersDetails.dealer_dg_id)" style="cursor: pointer" title="Edit"  class="img-fluid"></a>
+                                    <a  [routerLink]="['/EditDealership', dealersDetails.dealer_id,  dealersDetails.dealer_dg_id, 'edit'] ">
+                                        <img src="assets/Images/Edit-Icon.png" style="cursor: pointer" title="Edit"  class="img-fluid"></a>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +67,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a style="margin-left: 15px;" [routerLink]="['/AddDealership', dealersDetails.dealer_dg_id] "><img src="assets/Images/Add-Dealership.png" class="img-fluid"></a>
+                        <a style="margin-left: 15px;" [routerLink]="['/AddDealership', dealersDetails.dealer_dg_id,'add'] "><img src="assets/Images/Add-Dealership.png" class="img-fluid"></a>
                     </div>
 
                 </div>

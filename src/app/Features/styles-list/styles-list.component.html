@@ -13,26 +13,26 @@
         <form #monForm="ngForm" (ngSubmit)="OnSubmit()">
             <div style="width: 6%;float: left;margin-left: 39%;margin-top: 2px;font-size: 13px;">Filter by:</div>
             <div class="form-group drop_dwn" style="width: 13%;float: left;margin:0 10px 2% 0;">                                       
-                <select class="form-control" style="height: calc(1.50rem + 5px);font-size: 11px;" id="Brand" [ngModel]="BrandContant" (change)="synchroMembre($event,'B');" required name="Brand">
+                <select class="form-control" style="height: calc(1.50rem + 5px);font-size: 11px;padding-bottom: 6px;" id="Brand" [ngModel]="BrandContant" (change)="synchroMembre($event,'B');" required name="Brand">
                     <option [value]="0">Select Brand</option>
                   <option *ngFor="let Bnd of Brands.response" [value]="Bnd.brand_chrome_id">{{ Bnd.brand_name }}</option>
                 </select>
                 <small class="errormessage" style="color: #dc3545;position: absolute;margin: 23px 0px 0px 23px;" *ngIf="Band">Brand is required</small>
           </div>                              
              <div class="form-group drop_dwn" style="width: 13%;float: left;margin:0 10px 2% 0;">
-                <select class="form-control" style="height: calc(1.50rem + 5px);font-size: 11px;" id="Year" [(ngModel)]="YearContant" (ngModelChange)="synchroMembre($event,'Y')" required name="Year">        
+                <select class="form-control" style="height: calc(1.50rem + 5px);font-size: 11px;padding-bottom: 6px;" id="Year" [(ngModel)]="YearContant" (ngModelChange)="synchroMembre($event,'Y')" required name="Year">        
                   <option *ngFor="let Yrs of Years" [value]="Yrs.value">{{Yrs.Year}}</option>
                 </select>
                 <small class="errormessage" style="color: #dc3545;position: absolute;margin: 23px 0px 0px 23px;" *ngIf="Yar">Year is required</small>
           </div>
           <div class="form-group drop_dwn" style="width: 13%;float: left;margin:0 10px 2% 0;">
-              <select class="form-control" style="height: calc(1.50rem + 5px);font-size: 11px;" id="Model" [(ngModel)]="ModelContant" (ngModelChange)="synchroMembre($event,'M')" required name="Model">
+              <select class="form-control" style="height: calc(1.50rem + 5px);font-size: 11px;padding-bottom: 6px;" id="Model" [(ngModel)]="ModelContant" (ngModelChange)="synchroMembre($event,'M')" required name="Model">
                 <option [value]="0">Select Model</option>
                 <option *ngFor="let Mod of Models.response" [value]="Mod.modelCode">{{Mod.modelName}}</option>
               </select>
               <small class="errormessage" style="color: #dc3545;position: absolute;margin: 23px 0px 0px 23px;" *ngIf="Mdel">Model is required</small>
           </div>
-          <input type="submit" value="Search" style="width: 13%;background-color: #fff;float: right;font-size: 12px;">
+          <input type="submit" value="Search" class="btnsearch" style="width: 10%;">
         </form>
     </div>
     

@@ -1,297 +1,547 @@
-<div class="dashboard_bg">
-  <app-header></app-header>
-  <div class="container-fluid pt64">
-    <div class="row">
-      <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav"
-        id="sidebar">
-        <app-left-panel class="w-100"></app-left-panel>
-      </div>
 
-      <div class="content_body" *ngIf="showgrid">
-        <form [formGroup]="SearchBrandForm">
-          <table style="width: 1000px; float: left;">
-            <tbody>
-              <tr>
-                <td></td>
-                <td style="vertical-align: top;">
-                  <table class="gridheader">
-                    <thead>
-                      <tr>
-                        <th style="width: 462px; font-weight: bold;">
-                          <div style="float: left">
-                            <div class="getuser">
-                              <label class="getuserlabel">OEM Brands</label>
-                            </div>
-                            <div class="AddIcon">
-                              <a (click)="showAddPanel()"><img src="assets/Images/brand_plus.png"></a>
-                            </div>
-                          </div>
-                          <!-- <div class="getrolediv">
-                                          <label class="getrolelbl">Brands</label>
-                                      </div> -->
-                        </th>
-                        <th style="width: 500px; text-align: center">
-                          <div style="float: left">
-                          </div>
-                        </th>
-                        <th style="width:10%; text-align: center" colspan="2">
-                          <div style="width:80px; cursor: pointer;" (click)="atoZClick()">
-                            <div class="DivAZ1">A - Z</div>
-                            <div class="DivAZ2">
-                              <a><img src="assets/Images/sorting_img.png"></a>
-                            </div>
-                          </div>
-                        </th>
-                        <th style="padding-left: 0px;">
-                          <div class="search">
-                            <input type="text" formControlName="txtSearch" placeholder="Search" autofocus
-                              (keyup)="onSearch()">
-                          </div>
-                          <div style="float: right; margin-top: -22px; margin-right: 6px;"><img
-                              src="assets/Images/Search-Icon.png"></div>
-                        </th>
-                      </tr>
-                    </thead>
-                  </table>
-                  <div class="row" *ngIf="atozFltr" style="height: 50px;margin-bottom: 10px;">
-                    <div style="width:100%;">
-                      <app-atoz-filter (onAlphaClick)="onAlphaCatch($event)"></app-atoz-filter>
+<div class="dashboard_bg">
+    <app-header></app-header>
+    <div class="container-fluid pt64">
+      <div class="row">
+  
+  
+        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav">
+            <app-left-panel class="w-100"></app-left-panel>
+        </div>
+  
+  
+  <div class="col-10" *ngIf="showgrid">
+    <form [formGroup]="SearchBrandsForm">
+    <div class="row style_head ">
+        <div class="col-12 col-lg-6 d-flex align-items-center pl-lg-5">
+            <h4>OEM Brands </h4>
+            <a (click)="showAddPanel()" class="pointer"><img src="assets/Images/brand_plus.png"></a>
+        </div>
+  
+        <div class="col-12 col-lg-6 d-flex align-items-center justify-content-end">
+          <div>
+ 
+            <div  class="DivAZ3" (click)="atoZClick()">
+                <div class="DivAZ1">A - Z</div>
+                <div class="DivAZ2">
+                   <a><img src="assets/Images/sorting_img.png"></a>
+               </div>  
+           </div>
+     
+        </div>
+  
+  
+          
+            <div class="search">
+                <input type="text" placeholder="Search" formControlName="txtSearch" autofocus (keyup)="onSearch()">
+            </div>
+           
+        </div>
+    </div>
+  
+    <div class="row justify-content-center py-4 pl-lg-3 pr-lg-4">
+        <div class="col-12 cpl-lg-12">
+            <div class="style_bg">
+  
+                <div class="clearfix"></div>
+  
+                <div>
+  
+                    <div class="row atozFltr" *ngIf="atozFltr" >
+                        <div class="width">
+                            <app-atoz-filter (onAlphaClick)="onAlphaCatch($event)"></app-atoz-filter>
+                        </div>
+                    </div>
+  
+                    <div class="contentss">
+
+                        <table class="dashboard">
+                            <tbody>
+                              <ng-container *ngIf="brandsInfo | alphaFilter : alphaSrch: alphaColumns :'aa' as Brandsdata; else noItems"> 
+                                <tr *ngFor= "let list of Brandsdata">
+                                    <td class="tdspname">{{list.brand_name}}</td>
+                                    <td class="tdspname">{{list.brand_url}}</td>
+                                    <td style="width:25%;"><div style="text-align: center;"><img style="height: 50px;" src="{{list.brand_logo}}"></div></td> 
+  
+                                      <td class="edit">
+                                        <a class="pointer" (click)="Action(list)"
+                                          ><img src="assets/Images/edt_icon.png"
+                                        /></a>
+                                      </td>
+  
+                                </tr>
+                                <ng-container *ngIf="!Brandsdata.length && hide" [ngTemplateOutlet]="noItems"></ng-container>
+                            </ng-container>
+      
+                            <ng-template #noItems>
+                               <tr><td colspan="9" class="noitems">No OEM Brands Available!</td></tr>
+                            </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+  
+  
+  </form> 
+  </div>
+  
+  <div class="contentpanel_bg col-9 pt-3"  *ngIf="addview">
+    <div> 
+  
+   <!--                    add brand start                    -->
+          
+   <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+        <div class="panel panel-default">
+
+          <div class="panel-body">
+            <form [formGroup]="addBrandForm" (ngSubmit)="addBrand()">
+
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                      <label> Brand Name</label>
+                      <input type="text" formControlName="brand_name" class="form-control" maxlength="51" autofocus
+                      />
+                      <small class="errormessage" *ngIf="submitted && addBrandForm.controls.brand_name.hasError('required')">Brand name is required
+                        <br>
+                      </small>
+                      <small class="errormessage" *ngIf="addBrandForm.controls.brand_name.hasError('maxlength')">
+                        You have reached your maximum limit
+                      </small>
                     </div>
                   </div>
-                  <div>
-                    <table class="dashboardHeader">
-                      <thead>
-                        <tr class="colHeader">
-                          <th style="width:4%;"></th>
-                          <th align="center" scope="col" style="width: 35px;">
-                            Brand Name
-                          </th>
-                          <th align="center" scope="col" style="width: 190px;text-align: center;">
-                            URL
-                          </th>
-                          <th align="center" scope="col" style="width: 100px;text-align: center;">
-                            Logo
-                          </th>
-                          <th scope="col" style="width: 37px;">&nbsp;</th>
-                        </tr>
-                      </thead>
-                    </table>
-                    <div>
-                      <div class="contentss">
-                        <table class="dashboard">
-                          <tbody>
-                            <ng-container
-                              *ngIf="BrandInfo | alphaFilter : alphaSrch: alphaColumns :'aa' as Brandsdata; else noItems">
-                              <tr *ngFor="let br of Brandsdata">
-                                <td style="width:25%;margin-left:10%;">
-                                  <div style="margin-left: 15%;"><span style="font-size: 14px;">{{br.brand_name}}</span>
-                                  </div>
-                                </td>
-                                <td style="width:40%;">
-                                  <div style="margin-left: 15%;"><span style="font-size: 14px;">{{br.brand_url}}</span>
-                                  </div>
-                                </td>
-                                <td style="width:25%;">
-                                  <div style="text-align: center;"><img id="imglogo" style="height: 50px;"
-                                      src='{{ "assets/Images/BrandLogo/" + br.brand_logo + "" }}'></div>
-                                </td>
-                                <td style="width:10%; text-align: center; cursor: pointer;">
-                                  <a (click)="editBrand(br.brand_id)"><img src="assets/Images/edt_icon.png"></a>
-                                </td>
-                              </tr>
-                              <ng-container *ngIf="!Brandsdata.length && hide" [ngTemplateOutlet]="noItems">
-                              </ng-container>
-                            </ng-container>
+                  <div  class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                      <label>Oem Groups</label>
+                      <input type="text" class="form-control" maxlength="100" formControlName="groupbrands" autofocus
+                        (keyup)="OnChangeEvent($event)"  />
+                        <div class="AddIcon"  style="float: right;margin-top: -36px;">
+                          <a (click)="showOEMPopup()"><img class="oemgroupimg"src="assets/Images/brand_plus.png"></a>
+                      </div>
+                      <small class="errormessage" *ngIf="submitted && selectedbrandid == false">Group Brands is required
+                      </small>
+                      
+                      <div *ngIf="showBrandDiv" class="autofillcls" #menu>
+                        <div *ngFor="let option of selectedOemGroups; let i = index" (mouseover)="highlightRow(option)" [ngClass]="{
+                                              highlight: option.OEM_Name == selectedItem
+                                            }">
+                          <li style="list-style: none; padding: 8px; cursor: pointer" (click)="selectItem($event, option, i)">
+                            {{ option.OEM_Name }}
+                          </li>
+                        </div>
+                      </div>
+                      
+                      <div style="display: flex" *ngIf="selectedgroupList != ''">
+                        <div *ngFor="let item of selectedgroupList; let i = index" class="editdivbox">
+                          <img src="../../assets/Images/cancel-icon.png" class="closecls" (click)="
+                                                removeBrandTag(item.OEM_Name, i, item.OEM_Id)
+                                              " />
+                          <div>{{ item.OEM_Name }}</div>
+                        </div>
+                      </div>
+    
+                    </div>
+                  </div>
+                </div>
 
-                            <ng-template #noItems>
-                              <tr>
-                                <td colspan="9" style="text-align: center;">No Inventories Available!</td>
-                              </tr>
-                            </ng-template>
-                          </tbody>
-                        </table>
+                <div class="row">
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                      <label> Brand URL</label>
+                      <input type="text" formControlName="brand_url" class="form-control" maxlength="51" autofocus
+                      />
+                      <small class="errormessage" *ngIf="submitted && addBrandForm.controls.brand_url.hasError('required')">Brand url is required
+                        <br>
+                      </small>
+                      <small class="errormessage" *ngIf="addBrandForm.controls.brand_url.hasError('maxlength')">
+                        You have reached your maximum limit
+                      </small>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                      <img src="assets/Images/Add-Contact.png" (click)="OpenContactPopUp()">
+                  </div>
+                  <div *ngIf="groupcontact.length != 0">
+                  <table>
+                      <thead>
+                       
+                        <th style="width:150px">Name</th>
+                        <th style="width:150px">Email </th>
+                       
+                        <th style="width:150px">CELL#</th>
+                        
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of groupcontact">
+                         
+                          <td style="width:150px">{{item.contactname}}</td>
+                          <td style="width:150px">{{item.contactemail}}</td>
+                         
+                          <td style="width:150px">{{item.contactphone}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  </div>
+
+
+                </div>
+
+
+                <div class="row">
+
+
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                      <label>Brand Description</label>
+                      <textarea formControlName="brand_desc" class="form-control" autofocus autofocus rows="5" cols="10">                             
+                      </textarea>
+                      <small class="errormessage" *ngIf="submitted && addBrandForm.controls.brand_desc.hasError('required')">Brand description is required
+                        <br>
+                      </small>
+                      <small class="errormessage" *ngIf="addBrandForm.controls.brand_desc.hasError('maxlength')">
+                        You have reached your maximum limit
+                      </small>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                  <div class="form-group">
+                    <label>Category</label>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                      <div class="form-group">
+
                       </div>
                     </div>
+
+                      <label> 
+                    <input type="radio" value="D" formControlName="brand_category" name="brand_category"
+                    /> &nbsp; Domestic</label>
+                    &nbsp;
+                    <label> 
+                      <input type="radio" value="I" formControlName="brand_category" name="brand_category"
+                      />&nbsp;Import</label>
+                      &nbsp;
+                      <label> 
+                        <input type="radio" value="L" formControlName="brand_category"  name="brand_category"
+                        />&nbsp;Luxury/Exotic</label>
+                        <div>
+                        <small class="errormessage" *ngIf="submitted && addBrandForm.controls.brand_category.hasError('required')">Brand category is required
+                        </small>
+                      </div>
                   </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
-      </div>
-
-      <div class="contentpanel_bg col-9 pt-3" *ngIf="addclick">
-        <form [formGroup]="brandForm" (ngSubmit)="OnSubmit()">
-
-          <div class="col-12">
-            <div class="row">
-              <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <div class="formgroup grp grp_det">
-                  <label>Brand Name</label>
-                  <input type="text" class="form-control" maxlength="51" formControlName="brandname" autofocus>
-                  <small class="errormessage"
-                    *ngIf="submitted && brandForm.controls.brandname.hasError('required')">BrandName is
-                    required
-
-                  </small>
-                  <small class="errormessage" *ngIf="brandForm.controls.brandname.hasError('maxlength')">
-                    You have reached your maximum limit of characters allowed for Brand Name
-                  </small>
                 </div>
               </div>
-              <div  class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <div class="formgroup grp grp_det">
-                  <label>Oem Groups</label>
-                  <input type="text" class="form-control" maxlength="100" formControlName="groupbrands" autofocus
-                    (keyup)="OnChangeEvent($event)"  />
-                    <div class="AddIcon"  style="float: right;margin-top: -36px;">
-                      <a (click)="showOEMPopup()"><img src="assets/Images/brand_plus.png"></a>
-                  </div>
-                  <small class="errormessage" *ngIf="submitted && selectedbrandid == false">Group Brands is required
-                  </small>
-                  
-                  <div *ngIf="showBrandDiv" class="autofillcls" #menu>
-                    <div *ngFor="let option of selectedOemGroups; let i = index" (mouseover)="highlightRow(option)" [ngClass]="{
-                                          highlight: option.OEM_Name == selectedItem
-                                        }">
-                      <li style="list-style: none; padding: 8px; cursor: pointer" (click)="selectItem($event, option, i)">
-                        {{ option.OEM_Name }}
-                      </li>
+
+                <div class="row">
+
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+     
+                      <img src="assets/Images/Upload-Icon.png" (click)="selectFile.click()">
+                      <input style="display: none" type="file" name="image" formControlName="fileUpload" (change)="processFile($event)" #selectFile/>
+                      <div *ngIf="fileUploadProgress">
+                        Upload progress: {{ fileUploadProgress }}
+                      </div>
+                      &nbsp;
+                      <div style="display: contents;" class="image-preview" *ngIf="previewUrl">
+                        <img [src]="previewUrl" height="70" width="100" />
+                      </div>
+
+                      <div *ngIf="uploadedFilePath">
+                        {{uploadedFilePath}}
+                      </div>
+
+                      <div>
+                        <small class="errormessage" *ngIf="submitted && addBrandForm.controls.fileUpload.hasError('required')">
+                          Logo is required
+                        </small>
+                      </div>
+
+
                     </div>
                   </div>
-                  
-                  <div style="display: flex" *ngIf="selectedgroupList != ''">
-                    <div *ngFor="let item of selectedgroupList; let i = index" class="editdivbox">
-                      <img src="../../assets/Images/cancel-icon.png" class="closecls" (click)="
-                                            removeBrandTag(item.OEM_Name, i, item.OEM_Id)
-                                          " />
-                      <div>{{ item.OEM_Name }}</div>
-                    </div>
+                </div>
+
+
+              </div>
+
+
+              <div class="col-lg-12 pt-lg-5 pl-lg-4">
+                <div class="row">
+                  <div class="col-lg-2">
+                    <input type="submit" value="Save" class="savebutton" />
                   </div>
+                  <div class="col-lg-2">
+                    <input type="button" value="Cancel" (click) = "showGridPanel()" routerLinkActive="router-link-active" class="savebutton" />
+                  </div>
+                </div>
+              </div>
 
-                </div>
-              </div>
-            </div>
 
-            <div class="row">
-              <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <div class="formgroup grp grp_det">
-                  <label>Brand URL</label>
-                  <input type="text" class="form-control" maxlength="100" formControlName="brandurl" autofocus>
-                </div>
-              </div>
-              
-              <div style="display: none;" class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <div class="formgroup grp grp_det">
-                  <label>Recall URL</label>
-                  <input type="text" class="form-control" maxlength="100" formControlName="recallurl" autofocus>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-
-              <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <div class="formgroup grp grp_det">
-                  <label>Brand Description</label>
-                  <!-- <input type="text" style="height: 100px;" class="form-control" maxlength="500" formControlName="branddesc" autofocus> -->
-                  <textarea class="form-control" maxlength="500" formControlName="branddesc" autofocus rows="5" cols="10">                             
-                  </textarea>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <div class="formgroup grp grp_det">
-                    <img src="assets/Images/Add-Contact.png" (click)="OpenContactPopUp()">
-                <!-- <input type="button" (click)="OpenContactPopUp()" value="Add Contact">  -->
-                </div>
-                <div *ngIf="groupcontact.length != 0">
-                <table>
-                    <thead>
-                     
-                      <th style="width:150px">Name</th>
-                      <th style="width:150px">Email </th>
-                     
-                      <th style="width:150px">CELL#</th>
-                      
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let item of groupcontact">
-                       
-                        <td style="width:150px">{{item.contact_name}}</td>
-                        <td style="width:150px">{{item.contact_email}}</td>
-                       
-                        <td style="width:150px">{{item.contact_phone}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-            </div>
-
-              <div style="display: none;" class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <div class="formgroup grp grp_det">
-                  <label>Brand Chrome Id</label>
-                  <input type="text" class="form-control" maxlength="100" formControlName="chromeid" autofocus>
-                  <small class="errormessage" *ngIf="submitted && brandForm.controls.chromeid.hasError('required')">
-                    Chrome Id is
-                    required
-                    <br>
-                  </small>
-                </div>
-              </div>
-              <div style="display: none;" class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <div class="formgroup grp grp_det">
-                  <label>Brand Acronym</label>
-                  <input type="text" class="form-control" maxlength="100" formControlName="brandacronym" autofocus>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div style="display: none;" class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <div class="formgroup grp grp_det">
-                  <label>Background Color</label>
-                  <input type="text" class="form-control" maxlength="100" formControlName="backgroundcolor" autofocus>
-                </div>
-              </div>
-              <div style="display: none;" class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <div class="formgroup grp grp_det">
-                  <label>Logo Highlights</label>
-                  <input type="text" class="form-control" maxlength="100" formControlName="logohighlights" autofocus>
-                </div>
-              </div>
-            </div>
+            </form>
           </div>
-
-          <div class="col-12">
-            <label style="color: white;">Brand Logo</label>
-          </div>
-
-          <div class="col-12">
-            <img src="assets/Images/Upload-Icon.png" (click)="selectFile.click()">
-            <input style="display: none;" *ngIf="AddView" type="file" accept="image/*" formControlName="file"
-              (change)="processFile($event)" #selectFile>
-          </div>
-          <div class="col-12">
-            <div class="imagePreview" *ngIf="selectedFile && selectedFile !== ''">
-              <img [src]="selectedFile" *ngIf="AddView">
-              <img [src]="ImageFolder+brandForm.value.file" [alt]="brandForm.value.file" *ngIf="EditView">
-            </div>
-          </div>
-          <div class="row" style="padding-bottom: 4%;">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-1" style="padding-top: 2%">
-              <button type="submit" class="button">Save</button>
-            </div>
-            <div class="col-sm-1" style="padding-top: 2%">
-              <!-- <button type="submit" [routerLink]="['/BrandList']" class="button">cancel</button> -->
-              <!-- <a routerLink="/BrandList" style="padding-left: 47px;"><button  class="button">cancel</button></a> -->
-              <a style="padding-left: 47px;"><button class="button" (click)="showGridPanel()">cancel</button></a>
-
-            </div>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  
+  
+   </div>
+   </div>
+  
+        
+   <!--                            add brand end                    -->
+
+
+
+   <div class="contentpanel_bg col-9 pt-3"  *ngIf="editview">
+    <div> 
+  
+   <!--                    edit start                    -->
+          
+   <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+        <div class="panel panel-default">
+
+          <div class="panel-body">
+            <form [formGroup]="editbrandform" >
+
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                      <label> Brand Name</label>
+                      <input type="text" [(ngModel)]="BrandDetails.brand_name" formControlName="brand_name" class="form-control" maxlength="51" autofocus
+                      />
+                      <small class="errormessage" *ngIf="submitted && editbrandform.controls.brand_name.hasError('required')">Brand name is required
+                        <br>
+                      </small>
+                      <small class="errormessage" *ngIf="editbrandform.controls.brand_name.hasError('maxlength')">
+                        You have reached your maximum limit
+                      </small>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                      <label>Oem Groups</label>
+                      <input type="text" formControlName="oem_group" class="form-control" autofocus
+                      /><img class="oemgroupimg" src="assets/Images/brand_plus.png">
+                      <!-- <small class="errormessage" *ngIf="submitted && addBrandForm.controls.oem_group.hasError('required')">oem_group is required
+                        <br>
+                      </small> -->
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                      <label> Brand URL</label>
+                      <input type="text" [(ngModel)]="BrandDetails.brand_url" formControlName="brand_url" class="form-control" maxlength="51" autofocus
+                      />
+                      <small class="errormessage" *ngIf="submitted && editbrandform.controls.brand_url.hasError('required')">Brand url is required
+                        <br>
+                      </small>
+                      <small class="errormessage" *ngIf="editbrandform.controls.brand_url.hasError('maxlength')">
+                        You have reached your maximum limit
+                      </small>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="formgroup grp grp_det">
+                      <img src="assets/Images/Add-Contact.png" (click)="OpenContactPopUp()">
+                  </div>
+                  <div *ngIf="groupcontact.length != 0">
+                  <table>
+                      <thead>
+                       
+                        <th style="width:150px">Name</th>
+                        <th style="width:150px">Email </th>
+                       
+                        <th style="width:150px">CELL#</th>
+                        
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of groupcontact">
+                         
+                          <td style="width:150px">{{item.contact_name}}</td>
+                          <td style="width:150px">{{item.contact_email}}</td>
+                         
+                          <td style="width:150px">{{item.contact_phone}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  </div>
+                  
+                </div>
+
+
+                <div class="row">
+
+
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                      <label>Brand Description</label>
+                      <textarea [(ngModel)]="BrandDetails.brand_desc" formControlName="brand_desc" class="form-control" autofocus autofocus rows="5" cols="10">                             
+                      </textarea>
+                      <!-- <small class="errormessage" *ngIf="submitted && editbrandform.controls.brand_desc.hasError('required')">Brand description is required
+                        <br>
+                      </small>
+                      <small class="errormessage" *ngIf="editbrandform.controls.brand_desc.hasError('maxlength')">
+                        You have reached your maximum limit
+                      </small> -->
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                  <div class="form-group">
+                    <label>Category</label>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                      <div class="form-group">
+
+                      </div>
+                    </div>
+
+                      <label> 
+                    <input type="radio" value="D" [(ngModel)]="BrandDetails.brand_category" formControlName="brand_category" name="brand_category"
+                    /> &nbsp; Domestic</label>
+                    &nbsp;
+                    <label> 
+                      <input type="radio" value="I" [(ngModel)]="BrandDetails.brand_category" formControlName="brand_category" name="brand_category"
+                      />&nbsp;Import</label>
+                      &nbsp;
+                      <label> 
+                        <input type="radio" value="L" [(ngModel)]="BrandDetails.brand_category" formControlName="brand_category"  name="brand_category"
+                        />&nbsp;Luxury/Exotic</label>
+                        <div>
+                        <small class="errormessage" *ngIf="submitted && editbrandform.controls.brand_category.hasError('required')">Brand category is required
+                        </small>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+                <div class="row">
+
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+     
+                      <img src="assets/Images/Upload-Icon.png" (click)="selectFile.click()">
+                      <input style="display: none" type="file" name="image" formControlName="fileUpload" (change)="processFile($event)" #selectFile/>
+                      <div *ngIf="fileUploadProgress">
+                        Upload progress: {{ fileUploadProgress }}
+                      </div>
+                      &nbsp;
+                      <div style="display: contents;" class="image-preview" *ngIf="previewUrl">
+                        <img [src]="previewUrl" height="70" width="100" />
+                      </div>
+
+                      <div *ngIf="uploadedFilePath">
+                        {{uploadedFilePath}}
+                      </div>
+
+                      <div>
+                        <!-- <small class="errormessage" *ngIf="submitted && editbrandform.controls.fileUpload.hasError('required')">
+                          Logo is required
+                        </small> -->
+                      </div>
+
+
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row">
+
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="form-group">
+
+                      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+
+                        </div>
+                      </div> 
+
+                      <div class="row">
+                        <div class="col-xs-3 col-sm-3 col-md-3">
+                          <label for="brand_status">Status:</label>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2">
+                          <div class="form-group">
+                            <span>
+                              <input class="form-check-input" [(ngModel)]="BrandDetails.brand_status" type="radio" value="Y" name="brand_status" formControlName="brand_status"
+                              />
+                              <label class="statusActive" for="yes">Active</label>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-xs-5 col-sm-5 col-md-5">
+                          <div class="form-group">
+                            <span>
+                              <input class="form-check-input" [(ngModel)]="BrandDetails.brand_status" type="radio" value="N" name="brand_status" formControlName="brand_status"
+                              />
+                              <label class="statusInactive" for="no">In-Active</label>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                  </div>
+
+                </div>
+                
+
+              </div>
+
+
+              <div class="col-lg-12 pt-lg-5 pl-lg-4">
+                <div class="row">
+                  <div class="col-lg-2">
+                    <input type="submit"(click)="updateBrand()" value="Save" class="savebutton" />
+                  </div>
+                  <div class="col-lg-2">
+                    <input type="button" value="Cancel" (click) = "showGridPanel()" routerLinkActive="router-link-active" class="savebutton" />
+                  </div>
+                </div>
+              </div>
+
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+
+  <!-- ------------------ edit end ------------------ -->
+
+  
+  
+  </div>
+  </div>
+  </div>
+  

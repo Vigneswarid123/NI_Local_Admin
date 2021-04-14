@@ -2,162 +2,164 @@
   <app-header></app-header>
   <div class="container-fluid pt64">
     <div class="row">
-      <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav" id="sidebar">
+      <div
+        class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav"
+        id="sidebar"
+      >
         <app-left-panel class="w-100"></app-left-panel>
-    </div>
+      </div>
 
       <div class="content_body">
+        <form [formGroup]="SearchPlansForm">
         <table style="width: 1000px; float: left">
           <tbody>
             <tr>
               <td></td>
               <td style="vertical-align: top">
-                
                 <table class="gridheader">
                   <thead>
-                      <tr>
-                          <th style="width: 462px; font-weight: bold;">
-                            <div style="float: left">
-                                <div class="getuser">
-                                    <label class="getuserlabel">Subscription Plans</label>
-                                </div>
-                                <div class="AddIcon">
-                                  <a
-                                  [routerLink]="['/subscriptionPlansAdd']"
-                                  routerLinkActive="router-link-active"
-                                  style="cursor: pointer;"
-                                  ><img src="assets/Images/brand_plus.png"></a>
-                                </div>
-                            </div>
-                          </th>
-                          <th style="width: 500px; text-align: center">
-                            <div style="float: left">                                       
-                            </div>
-                        </th>  
-                        
-                        <th><div class= "search">
-                          <input type="text" placeholder="Search" [(ngModel)]="SearchText" />
-                        </div></th>  
-
-                        <th style="width:10%; text-align: center" colspan="2">
-                                    <div class="DivAZ1">A - Z</div>
-                                    <div class="DivAZ2">
-                                       <a><img src="assets/Images/sorting_img.png"></a>
-                                   </div>  
-                        </th>
-                       
-                      </tr>
+                    <tr>
+                      <th style="width: 462px; font-weight: bold">
+                        <div style="float: left">
+                          <div class="getuser">
+                            <label class="getuserlabel">Subscription Plans</label>
+                          </div>
+                          <div class="AddIcon">
+                            <a
+                              [routerLink]="['/subscriptionPlansAdd']"
+                              routerLinkActive="router-link-active"
+                              style="cursor: pointer"
+                              ><img src="assets/Images/brand_plus.png"
+                            /></a>
+                          </div>
+                        </div>
+                      </th>
+                      <th style="width: 500px; text-align: center">
+                        <div style="float: left"></div>
+                      </th>
+                      <th style="width:10%; text-align: center" colspan="2">
+                        <div style="width:80px; cursor: pointer;" (click)="atoZClick()">
+                          <div class="DivAZ1">A - Z</div>
+                          <div class="DivAZ2">
+                            <a><img src="assets/Images/sorting_img.png"></a>
+                          </div>
+                        </div>
+                      </th>
+                      <th style="padding-left: 0px;">
+                        <div class="search">
+                            <input type="text" formControlName="txtSearch" placeholder="Search" autofocus (keyup)="onSearch()">
+                        </div>
+                        <div style="float: right; margin-top: -22px; margin-right: 6px;"><img src="assets/Images/Search-Icon.png"></div>
+                    </th>
+                    </tr>
                   </thead>
-              </table>
+                </table>
 
+                <div
+                  class="row"
+                  *ngIf="atozFltr"
+                  style="height: 50px; margin-bottom: 10px"
+                >
+                  <div style="width: 100%">
+                    <app-atoz-filter
+                      (onAlphaClick)="onAlphaCatch($event)"
+                    ></app-atoz-filter>
+                  </div>
+                </div>
 
                 <div>
                   <table class="dashboard">
                     <thead>
                       <tr class="colHeader">
                         <th style="width: 6%"></th>
-                        <!-- <th align="center" scope="col" style="width: 150px;">
-  Id
-  </th> -->
+                        
                         <th
                           align="center"
                           scope="col"
-                          style="width: 40px;"
+                          style="text-align: left; width: 70px; color: #00a453;"
                         >
-                          Name
+                        Name
                         </th>
-                        <th  
-                          align="center"                        
+
+                        <th
+                          align="center"
                           scope="col"
-                          style="padding-left: 15%;"
+                          style="width: 73px;color: #00a453;"
                         >
                         Setup Fee
                         </th>
-                         <th
-                         align="center"
-                          scope="col"
-                          style="padding-left: 9%;"
-                        >
-                        Monthly Fee
-                        </th> 
-                        <th                              
-                          scope="col"
-                          style="padding-left: -5%;"
-                        >
-                          Status
-                        </th>
 
-                        <th scope="col" style="width: 37px">&nbsp;</th>
+                        <th align="center" scope="col" style="width: 82px;color: #00a453;">
+                      
+                      Monthly Fee
+                      </th>
+
+                      <th align="center" scope="col" style="width: 95px;color: #00a453;">                          
+                    Status
+                    </th>
+
+                        <!-- <th scope="col" style="width: 37px">&nbsp;</th> -->
                       </tr>
                     </thead>
                   </table>
                   <div class="col-md-8" style="padding-left: 0px">
                     <div class="contentss">
                       <table class="dashboard">
-                        <tbody *ngFor="let list of subscriptionPlansArray | filter:SearchText">
-                          <tr>                               
-                            <td style="width: 120px;">
-                              <div style="margin-left: 50px;">
-                                <span>{{
-                                  list.sp_name
-                                }}</span>
-  
-                              </div> 
-                            </td>    
-                            
-                            <td style="width: 120px;">
-                              <div style="margin-left: 50px;">
-                                <span>{{
-                                  list.sp_setupfee
-                                }}</span>
-  
-                              </div> 
-                            </td>   
+                        <tbody>
+                          <ng-container *ngIf="PlansInfo | alphaFilter : alphaSrch: alphaColumns :'aa' as Termsdata; else noItems">
+                          <tr *ngFor="let list of Termsdata">
+                            <td style="width: 100px">
+                              <div style="text-align: center;">
+                                <span>{{ list.sp_name }}</span>
+                              </div>
+                            </td>
 
-                            <td style="width: 120px;">
-                              <div style="margin-left: 50px;">
-                                <span>{{
-                                  list.sp_monthlyfee
-                                }}</span>
-  
-                              </div> 
-                            </td>   
-                            
+                            <td style="width: 100px">
+                              <div style="margin-left: 50px; text-align: center;">
+                                <span>{{ list.sp_setupfee }}</span>
+                              </div>
+                            </td>
 
-                             <td
+                            <td style="width: 100px">
+                              <div style="margin-left: 50px; text-align: center;">
+                                <span>{{ list.sp_monthlyfee }}</span>
+                              </div>
+                            </td>                          
+ 
+                            <td
                               *ngIf="list.sp_status === 'Y'; else elseBlock"
-                              style="width: 100px"
-                            >
+                              style="width: 100px">
                               <div class="Active" style="text-align: center">
                                 <span>Active</span>
                               </div>
                             </td>
-
                             <ng-template #elseBlock>
                               <td style="width: 100px">
                                 <div
                                   class="InActive"
-                                  style="text-align: center"
-                                >
+                                  style="text-align: center">
                                   <span>Inactive</span>
                                 </div>
                               </td>
-                            </ng-template> 
-
-                            <td align="center" style="width: 37px">
-                              <a (click)="Action(list)">
-                                <img src="assets/Images/edt_icon.png"
+                            </ng-template>
+                            <td align="center" style="width: 37px; cursor: pointer;">
+                              <a (click)="Action(list)"
+                                ><img src="assets/Images/edt_icon.png"
                               /></a>
                             </td>
 
-                            <td align="center" style="width: 37px">
-                              <a (click)="delete(list)">
+                          <td align="center" style="width: 37px">
+                              <a (click)="delete(list)" style="cursor: pointer;">
                                 <img src="assets/Images/del_gry.png"/>
                               </a>
-                           </td> 
+                          </td> 
 
-                            
                           </tr>
+                          <ng-container *ngIf="!Termsdata.length && hide" [ngTemplateOutlet]="noItems"></ng-container>
+                          </ng-container>
+                          <ng-template #noItems>
+                                <tr><td colspan="9" style="text-align: center;">No Plans Available!</td></tr>
+                          </ng-template>
                         </tbody>
                       </table>
                     </div>
@@ -167,8 +169,9 @@
             </tr>
           </tbody>
         </table>
+       </form>
+
       </div>
     </div>
   </div>
 </div>
-

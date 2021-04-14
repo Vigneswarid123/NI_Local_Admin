@@ -138,12 +138,13 @@
 .divbox{
     background-color: #00a453;
     box-sizing: border-box;
-    padding: 7px 11px;
-    width: auto;
+    padding: 3px 11px;
+    width: max-content;
     border-radius: 2px;
     margin: 4px;
     color: #fff;
-    height: 30px;
+    height: 26px;
+    float: left;
  }
  .editdivbox{
 //     background-color: #00a453;

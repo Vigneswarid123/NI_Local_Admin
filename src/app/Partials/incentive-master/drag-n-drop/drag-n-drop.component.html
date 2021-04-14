@@ -1,0 +1,371 @@
+<div class="row">
+    <div class="drag_n_drop">
+        <div class="select-box-list-container">
+            <div class="col-12">
+                <div class="detailscls">Incentive Name : {{lineItemsInfo.incentiveName}} <br> Incentive Type: {{lineItemsInfo.incentiveType}}</div>
+                <div class="row">
+                    <div class="col-12 col-lg-5 terms_cond">
+                        <div class="vertical">
+                            <p class="pl-4">Select Incentive Detail Fields</p>
+                            <div class="drag pl-4">
+                                <!-- Drag and drop required fields -->
+                            </div>
+                            <div class="term">
+                                <div class="search">
+                                    <input type="text" *ngIf="search" [(ngModel)]="leftFilterText"  placeholder="Search">
+                                </div>
+
+                                <div class="select-box-list vertical" cdkDropList #origList="cdkDropList" [cdkDropListConnectedTo]="[selList]" (cdkDropListDropped)="dragOntoLeftItems($event)">
+
+                                    <ng-container *ngFor="let item of originalItems | alphaFilter : leftFilterText: alphaColumns :'dragndrop'; let i=index">
+                                            <div id="{{item.value.Varbl_Unique_Id}}" class="button"  >
+                                                  
+                                                        <div class="outlinebtn" style="border:1px solid #eee" [ngClass]="item.selected ? 'selected' : ''" (click)="item.selected = isDraggable(item.value.Varbl_Unique_Id,$event)"
+                                                            (dblclick)="addListItems(item.value.Varbl_Unique_Id,i)" [cdkDragDisabled]="(disabled || _glbDisableAll || !item.selected)">
+                                                            
+                                                            {{item.value.Varbl_Display_Name}}
+                                                        </div>
+                                                      
+                                                        <div class="pt-2 float-left">{{item.value.Varbl_Type_Name}}</div>
+                                                    </div>
+                                                        
+                                           <div>
+                                                <div *cdkDragPlaceholder></div>
+                                                <div class="lineitems-drag" *cdkDragPreview>
+                                                   {{item.value.Varbl_Display_Name}}
+                                                </div>
+                                           </div>
+                                                
+                                    </ng-container>
+                                   
+
+                                    <!-- <div *cdkDragPlaceholder class="select-box-placeholder vertical">
+                                        <span *ngFor="let leftPreview of getLeftSelectedList()">{{leftPreview.value.Varbl_Display_Name}}</span>
+                                    </div>
+                                    <div *cdkDragPreview class="select-box-preview vertical">
+                                        <span *ngFor="let leftPreview of getLeftSelectedList()">{{leftPreview.value.Varbl_Display_Name}}</span>
+                                    </div> -->
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-1">
+                        <div class="verContainer">
+                            <div class="vertical-center">
+                                <div (click)="addItems()" class="arrow">
+                                    <img src="assets/Images/Arrow_drag.png">
+                                </div>
+
+                                <!-- <div (click)="removeItems()" style="margin-top: 11px;margin-left: 33px;transform: scaleX(-1);">
+                                        <img src="assets/Images/Arrow_drag.png">
+                                    </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="row">
+                            <div class="col-2 col-lg-2">&nbsp;</div>
+                            <div class="col-10 col-lg-12 px-0">
+                                <p class="pb-2">Detail
+                                    <span class="num">{{_glbLineItemId}}</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+
+
+
+                            <div class="vertical1 col-12">
+
+                                <div>
+
+                                    <div>
+                                        <div class="terms_cond">
+                                            <div class="mt-4">
+                                                <div class="select-box-list vertical" cdkDropList #selList="cdkDropList" [cdkDropListConnectedTo]="[origList]" (cdkDropListDropped)="dragOntoRightItems($event)"
+                                                  style="scroll-snap-type:none !important;">
+                                                 <div class="col-12" style="direction:ltr;padding:0px !important;">
+                                                    <div *ngIf="_glbSelectEnabled">
+                                                        <div class="row term" style="direction:ltr;padding:0px !important;">
+                                                            <div class="col-12">
+                                                                <form [formGroup]="detailsFormGroup" (submit)="onDetailsSubmit()">
+
+
+                                                                    <div class="row">
+                                                                        <div class="col-12" style="display:flex;">
+
+                                                                            <div class="col-lg-4 px-0 align-self-center">
+                                                                                Line Item Name :
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div class="button">
+                                                                                    <div>
+                                                                                        <div>
+                                                                                            <input [ngModel]="_glbLineHdrName" class="outlinebtn" style="width:100%;border:1px solid #fff;" type="text" required="required" formControlName="LineHeader">
+
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-12" style="display:flex;" *ngFor="let items of detailsOptionValues.controls; let j=index">
+                                                                            <div class="col-lg-4 px-0 align-self-center">
+                                                                                {{detailsFormGroup.value.detailsOptionValues[j].detailName}} :
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div>
+                                                                                    <div formArrayName="detailsOptionValues">
+                                                                                        <div [formGroupName]="j">
+                                                                                            <div   [ngClass]="items.selected ? 'dragged':''"  (dblclick)="items.selected=onDragToLeft(detailsFormGroup.value.detailsOptionValues[j].detailId,'M')">
+                                                                                                <div class="button">
+                                                                                                <select formControlName="controlid" id="{{'ddl'+j }}"  style="width:100%;border:1px solid #fff !important;">
+                                                                                                    <option [value]="0">Select</option>
+                                                                                                    <option *ngFor="let item of detailOptions[detailsFormGroup.value.detailsOptionValues[j].detailId]" [value]="item.DropdownValue">{{item.DropdownName}}</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div style="display:flex;" class="col-12" *ngFor="let item of detailsMultiOptionValues.controls; let j=index">
+                                                                            <div class="col-lg-4 px-0 align-self-center">
+                                                                                {{detailsFormGroup.value.detailsMultiOptionValues[j].detailName}} :
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div >
+                                                                                    <div>
+                                                                                        <div formArrayName="detailsMultiOptionValues">
+                                                                                            <div class="button" [formGroupName]="j"  [ngClass]="item.selected ? 'dragged':''"  (dblclick)="item.selected=onDragToLeft(detailsFormGroup.value.detailsMultiOptionValues[j].detailId,'M')">
+                                                                                                <div class="mr-2" >
+                                                                                                    <div>
+                                                                                                    <angular2-multiselect formControlName="controlid" id="{{'ddlMulti'+detailsFormGroup.value.detailsMultiOptionValues[j].detailId}}" style="cursor: pointer; text-align: left; color:black" 
+                                                                                                        [data]="detailOptions[detailsFormGroup.value.detailsMultiOptionValues[j].detailId]"
+                                                                                                        [(ngModel)] ="multiDropSlctValues[detailsFormGroup.value.detailsMultiOptionValues[j].detailId]"
+                                                                                                        [settings]="dropdownSettings"
+                                                                                                        (onSelect)="onMultiItemSelect($event,detailsFormGroup.value.detailsMultiOptionValues[j].detailId)"
+                                                                                                        (onDeSelect)="OnMultiItemDeSelect($event,detailsFormGroup.value.detailsMultiOptionValues[j].detailId)"
+                                                                                                        (onSelectAll)="onMultiSelectAll($event,detailsFormGroup.value.detailsMultiOptionValues[j].detailId)"
+                                                                                                        (onDeSelectAll)="onMultiDeSelectAll($event,detailsFormGroup.value.detailsMultiOptionValues[j].detailId)"
+                                                                                                        (onClose)="onAngularMultiClose(detailsFormGroup.value.detailsMultiOptionValues[j].detailId,detailsFormGroup.value.detailsMultiOptionValues[j].varblId)">
+                                                                                                    </angular2-multiselect>
+                                                                                                    </div>
+                                                                                                    <!-- <div><small class="errormessage"
+                                                                                                        *ngIf="_glbFormSubmitted && detailsFormGroup.controls.detailsMultiOptionValues.controls[j].get('controlid').errors?.required">please select option</small></div> -->
+                                                                                                </div>
+                                                                                            </div>
+                                                                          
+                                                                                       </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-12" style="display:flex;" *ngFor="let item of detailsValues.controls; let idx = index">
+
+                                                                            <div class="col-lg-4 px-0 align-self-center">
+                                                                                {{detailsFormGroup.value.detailsValues[idx].detailName}} :
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div  >
+                                                                                    <div>
+                                                                                        <div formArrayName="detailsValues">
+                                                                                            <div [formGroupName]="idx">
+                                                                                                <div *ngIf="detailsFormGroup.value.detailsValues[idx].dataType==='text'" style="display:flex;">
+                                                                                                    <div style="align-self:center;">
+                                                                                                        <span *ngIf="detailsFormGroup.value.detailsValues[idx].detailId === 1006" style="font-size: 16px;margin-right: 1%;">$</span>
+                                                                                                        <span *ngIf="detailsFormGroup.value.detailsValues[idx].detailId === 1007" style="font-size: 16px;margin-right: 1%;">%</span>
+                                                                                                    </div>
+                                                                                                    <div *ngIf="detailsFormGroup.value.detailsValues[idx].isDealerSpec!=='Y'" class="button"  [ngClass]="item.selected ? 'dragged':''"  (dblclick)="item.selected=onDragToLeft(detailsFormGroup.value.detailsValues[idx].detailId,'M')">
+                                                                                                        <input  [ngModel]="detailsFormGroup.value.detailsValues[idx].data"
+                                                                                                        class="outlinebtn"  style="width:100%;border:1px solid #fff;"
+                                                                                                        type="text" required="required"
+                                                                                                        formControlName="idx" (keypress)="numberOnly($event,detailsFormGroup.value.detailsValues[idx].detailId)">
+                                                                                                    </div>
+                                                                                                    <div *ngIf="detailsFormGroup.value.detailsValues[idx].isDealerSpec==='Y'" class="button"  [ngClass]="item.selected ? 'dragged':''"  (dblclick)="item.selected=onDragToLeft(detailsFormGroup.value.detailsValues[idx].detailId,'M')">
+                                                                                                            <input class="outlinebtn" style="width:100%;opacity:0.6;border:1px solid #fff;" disabled placeholder="Dealer will submit"
+                                                                                                            type="text" title="{{detailsFormGroup.value.detailsValues[idx].detailName}}"
+                                                                                                            formControlName="idx" >
+                                                                                                        </div>
+                                                                                                </div>
+                                                                                               
+                                                                                                <span *ngIf="detailsFormGroup.value.detailsValues[idx].dataType==='date'" class="startDate">
+                                                                                                    <div>
+                                                                                                        <label class="wrapper" style="width:100%;">
+                                                                                                            <input type="date" class="outlinebtn formatcenter" style="width:100%;" formControlName="idx" required="required" (change)="changeFirstInput($event)"
+                                                                                                            />
+                                                                                                            <span></span>
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <small class="errormessage" *ngIf="_glbFormSubmitted && detailsFormGroup.controls.detailsValues.hasError('required')">Date is required</small>
+                                                                                                    </div>
+                                                                                                </span>
+
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row" *ngIf="_glbEnableTier">
+                                                                        <div style="display:flex;" class="col-12">
+
+                                                                            <div class="col-lg-4 px-0 align-self-center">
+                                                                                Tier :
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div class="button">
+
+                                                                                    <div (dblclick)="onDragToLeft(1008,'M')">
+                                                                                        <select formControlName="detailTierOption" [ngModel]="_updtTierValue !== '' ? _updtTierValue : '0' " id="Tier" style="width:100%;border:1px solid #fff !important;">
+                                                                                            <option [value]="0">Select</option>
+                                                                                            <option *ngFor="let item of ddlTierOption" [value]="item.DropdownValue">{{item.DropdownName}}</option>
+                                                                                        </select>
+
+
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div style="float:right;align-self:center;">
+                                                                                <img style="cursor: pointer;margin-left:5%;" title="Tier Options" class="addImg" src="assets/Images/circle_icon.png" (click)="openModal('tier-modal')">
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div *ngIf="_selectTier" style="display:flex;" class="col-12">
+
+                                                                            <div class="col-lg-4 px-0 align-self-center">
+                                                                                <div *ngIf="tierBtn" class="align-self-center">Unit Price :</div>
+                                                                                <div *ngIf="tierBtn1" class="align-self-center">MSRP :</div>
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div class="button">
+                                                                                    <div *ngIf="tierBtn" style="display:flex;">
+                                                                                        <span style=" margin-top: 2%;font-size: 16px;margin-right: 1%;">$</span>
+                                                                                        <input  [ngModel]="_updtUnitPriceVal" class="outlinebtn" style="width:100%;" type="text" required="required"
+                                                                                            formControlName="tierUnitPrice" (keypress)="numberOnly($event,detailId)">
+                                                                                    </div>
+                                                                                   
+                                                                                        <div *ngIf="tierBtn1" style="display:flex;">
+                                                                                            <span style=" margin-top: 2%;font-size: 16px;margin-right: 1%;">%</span>
+                                                                                            <input  [ngModel]="_updtMsrpVal" class="outlinebtn" style="width:100%;" type="text" required="required"
+                                                                                                formControlName="tierMSRP" (keypress)="numberOnly($event,detailId)">
+                                                                                        </div>
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+
+
+
+
+                                                                    <!-- <div *cdkDragPlaceholder class="select-box-placeholder vertical">
+                                                                        <span *ngFor="let rightPreview of getRightSelectedList()">{{rightPreview.value.Varbl_Display_Name}}</span>
+                                                                    </div>
+                                                                    <div *cdkDragPreview class="select-box-preview vertical">
+                                                                        <span *ngFor="let rightPreview of getRightSelectedList()">{{rightPreview.value.Varbl_Display_Name}}</span>
+                                                                    </div> -->
+                                                                </form>
+                                                            </div>
+
+                                                        </div>
+                                                        <div *ngIf="_glbSelectEnabled" class="mb-5 d-flex col-12" style="margin-top:10%;">
+
+                                                            <div  *ngIf="_glbIsSaved" class="col-md-4" style="margin-top:0.7%;">
+                                                                <div *ngIf="_glbIsSaved" style="display:flex;cursor: pointer;float:right" (click)="addLineItem()">
+                                                                    <div>
+                                                                        <img style="height:20px;width:20px;" class="addImg" src="assets/Images/circle_icon.png">
+                                                                    </div>
+                                                                    <div style="margin-left:5%;">Details</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-8" style="display:flex;margin:auto;">
+                                                                <label *ngIf="_glbIsSaved" style="margin-right:5%;margin-top:1%;">or</label>
+                                                                <input *ngIf="!_glbIsSaved && lineItemsInfo['viewType']==='U'" style="margin-right:5% !important;width:40%;background: #757171 !important;" type="button" value="Reset" class="btn_reset" (click)="resetSelection('U')">
+                                                                <input *ngIf="!_glbIsSaved && lineItemsInfo['viewType']!=='U'" style="margin-right:5% !important;width:40%;background: #757171 !important;" type="button" value="Reset" class="btn_reset" (click)="resetSelection('')">
+                                                                <input *ngIf="!_glbIsSaved" style="margin-right:5% !important;width:40%;background: #252525 !important;" type="button" value="Back" class="btn_back" (click)="onCancel()">
+                                                                <input *ngIf="!_glbIsSaved" type="button" value="Save" class="btn_save" style="width:40%;background: #00a453 !important;" (click)="onDetailsSubmit()">
+                                                                <input *ngIf="_glbIsSaved" type="button" value="View" class="btn_save" style="width:40%;background: #00a453 !important;" (click)="onCancel()">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="!_glbSelectEnabled">
+
+                                                        <div class="button">
+                                                            <div class="select-box-list-item">
+                                                                <input class="outlinebtn" style="width:75%;" type="text" disabled>
+                                                                <input class="outlinebtn" style="width:75%;" type="text" disabled>
+                                                                <input class="outlinebtn" style="width:75%;" type="text" disabled>
+                                                                <input class="outlinebtn" style="width:75%;" type="text" disabled>
+                                                                <input class="outlinebtn" style="width:75%;" type="text" disabled>
+                                                                <input class="outlinebtn" style="width:75%;" type="text" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <div style="margin:auto;width:30%;">
+                                                            <input  type="button"  value="Back" class="btn_back" style="width: 100%;margin-top: 10% !important; background: #252525 !important;"  (click)="onCancel()">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                 </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <jw-modal id="tier-modal" style="height:200px;">
+
+            <h4 style="margin-top:2%;text-align:center;">Select required Fields</h4>
+            <div style="height:150px;margin-top:9%;">
+                <div class="button">
+                    <div style="width:87%;margin-left:17%;cursor: pointer;">
+
+                        <div class="outlinebtn select-box-list-item" [ngClass]="tierBtn ? 'selected' : ''" (click)="tierBtn=true;tierBtn1=false;">Unit Price</div>
+                        <div style="margin-top:5%" [ngClass]="tierBtn1 ? 'selected' : ''" (click)="tierBtn1=true;tierBtn=false;" class="outlinebtn select-box-list-item">MSRP</div>
+
+                    </div>
+                </div>
+                <div style="width:100%;align-self:center;">
+                    <input type="button" value="OK" class="btn_save" style="width:20%;margin-top:7%;margin-left: 36%;" (click)="applyToModal('tier-modal')">
+                </div>
+            </div>
+
+        </jw-modal>
+    </div>
+</div>

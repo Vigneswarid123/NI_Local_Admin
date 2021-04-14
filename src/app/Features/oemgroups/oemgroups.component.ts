@@ -19,6 +19,7 @@ import {BrandpopupComponent} from '../brandpopup/brandpopup.component';
 export class OemgroupsComponent implements OnInit {
 
   groupForm: FormGroup;
+  SearchOemGroupForm: FormGroup;
   submitted = false;
   addclick = false;
   showgrid = false;
@@ -59,6 +60,10 @@ export class OemgroupsComponent implements OnInit {
   phoneFormat: any[] = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
   EditCheck: boolean;
   editStatus: string;
+  atozFltr:boolean=false;
+  hide: boolean;
+  alphaSrch:string='';
+  alphaColumns:any=["OEM_Name"];
 
   constructor(private fB: FormBuilder, private ApiService: ApiService,private sanitizer: DomSanitizer,private renderer: Renderer2, public dialog: MatDialog) {
 
@@ -80,19 +85,16 @@ export class OemgroupsComponent implements OnInit {
       address1 :[''],
       address2 :[''],
       city:[''],
-      state : [''],
-      country:[''],
+      state : ['0'],
+      country:['0'],
       zip:[''],
       phone :[''],
-
+      status:['']
 
     });
-    // this.brandpopupForm = this.fB.group({
-    //    brandname:[''],
-    //    branddesc:[''],
-    //    brandurl:[''],
-    //    file : ['']
-    // });
+    this.SearchOemGroupForm =this.fB.group({
+      txtsearch:""
+    });
    }
    
 
@@ -141,23 +143,29 @@ reader.onload = (event) => {
     }
   }
 
+  tempOemGroups:any=[];
   getSearchData(e){
   
-    this.GetOEMGroups()
+    //this.GetOEMGroups()
+    this.alphaSrch= this.SearchOemGroupForm.controls['txtsearch'].value;
+    console.log(this.alphaSrch);
+    this.oemgroups=this.tempOemGroups;
 
   }
 
   GetOEMGroups(){
     this.oemgroups=[];
     let expression='';
-    if(this.txtsearch !="")
-    expression = " OEM_Name like '%"+this.txtsearch+"%'";
-    const obj = { "Id": 0,expression :expression };
+    // if(this.txtsearch !="")
+    // expression = " OEM_Name like '%"+this.txtsearch+"%'";
+    const obj = { "Id": 0,expression :"" };
     this.ApiService.GetOEMGroupsList(obj).subscribe((response:any)=>{
          console.log(response.response)
          if(response.status==200){
-           if(response.response.length !=0)
+           if(response.response.length !=0){
            this.oemgroups=response.response;
+           this.tempOemGroups = this.oemgroups;
+           }
            else
             this.noGroup=true;
          }
@@ -165,6 +173,7 @@ reader.onload = (event) => {
     })
   }
   showAddPanel() {
+    this.submitted = false;
     this.addclick = true;
     this.showgrid = false;
     this.AddView = true;
@@ -236,15 +245,15 @@ reader.onload = (event) => {
 
           //file:[response.response[0].OEM_Logo]
        });
-       this.editStatus = response.response[0].OEM_Status;
+      // this.editStatus = response.response[0].OEM_Status;
        if(response.response[0].contactdetails!=null)
           this.groupcontact = JSON.parse(response.response[0].contactdetails);
           else
           this.groupcontact = []
-       if(response.response[0].OEM_Status == 'Y')
-          this.groupForm.value.status = true;
-        else
-        this.groupForm.patchValue({status: false});
+      //  if(response.response[0].OEM_Status == 'Y')
+      //     this.groupForm.value.status = true;
+      //   else
+      //   this.groupForm.patchValue({status: false});
         // let objectURL = 'data:image/png;base64,' + response.response[0].OEM_Logo;
         // this.selectedFile = this.sanitizer.bypassSecurityTrustUrl(objectURL);
         this.selectedFile=response.response[0].OEM_Logo;
@@ -336,7 +345,8 @@ reader.onload = (event) => {
   }
 
   getStates(){
-    this.ApiService.getStates('states?185').subscribe((res:any)=>{
+    const obj={sg_id :0}
+    this.ApiService.postmethod('States/get',obj).subscribe((res:any)=>{
      if(res.status = 200)
        this.statesData=res.response;
 
@@ -399,11 +409,12 @@ reader.onload = (event) => {
     // if(this.groupForm.value.status == "Y" || this.groupForm.value.status == "true")
     // editstatus = 'Y';
     const obj1 = {
+      "action" : 'U',
       oemid: groupid,
      
       oemname: this.groupForm.value.groupname,
       oembrands : this.selectedbrandid.join(','),
-      oemlogo:this.selectedFile,
+      //oemlogo:this.selectedFile,
       oemaddress1 : this.groupForm.value.address1,
       oemaddress2 : this.groupForm.value.address2,
       oemcit:this.groupForm.value.city,
@@ -412,7 +423,7 @@ reader.onload = (event) => {
       oemzip : this.groupForm.value.zip,
       oemphone : this.groupForm.value.phone,
       oemcontact : this.groupcontact,
-      oemstatus: this.editStatus
+      oemstatus: this.groupForm.value.status
     };
    
       formdata.append('data', JSON.stringify(obj1));
@@ -495,6 +506,19 @@ reader.onload = (event) => {
       this.GetBrandsList();
       console.log('Dialog result:', resp);
     });
+  }
+  atoZClick(){
+    if(!this.atozFltr)
+    this.atozFltr=true;
+    else
+    this.atozFltr=false;
+  }
+  onAlphaCatch(alphabet){
+    this.hide=true;
+    this.atozFltr=true;
+    this.alphaSrch=alphabet;
+    this.oemgroups=this.tempOemGroups;
+    console.log(this.alphaSrch);
   }
 
 }

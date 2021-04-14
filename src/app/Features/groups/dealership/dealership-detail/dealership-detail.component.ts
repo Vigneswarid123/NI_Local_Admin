@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../../../Core/_providers/api-service/api.service';
 import { AdminServiceService } from '../../../../Core/_providers/admin-service/admin-service.service';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-dealership-detail',
@@ -13,7 +14,7 @@ export class DealershipDetailComponent implements OnInit {
   obj: any = [];
   dealersList:any =[];
   divActive : any = 0;
-  ImageFolder="http://niapi.local.com/api/resources/images/";
+  ImageFolder=`${environment.apiUrl}`+"resources/images/";
   dealersDetails: any =[];
   index: string;
 

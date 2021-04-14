@@ -1,0 +1,189 @@
+<div class="select-box-list-container">
+  <form [formGroup]="dynamicForm" class="dynamicformcls" (ngSubmit)="OnSubmit()">
+    <div class="col-12">
+      <div class="detailscls">Incentive Name : {{glbIncentiveName}} <br> Incentive Type: {{glbIncentiveType}}</div>
+      <div class="row">
+        <div class="col-12 col-lg-5 terms_cond">
+          <div class="vertical">
+            <p class="pl-4">Select Terms & Conditions</p>
+            <div class="drag pl-4"></div>
+            <div class="search" style="margin-left: 20px;">
+              <input type="text" *ngIf="!disabled && search" [(ngModel)]="leftFilterText" [disabled]="disabled"
+                [ngModelOptions]="{standalone: true}" placeholder="Search">
+            </div>
+            <div class="term">
+            
+            
+              <div class="select-box-list vertical" cdkDropList #origList="cdkDropList" [cdkDropListConnectedTo]="[selList]"
+                (cdkDropListDropped)="dragOntoLeftItems($event)">
+            
+            
+                <div class=" button" *ngFor="let item of originalItems | listfilter:leftFilterText; let i=index">
+            
+                  <div id="{{item.value.MIT_ID}}">
+                    <div class="outlinebtn select-box-list-item1" [ngClass]="item.selected ? 'selected' : ''"
+                      (click)="item.selected= (!disabled && !item.selected)" (dblclick)="isSingleClick=true;addListItems(i)" cdkDrag
+                      [cdkDragDisabled]="disabled || !item.selected">{{item.value.MIT_DISPLAYNAME}}</div>
+                    <div class="pt-2 float-left">{{item.value.Name}}</div>
+                  </div>
+                </div>
+            
+                <div *cdkDragPlaceholder class="select-box-placeholder vertical">
+                  <span *ngFor="let leftPreview of getLeftSelectedList()">{{leftPreview.value.MIT_DISPLAYNAME}}</span>
+                </div>
+                <div *cdkDragPreview class="select-box-preview vertical">
+                  <span *ngFor="let leftPreview of getLeftSelectedList()">{{leftPreview.value.MIT_DISPLAYNAME}}</span>
+                </div>
+            
+            
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-7">
+          <div class="row">
+            <div class="col-2 col-lg-2">&nbsp;</div>
+            <div class="col-10 col-lg-10">
+              <p class="pb-2 ml-4" style="position: absolute;left: 26px;">Terms & Conditions</p>
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="col-2 col-lg-2 text-center img_cursor Arrows">
+              <div (click)="addItems()"><img src="assets/Images/Arrow_drag.png"></div>
+
+              <!-- <div (click)="removeItems()" style="margin-top: 10px;transform: scaleX(-1);"><img
+                                src="assets/Images/Arrow_drag.png"></div> -->
+            </div>
+
+
+            <div class=" col-10 col-lg-10 vertical1">
+
+              <div class="col-12 col-lg-12">
+
+                <div class="row " style="margin-top: -8px;">
+                  <div class="col-10 col-lg-10 terms_cond">
+                    <div class="term" style="direction: ltr;">
+
+                      <div class="select-box-list vertical" cdkDropList #selList="cdkDropList"
+                        [cdkDropListConnectedTo]="[origList]" (cdkDropListDropped)="dragOntoRightItems($event)">
+
+                        <div class=" button" *ngFor="let item of selectedItems; let i =index ">
+                          <div id="{{item.value.MIT_ID}}">
+                            <div class="outlinebtn select-box-list-item" [ngClass]="item.selected ? 'selected' : ''"
+                              (click)="item.selected= (!disabled && !item.selected)"
+                              (dblclick)="isSingleClick=true;RemoveListItems(i,item.value.MIT_ID,'1')" cdkDrag
+                              [cdkDragDisabled]="disabled || !item.selected">{{item.value.MIT_DISPLAYNAME}}</div>
+                          </div>
+                          <!-- <div class="pt-2 float-left">{{item.value.Name}}</div> -->
+                        </div>
+
+                        <div formArrayName="termValues" class="mt-2">
+                          <div *ngFor="let term of termValues.controls; let idx = index" [formGroupName]="idx">
+                            <div>
+                              <input formControlName="idx" required="required"
+                                data-placeholder="{{term.value.RightTermName}}"
+                                (dblclick)="RemoveListItems(idx,term.value.termid,'2')">
+                            </div>
+                            <div>
+                              <small class="errormessage"
+                                *ngIf="submitted && dynamicForm.controls.termValues.controls[idx].get('idx').errors?.required">Value
+                                is required</small>
+                            </div>
+                          </div>
+                        </div>
+                        <div formArrayName="termOptionValues" class="mt-2">
+                          <div *ngFor="let option of termOptionValues.controls;let i=index" [formGroupName]="i">
+                            <div>
+                              <select formControlName="controlid" id="{{'t'+i }}"
+                                (dblclick)="RemoveListItems(i,option.value.termid,'3')">
+                                <option value="">Select ({{option.value.placeholder}})</option>
+                                <option *ngFor="let val of termsOptions[i]" [value]="val.to_id">{{val.to_Name}}</option>
+                              </select>
+                          
+
+                            </div>
+                            <div><small class="errormessage"
+                                *ngIf="submitted && dynamicForm.controls.termOptionValues.controls[i].get('controlid').errors?.required">Select
+                                option</small></div>
+                          </div>
+                        </div>
+                        
+                        <div formArrayName="termMultipleOptionValues" class="mt-2">
+                          <div *ngFor="let option of termMultipleOptionValues.controls;let k=index" [formGroupName]="k">
+                            <div>
+                          
+                              <angular2-multiselect style=" padding: 10px;cursor: pointer; text-align: left; color:black"  formControlName="multicontrolid" id="{{'term'+k }}"
+                              (dblclick)="RemoveListItems(k,option.value.termid,'5')"
+                              
+                                  [data]="dropdownList[k]" [(ngModel)]="selectedoptionItems[k]"
+                                  [settings]="dropdownSettings" 
+                                  (onSelect)="onItemSelect($event)" 
+                                  (onDeSelect)="OnItemDeSelect($event)"
+                                  (onSelectAll)="onSelectAll($event)"
+                                  (onDeSelectAll)="onDeSelectAll($event)" ></angular2-multiselect>
+
+                            </div>
+                            <div><small class="errormessage"
+                                *ngIf="submitted && dynamicForm.controls.termMultipleOptionValues.controls[k].get('multicontrolid').errors?.required">select one  option</small></div>
+                          </div>
+                        </div>
+
+                        <div formArrayName="DealerSpecificTerms" class="mt-2">
+                          <div *ngFor="let item of DealerSpecificTerms.controls; let ds = index" [formGroupName]="ds">
+                            <div>
+                              <input type="text" id="{{item.value.termid}}" formControlName="ds"
+                                placeholder="Dealer Will Submit" title="{{item.value.RightTermName}}"
+                                readonly="readonly" (click)="showErrorMessage()"
+                                (dblclick)="RemoveListItems(ds,item.value.termid,'4')">
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        <div *cdkDragPlaceholder class="select-box-placeholder vertical">
+                          <span
+                            *ngFor="let rightPreview of getRightSelectedList()">{{rightPreview.value.MIT_DISPLAYNAME}}</span>
+                        </div>
+                        <div *cdkDragPreview class="select-box-preview vertical">
+                          <span
+                            *ngFor="let rightPreview of getRightSelectedList()">{{rightPreview.value.MIT_DISPLAYNAME}}</span>
+                        </div>
+
+                      </div>
+                      <div *ngIf="globalSelected">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                      </div>
+
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2 col-lg-2">&nbsp;</div>
+
+                <div class="col-2 col-lg-2">&nbsp;</div>
+                <div class="col-10 col-lg-10  terms_cond">
+                  <input value="Back" class=" col-5 col-lg-5 btn_back" (click)="OnCancelTerms()">
+                  <input value="Save" class="col-5 col-lg-5 btn_save" style="margin-left: 5px !important;" type="submit"
+                    (click)="OnSubmit()">
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>
