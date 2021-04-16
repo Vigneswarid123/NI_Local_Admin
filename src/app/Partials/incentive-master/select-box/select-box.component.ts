@@ -109,7 +109,7 @@ export class SelectBoxComponent implements OnInit {
     this.selectedoptionItems = [];
     this.dropdownSettings = { 
       singleSelection: false, 
-      text:"Select(Dealer belongs to a group)",  
+      text:"Select",  
       selectAllText:'Select All',
       unSelectAllText:'UnSelect All',
       enableSearchFilter: true,
@@ -314,6 +314,8 @@ export class SelectBoxComponent implements OnInit {
     }
     if(type=="5"){
       this.termMultipleOptionValues.removeAt(i);
+      this.dropdownList.splice(i,1);
+     delete this.dropdownSettings[i];
     //this.SelectedEditTermItems.splice(i,1);
     }
 
@@ -430,7 +432,7 @@ export class SelectBoxComponent implements OnInit {
           
           item.selected = false;
           this.addMultiSelectField(item.value.MIT_ID, item.value.MIT_DISPLAYNAME);
-            this.getOptionsByTermMultiSelectAdd(item.value.MIT_ID);
+            this.getOptionsByTermMultiSelectAdd(item.value.MIT_ID,item.value.MIT_DISPLAYNAME);
         }
         
         
@@ -584,7 +586,7 @@ export class SelectBoxComponent implements OnInit {
       })
    }
 
-   getOptionsByTermMultiSelectAdd(termid){
+   getOptionsByTermMultiSelectAdd(termid,termname){
      //this.selectedoptionItems=[];
     this.termsMultipleOptions=[];
     const obj = { "TermID": termid,"expression": ""}
@@ -599,8 +601,11 @@ export class SelectBoxComponent implements OnInit {
            arr.length === 0 ?
             (arr = [{ id: element.to_id, itemName: element.to_Name }]) : (arr.push({ id: element.to_id, itemName: element.to_Name }));
            });
-           this.dropdownList[this.multicnt] = arr;
-           this.dropdownSettings={text:'select', badgeShowLimit:1}
+           if(this.termMultipleOptionValues.length > 0){
+
+           }
+           this.dropdownList[this.termMultipleOptionValues.length-1] = arr;
+           this.dropdownSettings[this.termMultipleOptionValues.length-1]={text:'select ('+termname+')', badgeShowLimit:1}
           // console.log("ddl",this.dropdownList)
            this.multicnt++;
         }

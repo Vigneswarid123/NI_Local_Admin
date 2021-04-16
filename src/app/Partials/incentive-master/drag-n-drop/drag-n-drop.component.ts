@@ -85,8 +85,9 @@ export class DragNDropComponent implements OnInit {
   _yearSlctd: boolean = false; _glbModelId: number = 0; _regionSlctd: boolean = false;
   _itemsUpdated: boolean = false; _enableRightDrag: boolean = false;
   _removeItem: boolean = false; _saleTypeSelect: boolean = false;
-  multiDropSlctValues: any = [];
-  dropdownSettings = {};_glbDraggedTypeId: number=0;
+  multiDropSlctValues: any = []; singlDropSlctValues: any = [];
+  dropdownSettings = {}; dropdownSettingsSingle = {};
+  _glbDraggedTypeId: number=0;
 
   // multiArrayItems: {
   //   detailId: number;
@@ -116,10 +117,7 @@ export class DragNDropComponent implements OnInit {
     this._glbDetailCnt++;
    
     this.detailsFormGroup = this.formBuilder.group({
-      tierUnitPrice: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
-      tierMSRP: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
       LineHeader: "",
-      detailTierOption: ['', ''],
       detailsValues: new FormArray([]),
       detailsOptionValues: new FormArray([]),
       detailsMultiOptionValues: new FormArray([])
@@ -127,6 +125,7 @@ export class DragNDropComponent implements OnInit {
     })
 
     this.multiDropSlctValues = [];
+    this.singlDropSlctValues = [];
     this.dropdownSettings = {
       singleSelection: false,
       text: 'Select',
@@ -138,6 +137,18 @@ export class DragNDropComponent implements OnInit {
       badgeShowLimit: 1
       //lazyLoading : true
     };
+    this.dropdownSettingsSingle = {
+      singleSelection: true,
+      text: 'Select',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      enableSearchFilter: true,
+      classes: 'myclass custom-class',
+      primaryKey: "id",
+      badgeShowLimit: 1
+      //lazyLoading : true
+    };
+    
 
 
     if (this.selectedList != null && this.selectedList != []) {
@@ -468,18 +479,16 @@ export class DragNDropComponent implements OnInit {
       }
 
       if (this._glbDraggedId === 1008) {
-        this._updtTierValue = "0";
+        this.singlDropSlctValues[this._glbDraggedId]=[];
+     
         $('#1006').removeClass('disabled');
         $('#1007').removeClass('disabled');
-        this._tierSelected = false;
-        this._glbEnableTier = false;
-        this._selectTier = false;
+     
         this.tierBtn = false;
         this.tierBtn1 = false;
         //this.ddlTierOption=["",""];
-        this._updtUnitPriceVal="";
-        this._updtMsrpVal="";
-        this.detailsFormGroup.value.detailTierOption = "";
+       
+      
       }
       
       // this.detailsFormGroup.controls["detailsMultiOptionValues"] = new FormArray([]);
@@ -488,10 +497,7 @@ export class DragNDropComponent implements OnInit {
      
 
      this.detailsFormGroup = this.formBuilder.group({
-      tierUnitPrice: this._glbDraggedId === 1008 ? "" : this._updtUnitPriceVal,
-      tierMSRP: this._glbDraggedId === 1008 ? "" : this._updtMsrpVal,
-      LineHeader: this._glbLineHdrName,
-      detailTierOption:this._glbDraggedId === 1008 ?  [""] : this.ddlTierOption,
+      LineHeader: this.detailsFormGroup.controls['LineHeader'].value,
       detailsValues: new FormArray([]),
       detailsOptionValues: new FormArray([]),
       detailsMultiOptionValues: new FormArray([])
@@ -520,9 +526,6 @@ export class DragNDropComponent implements OnInit {
          
           if (element.selected) {
               this._glbEnableTier = true;
-
-              this.tierBtn = false;
-              this.tierBtn1 = false;
                                 
           }
           
@@ -551,12 +554,7 @@ export class DragNDropComponent implements OnInit {
          
         }
 
-        if (element.value.Varbl_Unique_Id === 1000) {
-          if (!element.selected)
-            element.selected = true;
-        }
-
-
+       
       })
 
     fromList.sort((l1, l2): number => {
@@ -609,11 +607,11 @@ export class DragNDropComponent implements OnInit {
           else if (item.value.Varbl_Type === 3 || item.value.Varbl_Type === 8) {
 
             if (item.value.Varbl_Type === 3) {
-              if (item.value.Varbl_Unique_Id !== 1008)
+              // if (item.value.Varbl_Unique_Id !== 1008){
                 this.addSelectField(item.value.Varbl_Unique_Id, item.value.Varbl_Id, item.value.Varbl_Display_Name, item.value.Varbl_Data_Type, item.data, item.value.Varbl_Dealer_Specific);
-              else{
-                this.getIncentiveDropdownInfo(item.value.Varbl_Unique_Id,  item.value.Varbl_Id);
-              }
+              //}
+                 this.getIncentiveDropdownInfo(item.value.Varbl_Unique_Id,  item.value.Varbl_Id);
+             
             }
 
             if (item.value.Varbl_Type === 8) {
@@ -670,21 +668,7 @@ export class DragNDropComponent implements OnInit {
     }
 
    /* Populating dropdowns starts here*/
-    if (this.lineItemsInfo["viewType"] === "U") {
 
-      if (this._selectTier) {
-        this._updtTierValue= this._updtTierValue;
-        if (this._updtUnitPriceVal != "") {
-          this.tierBtn = true;
-          this.tierBtn1 = false;
-        }
-        if (this._updtMsrpVal != "") {
-          this.tierBtn1 = true;
-          this.tierBtn = false;
-        }
-      }
-   
-    }
     /* Populating dropdowns ends here*/
 
     /** Sorting of Selected List Items goes here */
@@ -955,15 +939,20 @@ export class DragNDropComponent implements OnInit {
                           }
                         }
                     }
+                    if(this.singlDropSlctValues[varId] !== undefined){
+                      for(let i=0;i<this.singlDropSlctValues[varId].length;i++){
+                       
+                           if(this.singlDropSlctValues[varId][i].id === element.DropdownValue.toString()){
+                             this.singlDropSlctValues[varId][i].id = element.DropdownValue;
+                             this.singlDropSlctValues[varId][i].itemName = element.DropdownName;
+                           }
+                         }
+                     }
                     
                   }
               });
 
-              if (varId === 1008){
-                this.ddlTierOption = res.response;
-                this._updtTierValue = this._updtTierValue;
-              }
-              else
+            
                 this.detailOptions[varId] = arr;
               this._glbcnt++;
               this.SpinnerService.hide(); 
@@ -1027,24 +1016,7 @@ export class DragNDropComponent implements OnInit {
     }
    }
 
-    
-    if (this._tierSelected) {
-      if (this.detailsFormGroup.controls['detailTierOption'].touched) {
-        if (!this._selectTier) {
-          this.alertify.error("Please select Tier Options");
-          this.emitCount++;
-          return;
-        }
-      }
-      else {
-        if (this.detailsFormGroup.controls['detailTierOption'].value === "") {
-          this.alertify.error("Please select Tier Value");
-          this.emitCount++;
-          return;
-        }
-      }
-    }
-
+   
     if (this.detailsFormGroup.controls['LineHeader'].value === "") {
       this.alertify.error("Please submit the Header");
       this.emitCount++;
@@ -1060,7 +1032,31 @@ export class DragNDropComponent implements OnInit {
       if (this.detailsFormGroup.value.detailsOptionValues.length > 0) {
 
         for (let i = 0; i < this.detailsFormGroup.value.detailsOptionValues.length; i++) {
-          this.componentFinalArray.push({ 'insertType': '', 'inli_v_id': this.detailsFormGroup.value.detailsOptionValues[i].varblId, 'inli_data': this.detailsFormGroup.value.detailsOptionValues[i].controlid, 'inli_status': 'Y', 'inli_condition_id': '' });
+          if(this.detailsFormGroup.value.detailsOptionValues[i].detailId === 1008)
+          {
+            if(this.singlDropSlctValues.length>0){
+  
+              if(this.singlDropSlctValues[this.detailsFormGroup.value.detailsOptionValues[i].detailId] !== undefined){
+                for(let j=0;j<this.singlDropSlctValues[this.detailsFormGroup.value.detailsOptionValues[i].detailId].length;j++){
+                  
+                 
+                  this.componentFinalArray.push({ 'insertType': 'TIER', 'inli_v_id':  this.detailsFormGroup.value.detailsOptionValues[i].varblId, 'inli_data': this.singlDropSlctValues[this.detailsFormGroup.value.detailsOptionValues[i].detailId][j].id, 'inli_status': 'Y', 'inli_condition_id': '' });
+                 
+                }
+              }
+            }
+          }
+          else{
+          if(this.singlDropSlctValues.length>0){
+
+            if(this.singlDropSlctValues[this.detailsFormGroup.value.detailsOptionValues[i].detailId] !== undefined){
+              for(let j=0;j<this.singlDropSlctValues[this.detailsFormGroup.value.detailsOptionValues[i].detailId].length;j++){
+                
+                this.componentFinalArray.push({ 'insertType': '', 'inli_v_id': this.detailsFormGroup.value.detailsOptionValues[i].varblId, 'inli_data': this.singlDropSlctValues[this.detailsFormGroup.value.detailsOptionValues[i].detailId][j].id, 'inli_status': 'Y', 'inli_condition_id': '' });
+              }
+            }
+          }
+        }
         }
       }
 
@@ -1080,21 +1076,36 @@ export class DragNDropComponent implements OnInit {
       if (this.detailsFormGroup.value.detailsValues.length > 0) {
 
         for (let j = 0; j < this.detailsFormGroup.value.detailsValues.length; j++) {
-
+          if(this.detailsFormGroup.value.detailsValues[j].detailId === 1006 || this.detailsFormGroup.value.detailsValues[j].detailId === 1007){
+          if(this._selectTier){
+            if (this.tierBtn) {
+              this.tierInfo.push({ 'insertType': 'TIERVARBL', 'inli_v_id': this.detailsFormGroup.value.detailsValues[j].varblId, 'inli_data': this.detailsFormGroup.value.detailsValues[j].idx, 'inli_status': 'Y', 'inli_condition_id': '' });
+            }
+            if (this.tierBtn1) {
+              this.tierInfo.push({ 'insertType': 'TIERVARBL', 'inli_v_id': this.detailsFormGroup.value.detailsValues[j].varblId, 'inli_data': this.detailsFormGroup.value.detailsValues[j].idx, 'inli_status': 'Y', 'inli_condition_id': '' });
+            }
+          }
+          else{
+            this.componentFinalArray.push({ 'insertType': '', 'inli_v_id': this.detailsFormGroup.value.detailsValues[j].varblId, 'inli_data': this.detailsFormGroup.value.detailsValues[j].idx, 'inli_status': 'Y', 'inli_condition_id': '' });
+          }
+        }
+        else{
           this.componentFinalArray.push({ 'insertType': '', 'inli_v_id': this.detailsFormGroup.value.detailsValues[j].varblId, 'inli_data': this.detailsFormGroup.value.detailsValues[j].idx, 'inli_status': 'Y', 'inli_condition_id': '' });
+        }
+          
 
         }
       }
 
-      if (this.detailsFormGroup.controls['detailTierOption'].value !== "") {
-        this.componentFinalArray.push({ 'insertType': 'TIER', 'inli_v_id': this._glbTierVarId, 'inli_data': this.detailsFormGroup.controls['detailTierOption'].value, 'inli_status': 'Y', 'inli_condition_id': '' });
-        if (this.tierBtn) {
-          this.tierInfo.push({ 'insertType': 'TIERVARBL', 'inli_v_id': this._glbUnitVarId, 'inli_data': this.detailsFormGroup.controls['tierUnitPrice'].value, 'inli_status': 'Y', 'inli_condition_id': '' });
-        }
-        if (this.tierBtn1) {
-          this.tierInfo.push({ 'insertType': 'TIERVARBL', 'inli_v_id': this._glbMsrpVarId, 'inli_data': this.detailsFormGroup.controls['tierMSRP'].value, 'inli_status': 'Y', 'inli_condition_id': '' });
-        }
-      }
+      // if (this.detailsFormGroup.controls['detailTierOption'].value !== "") {
+      //   this.componentFinalArray.push({ 'insertType': 'TIER', 'inli_v_id': this._glbTierVarId, 'inli_data': this.detailsFormGroup.controls['detailTierOption'].value, 'inli_status': 'Y', 'inli_condition_id': '' });
+      //   if (this.tierBtn) {
+      //     this.tierInfo.push({ 'insertType': 'TIERVARBL', 'inli_v_id': this._glbUnitVarId, 'inli_data': this.detailsFormGroup.controls['tierUnitPrice'].value, 'inli_status': 'Y', 'inli_condition_id': '' });
+      //   }
+      //   if (this.tierBtn1) {
+      //     this.tierInfo.push({ 'insertType': 'TIERVARBL', 'inli_v_id': this._glbMsrpVarId, 'inli_data': this.detailsFormGroup.controls['tierMSRP'].value, 'inli_status': 'Y', 'inli_condition_id': '' });
+      //   }
+      // }
 
       if (this.detailsFormGroup.controls['LineHeader'].value !== "") {
         this.lineHeader.push({ 'insertType': '', 'inl_id': this.lineItemsInfo["lineHdrId"], 'inl_mi_id': this.lineItemsInfo["incentiveId"], 'inl_name': this.detailsFormGroup.controls['LineHeader'].value })
@@ -1151,15 +1162,25 @@ export class DragNDropComponent implements OnInit {
           this.updateLineItems.forEach(
             (updtElement) => {
 
+              if(updtElement.Varbl_Type === 8){
               this.multiDropSlctValues[updtElement.Varbl_Unique_Id] === undefined
               ? (this.multiDropSlctValues[updtElement.Varbl_Unique_Id] = [{ id: updtElement.Varbl_Data, itemName: "" }])
               : this.multiDropSlctValues[updtElement.Varbl_Unique_Id].push({
                 id: updtElement.Varbl_Data,
                 itemName: "",
               });
-              
-              if (updtElement.Varbl_Unique_Id === 1001)
-                this._glbLineHdrName = updtElement.Varbl_LineHdr_Name;
+            }
+
+            if(updtElement.Varbl_Type === 3){
+              this.singlDropSlctValues[updtElement.Varbl_Unique_Id] === undefined
+              ? (this.singlDropSlctValues[updtElement.Varbl_Unique_Id] = [{ id: updtElement.Varbl_Data, itemName: "" }])
+              : this.singlDropSlctValues[updtElement.Varbl_Unique_Id].push({
+                id: updtElement.Varbl_Data,
+                itemName: "",
+              });
+            }
+             
+           this._glbLineHdrName = updtElement.Varbl_LineHdr_Name;
 
 
               this.originalItems.forEach(
@@ -1212,11 +1233,10 @@ export class DragNDropComponent implements OnInit {
                         this.tierBtn1 = true;
                       }
                     }
+                    
+                    
                   }
-                  if (element.value.Varbl_Unique_Id === 1000) {
-                    element.selected = true;
-                    element.data = updtElement.Varbl_LineHdr_Name;
-                  }
+                  
 
                 })
               itemCounter++;
@@ -1329,10 +1349,7 @@ export class DragNDropComponent implements OnInit {
 
 
     this.detailsFormGroup = this.formBuilder.group({
-      tierUnitPrice: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
-      tierMSRP: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
       LineHeader: "",
-      detailTierOption: ['', ''],
       detailsValues: new FormArray([]),
       detailsOptionValues: new FormArray([]),
       detailsMultiOptionValues: new FormArray([]),
@@ -1474,14 +1491,13 @@ export class DragNDropComponent implements OnInit {
   applyToModal(id) {
     this._selectTier = true;
     if (this.tierBtn) {
-      this._updtMsrpVal = "";
-      $('#1006').addClass('disabled');
-      $('#1007').removeClass('disabled');
+      let index = this.originalItems.findIndex(x => x.value.Varbl_Unique_Id === 1006);
+      this.addListItems(1006,index);
+     
     }
     if (this.tierBtn1) {
-      this._updtUnitPriceVal = "";
-      $('#1006').removeClass('disabled');
-      $('#1007').addClass('disabled');
+      let index = this.originalItems.findIndex(x => x.value.Varbl_Unique_Id === 1007);
+      this.addListItems(1007,index);
     }
     this.closeModal(id);
   }
@@ -1602,24 +1618,69 @@ export class DragNDropComponent implements OnInit {
    
   }
 
-onAngularMultiClose(uniqId: any,varblId: any){
-  if (uniqId === 1001) {
-    if (this._mdlIncSlctd)
-      this.getIncentiveDropdownInfo(1002, varblId);
-    if (this._mdlExcSlctd)
-      this.getIncentiveDropdownInfo(1003, varblId);
-    if (this._stylIncSlctd)
-      this.getIncentiveDropdownInfo(1004, varblId);
-    if (this._stylExcSlctd)
-      this.getIncentiveDropdownInfo(1005, varblId);
+  onAngularMultiClose(uniqId: any,varblId: any){
+    if (uniqId === 1001) {
+      if (this._mdlIncSlctd)
+        this.getIncentiveDropdownInfo(1002, varblId);
+      if (this._mdlExcSlctd)
+        this.getIncentiveDropdownInfo(1003, varblId);
+      if (this._stylIncSlctd)
+        this.getIncentiveDropdownInfo(1004, varblId);
+      if (this._stylExcSlctd)
+        this.getIncentiveDropdownInfo(1005, varblId);
+    }
+    else if (uniqId === 1002 || uniqId === 1003) {
+      if (this._stylIncSlctd)
+        this.getIncentiveDropdownInfo(1004, varblId);
+      if (this._stylExcSlctd)
+        this.getIncentiveDropdownInfo(1005, varblId);
+    }
   }
-  else if (uniqId === 1002 || uniqId === 1003) {
-    if (this._stylIncSlctd)
-      this.getIncentiveDropdownInfo(1004, varblId);
-    if (this._stylExcSlctd)
-      this.getIncentiveDropdownInfo(1005, varblId);
+
+
+  onItemSelect(item: any, uniqId: any) {
+    
+        console.log(item);
+        console.log(this.singlDropSlctValues);
+        
   }
-}
+    
+  OnItemDeSelect(item: any,uniqId: any) {
+
+    console.log(item);
+    console.log(this.singlDropSlctValues);
+  }
+  onSelectAll(items: any, uniqId: any) {
+
+    console.log(items);
+    
+  }
+  onDeSelectAll(items: any,uniqId: any) {
+
+    console.log(items);
+    
+  }
+
+  onAngularClose(uniqId: any,varblId: any){
+    if (uniqId === 1001) {
+      if (this._mdlIncSlctd)
+        this.getIncentiveDropdownInfo(1002, varblId);
+      if (this._mdlExcSlctd)
+        this.getIncentiveDropdownInfo(1003, varblId);
+      if (this._stylIncSlctd)
+        this.getIncentiveDropdownInfo(1004, varblId);
+      if (this._stylExcSlctd)
+        this.getIncentiveDropdownInfo(1005, varblId);
+    }
+    else if (uniqId === 1002 || uniqId === 1003) {
+      if (this._stylIncSlctd)
+        this.getIncentiveDropdownInfo(1004, varblId);
+      if (this._stylExcSlctd)
+        this.getIncentiveDropdownInfo(1005, varblId);
+    }
+  }
+
+
 
 
 markFormGroupTouched(formGroup: FormGroup) {

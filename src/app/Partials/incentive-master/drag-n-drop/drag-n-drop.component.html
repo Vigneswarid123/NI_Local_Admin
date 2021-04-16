@@ -123,22 +123,32 @@
                                                                             </div>
                                                                             <div class="col-lg-6">
                                                                                 <div>
-                                                                                    <div formArrayName="detailsOptionValues">
-                                                                                        <div [formGroupName]="j">
-                                                                                            <div   [ngClass]="items.selected ? 'dragged':''"  (dblclick)="items.selected=onDragToLeft(detailsFormGroup.value.detailsOptionValues[j].detailId,'M')">
-                                                                                                <div class="button">
-                                                                                                <select formControlName="controlid" id="{{'ddl'+j }}"  style="width:100%;border:1px solid #fff !important;">
-                                                                                                    <option [value]="0">Select</option>
-                                                                                                    <option *ngFor="let item of detailOptions[detailsFormGroup.value.detailsOptionValues[j].detailId]" [value]="item.DropdownValue">{{item.DropdownName}}</option>
-                                                                                                </select>
+                                                                                   <div formArrayName="detailsOptionValues">
+                                                                                        <div class="button" [formGroupName]="j"  [ngClass]="items.selected ? 'dragged':''"  (dblclick)="items.selected=onDragToLeft(detailsFormGroup.value.detailsOptionValues[j].detailId,'M')">
+                                                                                            <div class="mr-2" >
+                                                                                                <div>
+                                                                                                <angular2-multiselect formControlName="controlid" id="{{'ddl'+detailsFormGroup.value.detailsOptionValues[j].detailId}}" style="cursor: pointer; text-align: left; color:black" 
+                                                                                                    [data]="detailOptions[detailsFormGroup.value.detailsOptionValues[j].detailId]"
+                                                                                                    [(ngModel)] ="singlDropSlctValues[detailsFormGroup.value.detailsOptionValues[j].detailId]"
+                                                                                                    [settings]="dropdownSettingsSingle"
+                                                                                                    (onSelect)="onItemSelect($event,detailsFormGroup.value.detailsOptionValues[j].detailId)"
+                                                                                                    (onDeSelect)="OnItemDeSelect($event,detailsFormGroup.value.detailsOptionValues[j].detailId)"
+                                                                                                    (onSelectAll)="onSelectAll($event,detailsFormGroup.value.detailsOptionValues[j].detailId)"
+                                                                                                    (onDeSelectAll)="onDeSelectAll($event,detailsFormGroup.value.detailsOptionValues[j].detailId)"
+                                                                                                    (onClose)="onAngularClose(detailsFormGroup.value.detailsOptionValues[j].detailId,detailsFormGroup.value.detailsOptionValues[j].varblId)">
+                                                                                                </angular2-multiselect>
+                                                                                                </div>
+                                                                                                <!-- <div><small class="errormessage"
+                                                                                                    *ngIf="_glbFormSubmitted && detailsFormGroup.controls.detailsMultiOptionValues.controls[j].get('controlid').errors?.required">please select option</small></div> -->
                                                                                             </div>
-                                                                                            </div>
-
                                                                                         </div>
-                                                                                    </div>
+                                                                      
+                                                                                   </div>
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div style="float:right;align-self:center;margin-top:4%;" *ngIf="detailsFormGroup.value.detailsOptionValues[j].detailId === 1008">
+                                                                                <img style="cursor: pointer;" title="Tier Options" class="addImg" src="assets/Images/circle_icon.png" (click)="openModal('tier-modal')">
+                                                                            </div>
 
                                                                         </div>
                                                                     </div>
@@ -192,15 +202,18 @@
                                                                                         <div formArrayName="detailsValues">
                                                                                             <div [formGroupName]="idx">
                                                                                                 <div *ngIf="detailsFormGroup.value.detailsValues[idx].dataType==='text'" style="display:flex;">
-                                                                                                    <div style="align-self:center;">
-                                                                                                        <span *ngIf="detailsFormGroup.value.detailsValues[idx].detailId === 1006" style="font-size: 16px;margin-right: 1%;">$</span>
-                                                                                                        <span *ngIf="detailsFormGroup.value.detailsValues[idx].detailId === 1007" style="font-size: 16px;margin-right: 1%;">%</span>
-                                                                                                    </div>
+                                                                                                   
                                                                                                     <div *ngIf="detailsFormGroup.value.detailsValues[idx].isDealerSpec!=='Y'" class="button"  [ngClass]="item.selected ? 'dragged':''"  (dblclick)="item.selected=onDragToLeft(detailsFormGroup.value.detailsValues[idx].detailId,'M')">
-                                                                                                        <input  [ngModel]="detailsFormGroup.value.detailsValues[idx].data"
-                                                                                                        class="outlinebtn"  style="width:100%;border:1px solid #fff;"
-                                                                                                        type="text" required="required"
-                                                                                                        formControlName="idx" (keypress)="numberOnly($event,detailsFormGroup.value.detailsValues[idx].detailId)">
+                                                                                                            <div class="input-icons">
+                                                                                                                    
+                                                                                                                      <span *ngIf="detailsFormGroup.value.detailsValues[idx].detailId === 1006" style="font-size: 16px;margin: 2%;">$</span>
+                                                                                                                      <span *ngIf="detailsFormGroup.value.detailsValues[idx].detailId === 1007" style="font-size: 16px;margin: 2%;">%</span>
+                                                                                                                      <input  [ngModel]="detailsFormGroup.value.detailsValues[idx].data"
+                                                                                                                      class="outlinebtn input-field" style="width:100%;border:1px solid #fff !important"
+                                                                                                                      type="text" required="required"
+                                                                                                                      formControlName="idx" (keypress)="numberOnly($event,detailsFormGroup.value.detailsValues[idx].detailId)">
+                                                                                                              </div>
+                                                                                                       
                                                                                                     </div>
                                                                                                     <div *ngIf="detailsFormGroup.value.detailsValues[idx].isDealerSpec==='Y'" class="button"  [ngClass]="item.selected ? 'dragged':''"  (dblclick)="item.selected=onDragToLeft(detailsFormGroup.value.detailsValues[idx].detailId,'M')">
                                                                                                             <input class="outlinebtn" style="width:100%;opacity:0.6;border:1px solid #fff;" disabled placeholder="Dealer will submit"
@@ -231,7 +244,7 @@
 
                                                                         </div>
                                                                     </div>
-
+<!-- 
                                                                     <div class="row" *ngIf="_glbEnableTier">
                                                                         <div style="display:flex;" class="col-12">
 
@@ -281,7 +294,7 @@
                                                                             </div>
                                                                         </div>
 
-                                                                    </div>
+                                                                    </div> -->
 
 
 

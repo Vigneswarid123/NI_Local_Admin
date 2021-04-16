@@ -147,7 +147,7 @@ white-space: nowrap;
     .drag{font-size: 10px; font-style: italic; font-family: 'OpenSans-Italic';margin: -3px 0 15px; ;}
     .search{
         input{width: 70%; height: 28px;text-align: left; padding: 5px 45px 5px 10px;outline: none;border-radius: 3px ;
-            border: none;font-size: 12px;margin: 0 !important; background-color: #454444 !important; color: #fff !important; background: url(../../../../assets/Images/Search-lt.png) 96% no-repeat ;}
+            border: 1px solid #aaa;font-size: 12px;margin: 0 !important; background-color: #454444 !important; color: #fff !important; background: url(../../../../assets/Images/Search-lt.png) 96% no-repeat ;}
             ::placeholder{color:#fff}
     }
     .button{width: 100%; color: #ccc; font-size: 12px; float: left; 

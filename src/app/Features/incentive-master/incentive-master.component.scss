@@ -112,7 +112,8 @@ border: none;font-size: 12px;margin: 0 0 0 30px; background-color: #bdbdbd !impo
     ::ng-deep .c-btn{width: 316px;background-color: #505050;color: #fff;border: none;height: 35px;}
     ::ng-deep .pure-checkbox input[type=checkbox]+label:before {box-sizing: content-box;content: '';position: absolute;top: 50%;left: 0;border: 1px solid #aaa;width: 15px;height: 15px;margin-top: -9px;text-align: center;-webkit-transition: .4s;transition: .4s;border-radius: 3px;}
   ::ng-deep .selected-list .c-btn{background: #454444;color: #ccc;fill: #fff !important;}
-    ::ng-deep .selected-list .c-angle-down svg,.selected-list .c-angle-up svg{fill:#fff !important}
+    ::ng-deep .selected-list .c-angle-down svg{fill:#fff !important; font-size: 8pt !important;width: 7px;}
+    ::ng-deep .selected-list .c-angle-up svg{fill:#fff !important; font-size: 8pt !important;width: 7px;}
     // ::ng-deep #BrandDiv .c-list{display: none;}
     ::ng-deep .c-remove {display: none;}
     ::ng-deep .list-area{width: 180px;}

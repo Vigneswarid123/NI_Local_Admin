@@ -119,7 +119,7 @@
                               (dblclick)="RemoveListItems(k,option.value.termid,'5')"
                               
                                   [data]="dropdownList[k]" [(ngModel)]="selectedoptionItems[k]"
-                                  [settings]="dropdownSettings" 
+                                  [settings]="dropdownSettings[k]" 
                                   (onSelect)="onItemSelect($event)" 
                                   (onDeSelect)="OnItemDeSelect($event)"
                                   (onSelectAll)="onSelectAll($event)"

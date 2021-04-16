@@ -78,6 +78,7 @@ const routes: Routes = [
   { path: 'inventory', loadChildren: () => import('./Features/inventory/inventory.module').then(m => m.InventoryModule), canActivate: [AuthGuard] },
   { path: 'incentiveMaster', loadChildren: () => import('./Features/incentive-master/incentive-master.module').then(m => m.IncentiveMasterModule), canActivate: [AuthGuard] },
   { path: 'brandvariables', loadChildren: () => import('./Features/brandvariables/brandvariables.module').then(m => m.BrandvariablesModule), canActivate: [AuthGuard] },
+  { path: 'brandterms', loadChildren: () => import('./Features/brandterms/brandterms.module').then(m => m.BrandtermsModule), canActivate: [AuthGuard] },
   {​​​​​​​​ path:'', loadChildren: () =>import('./Features/incentive-terms/incentive-terms.module').then(m=>m.IncentiveTermsModule), canActivate: [AuthGuard] }​​​​​​​​,
   {​​​​​​​​ path:'incentiveVariables', loadChildren: () =>import('./Features/incentive-variables/incentive-variables.module').then(m=>m.IncentiveVariablesModule), canActivate: [AuthGuard] }​​​​​​​​,
   {path: 'Permissions',loadChildren:()=>import('./Features/cmspermissions/cmspermissions.module').then(m=>m.CmspermissionsModule),canActivate:[AuthGuard]},

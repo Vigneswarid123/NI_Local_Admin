@@ -73,21 +73,21 @@ ngOnInit(): void {
       this.getTermDetails();
     console.log(this.addTermForm.value);
 
-    this.addTermForm.get("MIT_TYPE").valueChanges.subscribe((MIT_TYPE) => { 
-      if (MIT_TYPE === '3' || MIT_TYPE === '8') 
-      {
-        this.getTermOptionDetails();
-        this.showOptions = true;
-        this.addTermForm.get('incentivetermsoptions').enable();
-        this.switchResult = 'N';
-      } 
-      else
-      {
-      //  this.switchResult = 'N';
-        this.showOptions = false;
-        this.addTermForm.get('incentivetermsoptions').disable();
-      }
-  });
+  //   this.addTermForm.get("MIT_TYPE").valueChanges.subscribe((MIT_TYPE) => { 
+  //     if (MIT_TYPE === '3' || MIT_TYPE === '8') 
+  //     {
+  //       this.getTermOptionDetails();
+  //       this.showOptions = true;
+  //       this.addTermForm.get('incentivetermsoptions').enable();
+  //       this.switchResult = 'N';
+  //     } 
+  //     else
+  //     {
+  //     //  this.switchResult = 'N';
+  //       this.showOptions = false;
+  //       this.addTermForm.get('incentivetermsoptions').disable();
+  //     }
+  // });
   }
 
   getDealerSpecificVal(e){
@@ -97,18 +97,44 @@ ngOnInit(): void {
       this.switchResult = 'Y';
       this.showOptions = false;
       this.addTermForm.get('incentivetermsoptions').disable();
+      console.log(this.addTermForm.value);
     }
-    else
+    if(e.target.checked == false)
     {
-    this.addTermForm.controls["MIT_ISDEALERSPECIFIC"].setValue('N');
-    this.switchResult = 'N';
-    this.showOptions = true;
-    this.addTermForm.get('incentivetermsoptions').enable();
+      if (this.initialDropdownValue === 3 || this.initialDropdownValue === 8)
+      {
+        console.log(this.addTermForm.value);
+        this.switchResult = 'N';
+        this.showOptions = true;
+        this.addTermForm.get('incentivetermsoptions').enable();
+        if (this.incentivetermsoptions().length < 1)
+        {
+          // this.showOptions = true;
+          // this.addTermForm.get('incentivetermsoptions').enable();
+          this.addGroup();
+        }
+      }
+      if (this.addTermForm.controls['MIT_TYPE'].value === '1' || this.addTermForm.controls['MIT_TYPE'].value === '2')
+        {
+          this.addTermForm.controls["MIT_ISDEALERSPECIFIC"].setValue('N');
+          this.switchResult = 'N';
+          this.showOptions = false;
+          this.addTermForm.get('incentivetermsoptions').disable();
+        }
+        if (this.addTermForm.controls['MIT_TYPE'].value === '3' || this.addTermForm.controls['MIT_TYPE'].value === '8')
+        {
+          this.addTermForm.controls["MIT_ISDEALERSPECIFIC"].setValue('N');
+          this.switchResult = 'N';
+          this.showOptions = true;
+          this.addTermForm.get('incentivetermsoptions').enable();
+        }
     }
 
   }
 
    
+initialDropdownValue: any;
+
 getTermDetails(){
     const obj: any ={
       itc_Id: this.MIT_ID
@@ -122,6 +148,11 @@ getTermDetails(){
     console.log('switchresult', this.switchResult);
     console.log('getTermDetailsArray', this.getTermDetailsArray); 
     console.log('Type' + this.getTermDetailsArray.MIT_TYPE);
+    this.initialDropdownValue = this.getTermDetailsArray.MIT_TYPE;
+    console.log('initialdropdownvalue', this.initialDropdownValue);
+
+    if(this.switchResult === 'N')
+   {
     if (this.getTermDetailsArray.MIT_TYPE === 3 || this.getTermDetailsArray.MIT_TYPE === 8){
       this.getTermOptionDetails();
         this.showOptions = true;
@@ -130,9 +161,9 @@ getTermDetails(){
     else{
       this.showOptions = false;
         this.addTermForm.get('incentivetermsoptions').disable();
-    } 
+    }
+  }
     });
-
     }
     
     ​​​​​​​​
@@ -152,6 +183,13 @@ getTermDetails(){
        } 
        this.showOptions = true;
        this.addTermForm.get('incentivetermsoptions').enable();
+
+       if (this.getTermDetailsArray.MIT_ISDEALERSPECIFIC === 'Y')
+       {
+        this.incentivetermsoptions().clear() ;
+        (<FormArray>this.addTermForm.get('incentivetermsoptions')).push(this.Addvalue());
+       }
+
       });
       
       }​​​​​​​​
@@ -252,20 +290,87 @@ getTermDetails(){
 
   onChange(value)
   {
-   if (value === '3' || value === '8')
-   {
-      this.switchResult = 'N';
-       this.incentivetermsoptions().clear();
-      (<FormArray>this.addTermForm.get('incentivetermsoptions')).push(this.Addvalue());
-      this.addTermForm.controls["MIT_ISDEALERSPECIFIC"].setValue('N');
-      console.log('checkboxvalue', this.addTermForm.controls["MIT_ISDEALERSPECIFIC"].value);
-   }
-   else
-   {
-    this.switchResult = 'N';
-    this.showOptions = false;
-    this.addTermForm.get('incentivetermsoptions').disable();   
-  }
+    console.log('initialdropdownvalue', this.initialDropdownValue);
+    console.log('dealerspecific', this.getTermDetailsArray.MIT_ISDEALERSPECIFIC)
+
+    if(this.initialDropdownValue === 3)
+    {
+        if (value === '3') 
+        {
+          this.getTermOptionDetails();
+          this.incentivetermsoptions().clear();
+          this.showOptions = true;
+          this.addTermForm.get('incentivetermsoptions').enable();
+          this.switchResult = 'N';
+        } 
+        if(value === '8')
+        {
+          //  this.switchResult = 'N';
+          this.incentivetermsoptions().clear();
+          this.showOptions = true;
+          this.addTermForm.get('incentivetermsoptions').enable();
+          (<FormArray>this.addTermForm.get('incentivetermsoptions')).push(this.Addvalue());
+          this.switchResult = 'N';
+        }
+        if(value === '2' || value === '1')
+        {
+        //  this.switchResult = 'N';
+          this.showOptions = false;
+          this.addTermForm.get('incentivetermsoptions').disable();
+         // this.switchResult = 'N';
+        }
+
+    }
+
+    if(this.initialDropdownValue === 8)
+    {
+        if (value === '8') 
+        {
+          this.getTermOptionDetails();
+          this.incentivetermsoptions().clear();
+          this.showOptions = true;
+          this.addTermForm.get('incentivetermsoptions').enable();
+          this.switchResult = 'N';
+        } 
+        if(value === '3')
+        {
+          //  this.switchResult = 'N';
+          this.incentivetermsoptions().clear();
+          this.showOptions = true;
+          this.addTermForm.get('incentivetermsoptions').enable();
+          (<FormArray>this.addTermForm.get('incentivetermsoptions')).push(this.Addvalue());
+          this.switchResult = 'N';
+        }
+        if(value === '2' || value === '1')
+        {
+         // this.switchResult = 'N';
+          this.showOptions = false;
+          this.addTermForm.get('incentivetermsoptions').disable();
+         // this.switchResult = 'N';
+        }
+    }
+
+    if(this.initialDropdownValue === 1 || this.initialDropdownValue === 2)
+    {
+        if (value === '3' || value === '8') 
+        {
+         // this.getTermOptionDetails();
+          this.incentivetermsoptions().clear();
+          this.showOptions = true;
+          this.addTermForm.get('incentivetermsoptions').enable();
+          (<FormArray>this.addTermForm.get('incentivetermsoptions')).push(this.Addvalue());
+          this.switchResult = 'N';
+        } 
+        if(value === '2' || value === '1')
+        {
+        //  this.switchResult = 'N';
+          this.showOptions = false;
+          this.addTermForm.get('incentivetermsoptions').disable();
+         // this.switchResult = 'N';
+        }
+
+    }
+
   }
   
 
