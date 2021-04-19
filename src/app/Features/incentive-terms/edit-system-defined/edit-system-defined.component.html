@@ -13,7 +13,7 @@
   
   <!-- edit Terms start -->
   
-  <div class="container">
+  <div >
   <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
   <div class="panel panel-default">
@@ -22,7 +22,7 @@
   </div>
   <div class="panel-body">
     <form [formGroup]="addTermForm" (ngSubmit)="OnSubmit()">
-      <div class="container">
+      <div>
         <div class="row pb-4">
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <label for="rule">Term</label>
@@ -122,19 +122,19 @@
         <label for="getTermDetailsArray.MIT_REFERENCE">Reference </label>                        
           <input type="textbox" class="form-control" maxlength="500" [(ngModel)]="getTermDetailsArray.MIT_REFERENCE" formControlName="MIT_REFERENCE" autofocus  >
       
-          <small class="errormessage" *ngIf="submitted && addTermForm.controls.MIT_REFERENCE.hasError('required')">
+          <!-- <small class="errormessage" *ngIf="submitted && addTermForm.controls.MIT_REFERENCE.hasError('required')">
             Reference is required
           </small> 
           <small class="errormessage" *ngIf="submitted && addTermForm.controls.MIT_REFERENCE.hasError('maxlength')">
             Maximum limit exceeded
-          </small> 
+          </small>  -->
       </div>
      </div>
 
      <div class="row pb-4">
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <label class="dropdwnlabel">
-          Frequency:
+          Frequency
         </label>
         <select class="Dropdown" formControlName="MIT_FREQUENCY" [(ngModel)]="getTermDetailsArray.MIT_FREQUENCY">
             <option value="">Select Frequency Type</option>
@@ -143,9 +143,9 @@
             <option value="3" >Yearly</option>
         </select> 
 
-        <small class="errormessage" *ngIf="submitted && addTermForm.controls.MIT_FREQUENCY.hasError('required')">
+        <!-- <small class="errormessage" *ngIf="submitted && addTermForm.controls.MIT_FREQUENCY.hasError('required')">
            Frequency type is required 
-        </small>
+        </small> -->
     </div>
     </div>
 

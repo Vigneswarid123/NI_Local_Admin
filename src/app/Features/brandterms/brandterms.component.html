@@ -18,7 +18,7 @@
                       <th style="width: 462px; font-weight: bold;">
                         <div style="float: left">
                             <div class="getuser">
-                                <label class="getuserlabel">Brand Variables</label>
+                                <label class="getuserlabel">Brand Terms</label>
                             </div>
                             <div class="AddIcon">
                               <a (click)="showAddPanel()"
@@ -103,17 +103,17 @@
                 
 
                  
-                  <td style="width:10%;">{{ list.INV_NAME }}</td>
+                  <td style="width:10%;">{{ list.INT_NAME }}</td>
                   <td style="width:5%;padding-left:4%;">
                     <div style="display: flex;text-align: center">
-                      <div *ngFor="let value of list.BV_Value.split(',')" class="divbox">
+                      <div *ngFor="let value of list.BT_Value.split(',')" class="divbox">
                         <span>{{value.split('_')[0]}}</span>
                       </div>
                     </div>
                   </td>
 
                   <td style="width:6%;">{{list.Brand_name}}</td>
-                  <td *ngIf="list.BV_STATUS === 'Y'; else adminBlock" style="width:5%;">
+                  <td *ngIf="list.BT_STATUS === 'Y'; else adminBlock" style="width:5%;">
                     <div class="Active" style="text-align: center">
                       <span>Active</span>
                     </div></td>
@@ -137,7 +137,7 @@
                 <ng-container *ngIf="!Brandsdata.length && hide" [ngTemplateOutlet]="noItems"></ng-container>
                 </ng-container>
                 <ng-template #noItems>
-                      <tr><td colspan="9" style="text-align: center;">No BrandVariables Available!</td></tr>
+                      <tr><td colspan="9" style="text-align: center;">No BrandTerms Available!</td></tr>
                 </ng-template>
             </tbody>
            </table>
@@ -153,14 +153,14 @@
                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                         <div class="formgroup">
 
-                            <label>Incentive Variable</label>
-                            <input type="text"  class="form-control" maxlength="100" placeholder="Select Variable" formControlName="inc_variables" [(ngModel)]="this.selectedIncentiveVariable"  autofocus (keyup)="OnChangeEvent($event)" #incentive>
+                            <label>Incentive Terms</label>
+                            <input type="text"  class="form-control" maxlength="100" placeholder="Select Term" formControlName="inc_variables" [(ngModel)]="this.selectedIncentiveVariable"  autofocus (keyup)="OnChangeEvent($event)" #incentive>
                                                      <div *ngIf="!brandvariables.controls.inc_variables.valid && (brandvariables.controls.inc_variables.dirty||submitted)" class="error">
-                              <div class="errormessage" *ngIf="brandvariables.controls.inc_variables.errors.required">incentive variable is required</div>
+                              <div class="errormessage" *ngIf="brandvariables.controls.inc_variables.errors.required">Incentive Terms is required</div>
                           </div>
                             <div *ngIf="showIncentiveDiv" class="autofillcls" #menu>
-                                <div *ngFor="let option of selectedincentive ; let i=index" (mouseover)="highlightRow(option)" [ngClass] = "{'highlight' : option.Varbl_Name == selectedItem}" >
-                                    <li style="list-style: none;padding: 8px;cursor: pointer;"   (click)="selectItem($event, option,i)">{{option.Varbl_Name}}</li>
+                                <div *ngFor="let option of selectedincentive ; let i=index" (mouseover)="highlightRow(option)" [ngClass] = "{'highlight' : option.MIT_DISPLAYNAME == selectedItem}" >
+                                    <li style="list-style: none;padding: 8px;cursor: pointer;"   (click)="selectItem($event, option,i)">{{option.MIT_DISPLAYNAME}}</li>
                                 </div>
                                 </div>  
                         </div>
@@ -169,18 +169,14 @@
                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                         <div class="formgroup">
                             <label>Brands</label>
-                            <select class="form-control"  formControlName="dealeruser" (change)="getdealerid($event)" >
-                                <option value="null" selected>Select Brands</option>
-                                <!-- <option hidden value="" disabled selected>Select one category </option> -->
-                                <!-- <option value="undefined" selected disabled>Select option</option> -->
-
+                            <select class="form-control"  formControlName="dealeruser" placeholder="select Brand" (change)="getdealerid($event)">
+                                <option value="null">Select Brands</option>
                                 <option *ngFor="let d of BrandNames" [value]="d.brand_chrome_id">{{d.brand_name}}</option>
                         </select>
                     <div *ngIf="!brandvariables.controls.dealeruser.valid && (brandvariables.controls.dealeruser.dirty||submitted)" class="error">
                       <div class="errormessage" *ngIf="brandvariables.controls.dealeruser.errors.required">Brand is required</div>
                   </div>
-                        </div>
-                      
+                        </div>                      
                     </div>
                 </div>
                 
@@ -218,7 +214,7 @@
                 <div class="col-lg-12 pt-lg-5 pl-lg-4">
                     <div  class="row">
                       <div class="col-lg-2">
-                        <button  type="button" class="savebutton" (click)="savebrandvariables()">Save</button>
+                        <button  type="button" class="savebutton" (click)="savebrandterms()">Save</button>
                       </div>
                       <div  class="col-lg-2">
                         <button  type="button" class="savebutton" (click)="showGridPanel();">Cancel</button>
@@ -238,8 +234,8 @@
                           <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                               <div class="formgroup">
       
-                                  <label>Incentive Variable</label>
-                                  <input type="text"  class="form-control" maxlength="100" placeholder="select Incentive" [(ngModel)]="editvariable.INV_NAME" formControlName="e_inc_variables" [readonly]="true">
+                                  <label>Incentive Terms</label>
+                                  <input type="text"  class="form-control" maxlength="100" placeholder="select Incentive" [(ngModel)]="editvariable.INT_NAME" formControlName="e_inc_variables" [readonly]="true">
                                                            
                               </div>
                               
@@ -292,7 +288,7 @@
                       <div class="col-lg-12 pt-lg-5 pl-lg-4">
                           <div  class="row">
                             <div class="col-lg-2">
-                              <button  type="submit" class="savebutton" (click)='updatebrandvariable()'>Save</button>
+                              <button  type="submit" class="savebutton" (click)='updatebrandterms()'>Save</button>
                             </div>
                             <div  class="col-lg-2">
                               <button  type="button" class="savebutton" (click)="showGridPanel();">Cancel</button>

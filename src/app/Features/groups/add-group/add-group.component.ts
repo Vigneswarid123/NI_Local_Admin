@@ -70,7 +70,7 @@ export class AddGroupComponent implements OnInit {
       quantities: this.fB.array([]),
       dcity: ['', [Validators.required, Validators.maxLength(50)]],
       state: ['', [Validators.required]],
-      zip: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
+      zip: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(5)]],
       country: ['', [Validators.required]],
       phone: ['', [Validators.required]],
       webaddress: ['', [Validators.required, Validators.maxLength(100)]],
@@ -510,12 +510,19 @@ export class AddGroupComponent implements OnInit {
     });
   }
 
+  // getStatesData() {
+  //   this.dataServ.getStates('states?185').subscribe(
+  //     resp => {
+  //       console.log('Getstates', resp.response);
+  //       this.getstatesresp = resp.response;
+  //     });
+  // }
+
   getStatesData() {
     const obj={sg_id :0}
-    this.dataServ.postmethod('States/get',obj).subscribe(
-      resp => {
-        console.log('Getstates', resp.response);
-        this.getstatesresp = resp.response;
+    this.dataServ.postmethod('States/get',obj).subscribe((res: any) => {
+        this.getstatesresp = res.response;
+        console.log('Getstates', this.getstatesresp);
       });
   }
 
@@ -579,7 +586,7 @@ export class AddGroupComponent implements OnInit {
             quantities: this.fB.array([]),
             dcity: [this.getdgroups.dg_city, [Validators.required, Validators.maxLength(50)]],
             state: [this.getdgroups.dg_state, [Validators.required]],
-            zip: [this.getdgroups.dg_zip, [Validators.required, Validators.maxLength(10)]],
+            zip: [this.getdgroups.dg_zip, [Validators.required, Validators.minLength(4), Validators.maxLength(5)]],
             country: [185, [Validators.required]],
             phone: [this.getdgroups.dg_phone, [Validators.required]],
             webaddress: [this.getdgroups.dg_websiteaddress, [Validators.required]],

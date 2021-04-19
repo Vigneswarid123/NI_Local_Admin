@@ -4,15 +4,15 @@ import { Router } from '@angular/router';
 import { AlertifyService } from '../../Core/_providers/alert-service/alertify.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import * as $ from 'jquery';
 
 
 @Component({
-  selector: 'app-brandvariables',
-  templateUrl: './brandvariables.component.html',
-  styleUrls: ['./brandvariables.component.scss']
+  selector: 'app-brandterms',
+  templateUrl: './brandterms.component.html',
+  styleUrls: ['./brandterms.component.scss']
 })
-export class BrandvariablesComponent implements OnInit {
+export class BrandtermsComponent implements OnInit {
+
   selectedvalues: any = [];
   FinalArray: any = [];
 
@@ -27,6 +27,7 @@ export class BrandvariablesComponent implements OnInit {
   public editbrandvariables: any = [];
   public brandvariablesdata: any = [];
   public incentivedata: any = [];
+  public incentivetermdata: any =[];
   public BrandNames: any = [];
   selectedincentive: Array<any> = [];
   selectedIncentiveVariable: Array<any> = [];
@@ -107,6 +108,7 @@ export class BrandvariablesComponent implements OnInit {
     this.showgrid = true;
     this.getBrands();
     this.getbrandvariables();
+
   }
 
 
@@ -134,7 +136,7 @@ export class BrandvariablesComponent implements OnInit {
         "expression": ""
 
       }
-      this.adminService.postmethod('brandvariables/get', obj).subscribe(res => {
+      this.adminService.postmethod('brandterms/get', obj).subscribe(res => {
         //    console.log(res.response[0].BV_Value.length)
         this.addBrandVariable = res.response
         console.log(this.addBrandVariable)
@@ -145,12 +147,12 @@ export class BrandvariablesComponent implements OnInit {
             this.remove(i)
           }
         }
-        if (this.addBrandVariable[0].BV_Value.length > 0) {
-          let output = this.addBrandVariable[0].BV_Value.split(',');
+        if (this.addBrandVariable[0].BT_Value.length > 0) {
+          let output = this.addBrandVariable[0].BT_Value.split(',');
           console.log(output)
           this.gettingvalues = [];
           for (let y in output) {
-            this.gettingvalues.push({ bv_bid: this.addBrandVariable[0].BV_BID, bv_invid: this.addBrandVariable[0].BV_INVID, BV_Value: output[y].split('_')[0], BV_ID: output[y].split('_')[1], action: 'U' });
+            this.gettingvalues.push({ bt_bid: this.addBrandVariable[0].BT_BID, bt_invtid: this.addBrandVariable[0].BT_INVTID, BT_Value: output[y].split('_')[0], BT_ID: output[y].split('_')[1], action: 'U' });
           }
           for (let T in this.gettingvalues) {
             (<FormArray>this.brandvariables.get('quantities')).push(this.addbrand(this.gettingvalues[T]));
@@ -171,8 +173,8 @@ export class BrandvariablesComponent implements OnInit {
   addbrand(dt): FormGroup {
     return this.fB.group({
       action: 'U',
-      values: [dt.BV_Value],
-      BV_ID: [dt.BV_ID]
+      values: [dt.BT_Value],
+      BT_ID: [dt.BT_ID]
       // evalues: ''
 
     });
@@ -230,15 +232,16 @@ export class BrandvariablesComponent implements OnInit {
 
   getincentives() {
     const obj = {
-      "variableid": "0",
-      "expression": ""
+      "id": "0",
+   "expression": ""
     }
-    this.adminService.postmethod('incentivevariables/detailslist', obj).subscribe(res => {
+    this.adminService.postmethod('termsandconditions/get', obj).subscribe(res => {
       console.log(res)
       if (res.status == 200) {
         this.incentivedata = res.response;
         console.log(this.incentivedata)
-
+        this.incentivetermdata = this.incentivedata.filter(item => item.MIT_STATUS == "Y");
+console.log(this.incentivetermdata)
       }
     })
   }
@@ -275,11 +278,11 @@ export class BrandvariablesComponent implements OnInit {
     const obj = {
 
       "BrandId": this.brandid,
-      "VariableId": "0",
+      "TermId": "0",
       "expression": ""
 
     }
-    this.adminService.postmethod('brandvariables/get', obj).subscribe(res => {
+    this.adminService.postmethod('brandterms/get', obj).subscribe(res => {
       console.log(res)
       if (res.status == 200) {
         this.brandvariablesdata = res.response;
@@ -296,45 +299,45 @@ export class BrandvariablesComponent implements OnInit {
 
   }
   filter(val: string): string[] {
-    return this.incentivedata.filter(option =>
-      option.Varbl_Name.toLowerCase().indexOf(val.toLowerCase()) === 0);
+    return this.incentivetermdata.filter(option =>
+      option.MIT_DISPLAYNAME.toLowerCase().indexOf(val.toLowerCase()) === 0);
   }
-
+ 
   OnChangeEvent(e) {
     console.log(e)
     console.log(e.code)
     this.selectedincentive = this.filter(e.target.value.toLowerCase())
     this.showIncentiveDiv = true;
-
+ 
     if (e.code == "Backspace") {
       this.showIncentiveDiv = false;
-
+ 
     }
   }
-
+ 
   selectItem(event: Event, item, index) {
     console.log(item)
     event.stopPropagation();
     if (this.selectedIncentiveid == "")
       this.selectedIncentiveid = [];
     if (item != '') {
-      this.selectedIncentiveid = item.Varbl_Id;
-      this.selectedIncentiveVariable = item.Varbl_Name;
+      this.selectedIncentiveid = item.MIT_ID;
+      this.selectedIncentiveVariable = item.MIT_DISPLAYNAME;
       this.selectedItem = item;
-
+ 
       this.showIncentiveDiv = false;
     }
     //  console.log(this.selectedIncentiveid)
     //  console.log(this.selectedincentive)
     //  console.log(this.selectedIncentiveVariable)
     this.optionDisplay();
-
+ 
   }
   highlightRow(option) {
-    this.selectedItem = option.Varbl_Name;
+    this.selectedItem = option.MIT_DISPLAYNAME;
   }
 
-  savebrandvariables() {
+  savebrandterms() {
     console.log('form submission');
     this.submitted = true;
     if (this.brandvariables.invalid) {
@@ -363,21 +366,21 @@ export class BrandvariablesComponent implements OnInit {
 
                 this.ComponentFinalArray.push({
                   'action': 'U',
-                  'bvid': this.brandvariables.value.quantities[i].BV_ID,
-                  'bv_invid': this.selectedIncentiveid,
-                  'bv_bid': this.dealershipid,
-                  'bv_value': this.brandvariables.value.quantities[i].values,
-                  'bv_status': 'Y'
+                  'btid': this.brandvariables.value.quantities[i].BT_ID,
+                  'bt_invtid': this.selectedIncentiveid,
+                  'bt_bid': this.dealershipid,
+                  'bt_value': this.brandvariables.value.quantities[i].values,
+                  'bt_status': 'Y'
                 });
               }
               if (this.brandvariables.value.quantities[i].action == undefined) {
 
                 this.ComponentFinalArray.push({
                   'action': 'A',
-                  'bv_invid': this.selectedIncentiveid,
-                  'bv_bid': this.dealershipid,
-                  'bv_value': this.brandvariables.value.quantities[i].values,
-                  'bv_status': 'Y'
+                  'bt_invtid': this.selectedIncentiveid,
+                  'bt_bid': this.dealershipid,
+                  'bt_value': this.brandvariables.value.quantities[i].values,
+                  'bt_status': 'Y'
                 });
               }
             }
@@ -385,14 +388,14 @@ export class BrandvariablesComponent implements OnInit {
             console.log(this.gettingvalues)
             if (this.gettingvalues.length == 0) {
               const obj = {
-                "brandvariables": this.ComponentFinalArray
+                "brandterms": this.ComponentFinalArray
               }
               console.log(obj)
               console.log("post")
-              this.adminService.postmethod('brandvariables', obj).subscribe(res => {
+              this.adminService.postmethod('brandterms', obj).subscribe(res => {
                 console.log(res)
                 if (res.status == 200) {
-                  this.alertify.success("Brand Variable Added Successfully")
+                  this.alertify.success("Brand Terms Added Successfully")
                   this.submitted = false;
                   this.showGridPanel();
                 }
@@ -404,14 +407,14 @@ export class BrandvariablesComponent implements OnInit {
             }
             else {
               const obj = {
-                "brandvariables": this.ComponentFinalArray
+                "brandterms": this.ComponentFinalArray
               }
               console.log(obj)
               console.log("put")
-              this.adminService.putmethod('brandvariables', obj).subscribe(res => {
+              this.adminService.putmethod('brandterms', obj).subscribe(res => {
                 console.log(res)
                 if (res.status == 200) {
-                  this.alertify.success("Brand Variable Updated Successfully")
+                  this.alertify.success("Brand Terms Updated Successfully")
                   this.submitted = false;
                   this.showGridPanel();
                 }
@@ -493,8 +496,8 @@ export class BrandvariablesComponent implements OnInit {
     console.log(this.editbrandvariables.value.e_quantities[i])
     this.deletedarray.push({
       'action': 'D',
-      'bvid': this.editbrandvariables.value.e_quantities[i].BV_ID,
-      'bv_value': this.editbrandvariables.value.e_quantities[i].evalues,
+      'btid': this.editbrandvariables.value.e_quantities[i].BT_ID,
+      'bt_value': this.editbrandvariables.value.e_quantities[i].evalues,
     });
     console.log(this.deletedarray)
     ////  let action = this.editbrandvariables.value.e_quantities[i].action = 'D';
@@ -522,7 +525,7 @@ export class BrandvariablesComponent implements OnInit {
     });
   }
 
-  updatebrandvariable() {
+  updatebrandterms() {
 
     console.log('form submission');
     this.submitted = true;
@@ -552,19 +555,19 @@ export class BrandvariablesComponent implements OnInit {
                 if (this.editbrandvariables.value.e_quantities[i].action == 'U') {
                   this.Updatearray.push({
                     'action': 'U',
-                    'bvid': this.editbrandvariables.value.e_quantities[i].BV_ID,
-                    'bv_invid': this.editvariable.BV_INVID,
-                    'bv_bid': this.editvariable.BV_BID,
-                    'bv_value': this.editbrandvariables.value.e_quantities[i].evalues,
-                    'bv_status': 'Y'
+                    'btid': this.editbrandvariables.value.e_quantities[i].BT_ID,
+                    'bt_invtid': this.editvariable.BT_INVTID,
+                    'bt_bid': this.editvariable.BT_BID,
+                    'bt_value': this.editbrandvariables.value.e_quantities[i].evalues,
+                    'bt_status': 'Y'
                   });
                 } else if (this.editbrandvariables.value.e_quantities[i].action == 'A') {
                   this.Updatearray.push({
                     'action': 'A',
-                    'bv_invid': this.editvariable.BV_INVID,
-                    'bv_bid': this.editvariable.BV_BID,
-                    'bv_value': this.editbrandvariables.value.e_quantities[i].evalues,
-                    'bv_status': 'Y'
+                    'bt_invtid': this.editvariable.BT_INVTID,
+                    'bt_bid': this.editvariable.BT_BID,
+                    'bt_value': this.editbrandvariables.value.e_quantities[i].evalues,
+                    'bt_status': 'Y'
                   })
                 }
                 //   else if (this.editbrandvariables.value.e_quantities[i].action == 'D') {
@@ -578,23 +581,23 @@ export class BrandvariablesComponent implements OnInit {
           }
           if (this.deletedarray.length > 0) {
             for (var i = 0; i < this.deletedarray.length; i++) {
-              if (this.deletedarray[i].bvid != undefined){
+              if (this.deletedarray[i].btid != undefined){
                 this.Updatearray.push({
                   'action': 'D',
-                  'bvid': this.deletedarray[i].bvid
+                  'btid': this.deletedarray[i].btid
                 })
               }
             }
           }
 
           const obj = {
-            "brandvariables": this.Updatearray
+            "brandterms": this.Updatearray
           }
           console.log(obj)
-          this.adminService.putmethod('brandvariables', obj).subscribe(res => {
+          this.adminService.putmethod('brandterms', obj).subscribe(res => {
             console.log(res)
             if (res.status == 200) {
-              this.alertify.success("Brand Variable Updated Successfully")
+              this.alertify.success("Brand Terms Updated Successfully")
               this.showGridPanel();
 
             }
@@ -616,12 +619,9 @@ export class BrandvariablesComponent implements OnInit {
   //*************************************************************************Hide and Show ***************************************************** */
   showAddPanel() {
     this.addclick = true;
-    // this.brandvariables.reset();
-    console.log(this.brandvariables.value)
     this.brandvariables.reset();
     console.log(this.brandvariables.values)
     
-// this.brandvariables.value.dealeruser=""
     this.showgrid = false;
     this.editclick = false;
     this.submitted = false;
@@ -633,9 +633,8 @@ export class BrandvariablesComponent implements OnInit {
 
   }
   showGridPanel() {
-    // location.reload();
-    console.log(this.brandvariables.values)
 
+    // location.reload();
     this.addaftercancel()
     this.editaftercancel()
     this.showgrid = true;
@@ -679,12 +678,12 @@ export class BrandvariablesComponent implements OnInit {
     //this.e_quantities().clear();
     this.editvariable = val;
     console.log(this.editvariable)
-    if (this.editvariable.BV_Value.length > 0) {
-      let result = this.editvariable.BV_Value.split(',');
+    if (this.editvariable.BT_Value.length > 0) {
+      let result = this.editvariable.BT_Value.split(',');
       console.log(result)
       this.selectedvalues.splice(0)
       for (let y in result) {
-        this.selectedvalues.push({ bv_bid: this.editvariable.BV_BID, bv_invid: this.editvariable.BV_INVID, BV_Value: result[y].split('_')[0], BV_ID: result[y].split('_')[1], action: 'U' });
+        this.selectedvalues.push({ bt_bid: this.editvariable.BT_BID, bt_invtid: this.editvariable.BT_INVTID, BT_Value: result[y].split('_')[0], BT_ID: result[y].split('_')[1], action: 'U' });
       }
       for (let T in this.selectedvalues) {
         (<FormArray>this.editbrandvariables.get('e_quantities')).push(this.value(this.selectedvalues[T]));
@@ -696,8 +695,8 @@ export class BrandvariablesComponent implements OnInit {
   value(dt): FormGroup {
     return this.fB.group({
       action: 'U',
-      evalues: [dt.BV_Value],
-      BV_ID: [dt.BV_ID]
+      evalues: [dt.BT_Value],
+      BT_ID: [dt.BT_ID]
       // evalues: ''
 
     });

@@ -158,8 +158,8 @@
                                                         <div class="form-group grp grp_det">
                                                             <label>Zip</label>
                                                             <input type="text" class="form-control"
-                                                                (keypress)="_keyPress($event)" maxlength="6"
-                                                                minlength="6" formControlName="zip">
+                                                                (keypress)="_keyPress($event)" maxlength="5"
+                                                                minlength="5" formControlName="zip">
                                                             <small class="errormessage"
                                                                 *ngIf="submitted && dshipForm.controls.zip.hasError('required')">
                                                                 Zip is required

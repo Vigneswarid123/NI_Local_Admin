@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import xml2js from 'xml2js'; 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AlertifyService } from '../../../Core/_providers/alert-service/alertify.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class AddSystemDefinedComponent implements OnInit {
     private route: ActivatedRoute,
     private termSrvc: ApiService,
     private _http: HttpClient,
+    private alertify: AlertifyService
     ) { }
 
   ngOnInit(): void {
@@ -46,6 +48,7 @@ export class AddSystemDefinedComponent implements OnInit {
     this.addTermForm.get("itc_Type").valueChanges.subscribe((itc_Type) => { 
       if (itc_Type === '3' || itc_Type === '8') 
       {
+        this.listItemsArray.clear();
         this.showOptions = true;
         this.addTermForm.get('incentivetermsoptions').enable();
         this.addGroup(); 
@@ -56,7 +59,7 @@ export class AddSystemDefinedComponent implements OnInit {
         this.listItemsArray.clear(); 
         this.showOptions = false;
         this.addTermForm.get('incentivetermsoptions').disable();
-        this.switchResult = 'N';
+       // this.switchResult = 'N';
       }
   });
 
@@ -76,13 +79,13 @@ export class AddSystemDefinedComponent implements OnInit {
       console.log(response);
       if(this.globalResponse.status === 200)
       {
-        alert('Record added successfully');
+        this.alertify.success('Record added successfully');
         console.log(this.globalResponse)
         this.router.navigate(['incentiveTerms']);
       }
 
       else if (this.globalResponse.status === 401){
-        alert(this.globalResponse.error);
+        this.alertify.error(this.globalResponse.error);
       }
  });
     
@@ -97,13 +100,22 @@ getDealerSpecificVal(e){
     this.addTermForm.get('incentivetermsoptions').disable();
     console.log('checkedvalue', this.addTermForm.controls["itc_IsDealerSpecific"].value);
   }
-  else
+  if(e.target.checked == false)
   {
-  this.addTermForm.controls["itc_IsDealerSpecific"].setValue('N');
-  this.switchResult = 'N';
-  this.showOptions = true;
-  this.addTermForm.get('incentivetermsoptions').enable();
-  console.log('Uncheckedvalue', this.addTermForm.controls["itc_IsDealerSpecific"].value);
+    if (this.addTermForm.controls['itc_Type'].value === '1' || this.addTermForm.controls['itc_Type'].value === '2')
+      {
+        this.addTermForm.controls["itc_IsDealerSpecific"].setValue('N');
+        this.switchResult = 'N';
+        this.showOptions = false;
+        this.addTermForm.get('incentivetermsoptions').disable();
+      }
+      if (this.addTermForm.controls['itc_Type'].value === '3' || this.addTermForm.controls['itc_Type'].value === '8')
+      {
+        this.addTermForm.controls["itc_IsDealerSpecific"].setValue('N');
+        this.switchResult = 'N';
+        this.showOptions = true;
+        this.addTermForm.get('incentivetermsoptions').enable();
+      }
   }
 }
  
@@ -168,7 +180,7 @@ addGroup()
  {
   if (this.listItemsArray.invalid)
   {
-     alert ('Please enter the empty fields..!')
+    this.alertify.error ('Please enter the empty fields..!')
      this.listItemsArray.updateValueAndValidity();
      return;
   }

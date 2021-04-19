@@ -378,48 +378,49 @@ export class IncentiveMasterComponent implements OnInit {
     console.log(items);
   }
   regionids = [];
-  showDealerStores(data) {
-    // return Promise.resolve(
-    //   (()=>{
-        if (this.selectedbrandid.length == 0) {
-          this.alertify.success('Please select Brand');
-          this.incentiveMasterForm.controls['region'].setValue('');
-          return false;
-        }
+  // showDealerStores(data) {
+  //   // return Promise.resolve(
+  //   //   (()=>{
+  //       if (this.selectedbrandid.length == 0) {
+  //         this.alertify.success('Please select Brand');
+  //         this.incentiveMasterForm.controls['region'].setValue('');
+  //         return false;
+  //       }
     
-        if (data.length == 0)
-          this.regionids.push(
-            this.incentiveMasterForm.controls['region'].value[0].id);
-        else {
-          if (this.incentiveid == 0) {
-            this.regionids = [];
-            for (var i = 0;i < this.incentiveMasterForm.controls['region'].value.length;i++)
-              this.regionids.push(this.incentiveMasterForm.controls['region'].value[i].id);
-          }
-        }
+  //       if (data.length == 0)
+  //         this.regionids.push(
+  //           this.incentiveMasterForm.controls['region'].value[0].id);
+  //       else {
+  //         if (this.incentiveid == 0) {
+  //           this.regionids = [];
+  //           for (var i = 0;i < this.incentiveMasterForm.controls['region'].value.length;i++)
+  //             this.regionids.push(this.incentiveMasterForm.controls['region'].value[i].id);
+  //         }
+  //       }
     
-        if (this.regionids.length != 0) {
-          const obj = {
-            Brand: this.selectedbrandid,
-            Region: this.regionids,
-          };
-          this.ApiService.postmethod('incentivemaster/getdealerstores', obj).subscribe((response: any) => {
-            console.log(response);
-            if (response.status == 200) {
-              this.dealershipStores = response.response;
-              if (this.dealershipStores.length != 0) this.dvStores = true;
-              if(this.incentiveid !=0)
-                this.getDealerShipsByIncentive(this.incentiveid)
-            }
-          });
-        } else {
-          this.selectedchkList = [];
-          this.dvStores = false;
-        }
-    //   })
-    // )
+  //       if (this.regionids.length != 0) {
+  //         const obj = {
+  //           Brand: this.selectedbrandid,
+  //           Region: this.regionids,
+  //           dealergroupid:0
+  //         };
+  //         this.ApiService.postmethod('incentivemaster/getdealerstores', obj).subscribe((response: any) => {
+  //           console.log(response);
+  //           if (response.status == 200) {
+  //             this.dealershipStores = response.response;
+  //             if (this.dealershipStores.length != 0) this.dvStores = true;
+  //             if(this.incentiveid !=0)
+  //               this.getDealerShipsByIncentive(this.incentiveid)
+  //           }
+  //         });
+  //       } else {
+  //         this.selectedchkList = [];
+  //         this.dvStores = false;
+  //       }
+  //   //   })
+  //   // )
     
-  }
+  // }
 
   onAllCheckboxChangeEvent(e) {
     const checked = e.target.checked;
@@ -886,7 +887,7 @@ this.tempincentives = this.tempincentives;
   getIncentiveTermaAndConditionsData(id):Promise<any> {
     return Promise.resolve((()=>{
       this.tacdata = [];
-      const obj = { IncentiveId: id, expression: '' };
+      const obj = { IncentiveId: id, expression: '','BrandId' : this._glbBrandId };
       this.ApiService.postmethod(
         'termsandconditions/basedonincentive',
         obj
@@ -990,6 +991,7 @@ this.tempincentives = this.tempincentives;
       unSelectAllText: 'UnSelect All',
       enableSearchFilter: true,
       classes: 'myclass custom-class',
+      badgeShowLimit:1
     };
 
     this.selectedBrandsList = [];

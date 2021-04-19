@@ -13,7 +13,7 @@
 
         <!--                    add Terms start                    -->
                
-        <div class="container">
+        <div>
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
               <div class="panel panel-default">
@@ -22,11 +22,11 @@
                 </div>
                 <div class="panel-body">
                   <form [formGroup]="addTermForm" (ngSubmit)="onSubmit()">
-                    <div class="container">
+                    <div >
                       <div class="row pb-4">
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                          <label for="rule">Term:</label>
-                          <input type="text" class="form-control" placeholder="Enter term" autofocus formControlName="itc_Name">                             
+                          <label for="rule">Term</label>
+                          <input type="text" class="form-control" placeholder="Enter term" autofocus formControlName="itc_Name" autofocus>                             
                           <small class="errormessage" *ngIf="submitted && addTermForm.controls.itc_Name.hasError('required')">
                             Term is required
                           </small>
@@ -39,7 +39,7 @@
                     <div class="row pb-4">
                       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <label style="color: white;">
-                          Type:
+                          Type
                         </label>
                         <select class="Dropdown" formControlName="itc_Type">
                             <option value="">Select Type</option>
@@ -123,19 +123,19 @@
                       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <label for="itc_Reference">Reference </label>                        
                           <input type="textbox" class="form-control" maxlength="500" formControlName="itc_Reference"  placeholder="Enter reference" autofocus  >
-                          <small class="errormessage" *ngIf="submitted && addTermForm.controls.itc_Reference.hasError('required')">
+                          <!-- <small class="errormessage" *ngIf="submitted && addTermForm.controls.itc_Reference.hasError('required')">
                             Reference is required 
                           </small>
                           <small class="errormessage" *ngIf="submitted && addTermForm.controls.itc_Reference.hasError('maxlength')">
                             Maximum limit exceeded
-                          </small> 
+                          </small>  -->
                         </div>
                      </div>
 
                      <div class="row pb-4">
                       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <label class="dropdwnlabel">
-                          Frequency:
+                          Frequency
                         </label>
                         <select class="Dropdown" formControlName="itc_Frequency">
                             <option value="">Select Frequency Type</option>
@@ -144,9 +144,9 @@
                             <option value="3" >Yearly</option>
                         </select> 
 
-                        <small class="errormessage" *ngIf="submitted && addTermForm.controls.itc_Frequency.hasError('required')">
+                        <!-- <small class="errormessage" *ngIf="submitted && addTermForm.controls.itc_Frequency.hasError('required')">
                             Frequency is required 
-                        </small>
+                        </small> -->
                     </div>
                     </div>
 

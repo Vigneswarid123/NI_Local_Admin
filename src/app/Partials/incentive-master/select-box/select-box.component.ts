@@ -25,6 +25,7 @@ export class SelectBoxComponent implements OnInit {
   @Input('incentiveid') incentiveid: number = 0;
   @Input('incentiveName') glbIncentiveName: string = "";
   @Input('incentiveType') glbIncentiveType: string = "";
+  @Input('incentiveBrand') _glbBrandId: string = "";
   @Output() public FinalArray = new EventEmitter<any>();
   //@Output('FinalArray') public FinalArray: EventEmitter<any>= new EventEmitter<any>();
   @Output() TermCancelClick:EventEmitter<boolean>=new EventEmitter<boolean>();
@@ -109,7 +110,7 @@ export class SelectBoxComponent implements OnInit {
     this.selectedoptionItems = [];
     this.dropdownSettings = { 
       singleSelection: false, 
-      text:"Select(Dealer belongs to a group)",  
+      text:"Select",  
       selectAllText:'Select All',
       unSelectAllText:'UnSelect All',
       enableSearchFilter: true,
@@ -155,7 +156,7 @@ export class SelectBoxComponent implements OnInit {
       badgeShowLimit:1
     }; 
     this.tacdata = [];
-    const obj = { "IncentiveId": id, "expression": "" };
+    const obj = { "IncentiveId": id, "expression": "" ,'BrandId' : this._glbBrandId};
     this.ApiService.postmethod('termsandconditions/basedonincentive', obj).subscribe((response: any) => {
       console.log(response);
       if (response.status == 200)
@@ -314,6 +315,9 @@ export class SelectBoxComponent implements OnInit {
     }
     if(type=="5"){
       this.termMultipleOptionValues.removeAt(i);
+      this.dropdownList.splice(i,1);
+     delete this.dropdownSettings[i];
+     this.selectedoptionItems.splice(i,1);
     //this.SelectedEditTermItems.splice(i,1);
     }
 
@@ -430,7 +434,7 @@ export class SelectBoxComponent implements OnInit {
           
           item.selected = false;
           this.addMultiSelectField(item.value.MIT_ID, item.value.MIT_DISPLAYNAME);
-            this.getOptionsByTermMultiSelectAdd(item.value.MIT_ID);
+            this.getOptionsByTermMultiSelectAdd(item.value.MIT_ID,item.value.MIT_DISPLAYNAME);
         }
         
         
@@ -566,7 +570,7 @@ export class SelectBoxComponent implements OnInit {
   cnt:any=0;
   getOptionsByTermForSelect(termid){
      //this.termsOptions=[];
-      const obj = { "TermID": termid,"expression": ""}
+      const obj = { "TermID": termid,"BrandId": this._glbBrandId}
       this.ApiService.postmethod('termsandconditions/incentivetermoptions',obj).subscribe((res:any)=>{
         console.log(res);
         if(res.status == 200){
@@ -584,10 +588,10 @@ export class SelectBoxComponent implements OnInit {
       })
    }
 
-   getOptionsByTermMultiSelectAdd(termid){
+   getOptionsByTermMultiSelectAdd(termid,termname){
      //this.selectedoptionItems=[];
     this.termsMultipleOptions=[];
-    const obj = { "TermID": termid,"expression": ""}
+    const obj = { "TermID": termid,"expression": "","BrandId": this._glbBrandId}
     this.ApiService.postmethod('termsandconditions/incentivetermoptions',obj).subscribe((res:any)=>{
       console.log(res);
       if(res.status == 200){
@@ -599,8 +603,11 @@ export class SelectBoxComponent implements OnInit {
            arr.length === 0 ?
             (arr = [{ id: element.to_id, itemName: element.to_Name }]) : (arr.push({ id: element.to_id, itemName: element.to_Name }));
            });
-           this.dropdownList[this.multicnt] = arr;
-           this.dropdownSettings={text:'select', badgeShowLimit:1}
+           if(this.termMultipleOptionValues.length > 0){
+
+           }
+           this.dropdownList[this.termMultipleOptionValues.length-1] = arr;
+           this.dropdownSettings[this.termMultipleOptionValues.length-1]={text:'select ('+termname+')', badgeShowLimit:1}
           // console.log("ddl",this.dropdownList)
            this.multicnt++;
         }
@@ -623,7 +630,7 @@ getOptionsByTermForMultiSelect(element){
       else{
       this.termsMultipleOptions=[];
       var termid=element.INT_MIT_ID;
-      const obj = { "TermID": termid,"expression": ""}
+      const obj = { "TermID": termid,"expression": "","BrandId": this._glbBrandId}
       this.ApiService.postmethod('termsandconditions/incentivetermoptions',obj).subscribe((res:any)=>{
         console.log(res);
         if(res.status == 200){
@@ -636,7 +643,7 @@ getOptionsByTermForMultiSelect(element){
               (arr = [{ id: element.to_id, itemName: element.to_Name }]) : (arr.push({ id: element.to_id, itemName: element.to_Name }));
              });
              this.dropdownList[this.multicnt] = arr;
-             this.dropdownSettings = { 
+             this.dropdownSettings[this.multicnt] = { 
               singleSelection: false, 
               text:"Check",  
               selectAllText:'Select All',
@@ -644,11 +651,7 @@ getOptionsByTermForMultiSelect(element){
               enableSearchFilter: true,
               classes:"myclass custom-class",
               primaryKey:"id",
-              badgeShowLimit:1
-              // showCheckbox:true,
-              // maxHeight:600,
-              // badgeShowLimit:3
-            };
+              badgeShowLimit:1 };
 
 
             // console.log("ddl",this.dropdownList)

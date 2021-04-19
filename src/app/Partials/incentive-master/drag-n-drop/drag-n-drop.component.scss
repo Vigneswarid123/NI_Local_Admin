@@ -77,7 +77,8 @@
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
  }
-    .num{padding: 2px 6px; border-radius: 50px; border: 1px solid #7c7c7c; text-align: center; color: #7c7c7c; font-family: 'Roboto-Bold'!important; font-size: 14px;;}
+    .num{padding: 2px 6px; border-radius: 50px; border: 1px solid #7c7c7c; text-align: center; color: #7c7c7c; font-family: 'Roboto-Bold'!important; font-size: 14px;;
+        margin-left: 2px;color:#eee;}
 
 
     .drag{font-size: 10px; font-style: italic; font-family: 'OpenSans-Italic';margin: -3px 0 15px; ;}
@@ -197,7 +198,20 @@
         .term::-webkit-scrollbar-thumb {width: 6px;background: #00a453; border-radius: 5px;}
         .save_btn{width: fit-content; height: 25px; border-radius: 5px; cursor: pointer; text-transform: uppercase; padding:3px 0; background: #00a453 !important; color: #ffffff; text-align: center;;;}
 
+        .input-icons span {
+            position: absolute;
+        }
+          
+        .input-icons {
+            width: 100%;
+            margin-bottom: 10px;
+        }
 
+        .input-field {
+            width: 100%;
+            text-align: left;
+            padding: 5px 10px 5px 20px;
+        }
         
     }
     .rightItem{
